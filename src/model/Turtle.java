@@ -1,14 +1,15 @@
 package model;
 
-import util.Vector;
 import util.AbstractSprite;
 import util.Location;
+import util.Vector;
+
 
 public class Turtle extends AbstractSprite {
-    
+
     private Location myCenter;
     private double myHeading;
-    
+
     public Location getCenter () {
         return myCenter;
     }
@@ -22,7 +23,7 @@ public class Turtle extends AbstractSprite {
     }
 
     public void translate (Vector v) {
-        //TODO figure out how to move through edges of canvas
+        // TODO figure out how to move through edges of canvas
     }
 
     public double getHeading () {
@@ -32,7 +33,5 @@ public class Turtle extends AbstractSprite {
     public void setHeading (double myHeading) {
         this.myHeading = myHeading;
     }
-    
-    
 
 }

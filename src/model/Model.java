@@ -1,12 +1,12 @@
 package model;
 
 import java.io.File;
-import exceptions.FormattingException;
-import factory.Parser; 
 import java.util.Iterator;
-import commands.ICommand;
 import util.Datasource;
 import util.Paintable;
+import commands.ICommand;
+import exceptions.FormattingException;
+import factory.Parser;
 
 
 public class Model implements IModel, Datasource {
@@ -26,7 +26,7 @@ public class Model implements IModel, Datasource {
 
     @Override
     public int executeCommand (String command) {
-       
+
         ICommand executable;
         try {
             executable = myParser.parse(command);
@@ -36,8 +36,7 @@ public class Model implements IModel, Datasource {
             // TODO Make Duvall Happy
             return ERROR_RETURN_VALUE;
         }
-        
-        
+
     }
 
     @Override

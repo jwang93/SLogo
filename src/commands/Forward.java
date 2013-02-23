@@ -1,13 +1,15 @@
 package commands;
+
 import model.Turtle;
 import util.Vector;
 
+
 public class Forward extends AbstractTurtleCommand {
-    private int myIncrement; 
-    
+    private int myIncrement;
+
     public Forward (Turtle turtle, int increment) {
         super(turtle);
-        myIncrement =increment;
+        myIncrement = increment;
     }
 
     @Override

@@ -2,6 +2,7 @@ package util;
 
 import java.awt.Graphics2D;
 
+
 public interface Paintable {
-    public void paint(Graphics2D pen);
+    public void paint (Graphics2D pen);
 }

@@ -1,5 +1,5 @@
 package commands;
 
 public interface ICommand {
-    public int execute();
+    public int execute ();
 }

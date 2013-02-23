@@ -2,6 +2,7 @@ package model;
 
 import util.AbstractSprite;
 
+
 public class Line extends AbstractSprite {
 
     public Line () {

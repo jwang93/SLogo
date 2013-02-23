@@ -2,6 +2,14 @@ package exceptions;
 
 public class FormattingException extends Exception {
 
+    /*
+     * TODO what's this long for?
+     */
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     public FormattingException () {
         // TODO Auto-generated constructor stub
     }
