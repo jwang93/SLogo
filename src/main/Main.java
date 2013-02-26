@@ -1,5 +1,8 @@
 package main;
 
+import view.View;
+import model.Model;
+
 public class Main {
 
     /**
@@ -8,7 +11,8 @@ public class Main {
      * @param args
      */
     public static void main (String[] args) {
-
+        Model model = new Model();              
+        new View("SLogo", model, "English");
     }
 
 }
