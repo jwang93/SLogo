@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.JComponent;
@@ -31,29 +33,31 @@ import javax.swing.Timer;
  * </UL>
  * 
  * @author Robert C Duvall
+ * @author David Winegar
+ * @author Zhen Gou
  */
-public class Canvas extends JComponent {
+public class Canvas extends JComponent implements Observer {
     // default serialization ID
     private static final long serialVersionUID = 1L;
     // animate 25 times per second if possible
-    public static final int FRAMES_PER_SECOND = 25;
+    //public static final int FRAMES_PER_SECOND = 25;
     // better way to think about timed events (in milliseconds)
-    public static final int ONE_SECOND = 1000;
-    public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;
+    //public static final int ONE_SECOND = 1000;
+    //public static final int DEFAULT_DELAY = ONE_SECOND / FRAMES_PER_SECOND;
     // only one so that it maintains user's preferences
-    private static final JFileChooser INPUT_CHOOSER = 
-            new JFileChooser(System.getProperties().getProperty("user.dir"));
+    //private static final JFileChooser INPUT_CHOOSER = 
+    //        new JFileChooser(System.getProperties().getProperty("user.dir"));
     // input state
-    public static final int NO_KEY_PRESSED = -1;
-    public static final Point NO_MOUSE_PRESSED = null;
+    //public static final int NO_KEY_PRESSED = -1;
+    //public static final Point NO_MOUSE_PRESSED = null;
 
     // drives the animation
-    private Timer myTimer;
+    //private Timer myTimer;
     // game to be animated
     // input state
-    private int myLastKeyPressed;
-    private Point myLastMousePosition;
-    private Set<Integer> myKeys;
+    //private int myLastKeyPressed;
+    //private Point myLastMousePosition;
+    //private Set<Integer> myKeys;
 
 
     /**
@@ -83,6 +87,12 @@ public class Canvas extends JComponent {
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getSize().width, getSize().height);
         // first time needs to be special cased :(
+    }
+    
+    @Override
+    public void update (Observable arg0, Object arg1) {
+        // TODO Auto-generated method stub
+        
     }
 
 

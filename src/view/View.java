@@ -3,20 +3,14 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ResourceBundle;
@@ -36,15 +30,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 
 import model.IModel;
-import model.Model;
 
 import util.Location;
 
 public class View extends JFrame implements IView {
-	private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
+	private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
 	private static final String USER_DIR = "user.dir";
 	private static final int FIELD_SIZE = 30;
 
@@ -57,7 +49,7 @@ public class View extends JFrame implements IView {
 	private JFileChooser myChooser;
 	private ResourceBundle myResources;
 	private KeyListener myKeyListener;
-	private FocusListener myFocusListener;
+	//private FocusListener myFocusListener;
 
 	private MouseListener myMouseListener;
 
@@ -66,14 +58,15 @@ public class View extends JFrame implements IView {
 	private IModel myModel;
 	private JComponent myCanvas;
 
-	public View(String title, IModel model) {
+	public View(String title, IModel model, String language) {
 		setTitle(title);
 		myModel = model;
-		myCanvas = new Canvas(new Dimension(600, 600));// TODo
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
+		myCanvas = new Canvas(new Dimension(600, 600));// TODO
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myChooser = new JFileChooser(System.getProperties().getProperty(
 				USER_DIR));
-		makeListeners();
+		//makeListeners();
 		getContentPane().add(makeCommandCenter(), BorderLayout.SOUTH);
 		getContentPane().add(new JSeparator());
 		getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
@@ -95,7 +88,7 @@ public class View extends JFrame implements IView {
 	private JComponent makeCommandHistory() {
 		JPanel result = new JPanel();
 		result.setLayout(new BorderLayout());
-		result.add(new JLabel("Command History"), BorderLayout.NORTH);
+		result.add(new JLabel(myResources.getString("CommandHistory")), BorderLayout.NORTH);
 		myTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
 		myTextArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(myTextArea);
@@ -128,7 +121,7 @@ public class View extends JFrame implements IView {
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result,BoxLayout.LINE_AXIS));
 		
-		result.add(new JLabel("Command-Line"));
+		result.add(new JLabel(myResources.getString("CommandLine")));
 		result.add(makeTextField());
 		result.add(new JSeparator());
 		result.add(makeClearButton());
@@ -142,7 +135,7 @@ public class View extends JFrame implements IView {
 		myTextField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String givenCommand = myTextField.getText();
-				showMessage("Enter pressed" + "  the given Command is:  "
+				showMessage(myResources.getString("TextBoxCommand")
 						+ givenCommand);
 				// myModel.executeCommand(givenCommand);
 				myTextField.setText("");
@@ -160,8 +153,8 @@ public class View extends JFrame implements IView {
 	}
 
 	protected JMenu makeFileMenu() {
-		JMenu result = new JMenu("File");
-		result.add(new AbstractAction("LoadCommand") {
+		JMenu result = new JMenu(myResources.getString("File"));
+		result.add(new AbstractAction(myResources.getString("LoadCommand")) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -179,7 +172,7 @@ public class View extends JFrame implements IView {
 				}
 			}
 		});
-		result.add(new AbstractAction("saveCommand") {
+		result.add(new AbstractAction(myResources.getString("SaveCommand")) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -199,7 +192,7 @@ public class View extends JFrame implements IView {
 			}
 		});
 		result.add(new JSeparator());
-		result.add(new AbstractAction("Quit") {
+		result.add(new AbstractAction(myResources.getString("Quit")) {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// clean up any open resources, then
@@ -211,7 +204,7 @@ public class View extends JFrame implements IView {
 	}
 
 	private JButton makeClearButton() {
-		myClearButton = new JButton("Clear");
+		myClearButton = new JButton(myResources.getString("ClearCommand"));
 		myClearButton.addMouseListener(myMouseListener);
 		myClearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -238,7 +231,7 @@ public class View extends JFrame implements IView {
 		}
 	}
 
-	protected void makeListeners() {
+	/*protected void makeListeners() {
 		myKeyListener = new KeyListener() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -281,7 +274,7 @@ public class View extends JFrame implements IView {
 			}
 		};
 
-	}
+	} */
 
 	private void echo(String s, KeyEvent e) {
 		showMessage(s + " char:" + e.getKeyChar() + " mod: "
@@ -313,11 +306,6 @@ public class View extends JFrame implements IView {
 
 	public void setModel(IModel model) {
 		myModel = model;
-	}
-
-	public static void main(String[] args) {
-		Model model = new Model();
-		new View("SLogo", model);
 	}
 
 }
