@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import java.io.Reader;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -47,6 +49,10 @@ public class View extends JFrame implements IView {
 	private static final int FIELD_SIZE = 30;
 
 	private JTextArea myTextArea;
+	private JTextArea myTurtleState;
+	private String myTurtlePositionLabel;
+	private String myTurtleHeadingLabel;
+	
 	private JTextField myTextField;
 	private JFileChooser myChooser;
 	private ResourceBundle myResources;
@@ -63,7 +69,7 @@ public class View extends JFrame implements IView {
 	public View(String title, IModel model) {
 		setTitle(title);
 		myModel = model;
-		myCanvas = new Canvas(new Dimension(300, 300));// TODO
+		myCanvas = new Canvas(new Dimension(600, 600));// TODo
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myChooser = new JFileChooser(System.getProperties().getProperty(
 				USER_DIR));
@@ -74,7 +80,7 @@ public class View extends JFrame implements IView {
 		getContentPane().add(new JSeparator());
 		setJMenuBar(makeMenuBar());
 
-		getContentPane().add(myCanvas, BorderLayout.CENTER);
+		getContentPane().add(makeTurtleDisplay(), BorderLayout.CENTER);
 
 		pack();
 		setVisible(true);
@@ -98,9 +104,30 @@ public class View extends JFrame implements IView {
 		return result;
 
 	}
+	private JComponent makeTurtleDisplay(){
+		JPanel result=new JPanel();
+		JPanel state=new JPanel();
+		state.setSize(10, 10);
+		result.setBorder(BorderFactory.createLineBorder(Color.black));
+		state.setBorder(BorderFactory.createLineBorder(Color.black));
+		result.setLayout(new BoxLayout(result,BoxLayout.PAGE_AXIS));
+		state.setLayout(new BoxLayout(state,BoxLayout.LINE_AXIS));
+		result.add(myCanvas);
+		
+		myTurtleState=new JTextArea();
+		myTurtleState.setEditable(false);
+		state.add(myTurtleState);
+		updateHeadingLabel(270);
+		updatePositionLabel(new Location(0,0));
+		result.add(state);
+		return result;
+		
+	}
 
 	private JComponent makeCommandCenter() {
-		JComponent result = new JPanel();
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result,BoxLayout.LINE_AXIS));
+		
 		result.add(new JLabel("Command-Line"));
 		result.add(makeTextField());
 		result.add(new JSeparator());
@@ -109,7 +136,7 @@ public class View extends JFrame implements IView {
 	}
 
 	private JTextField makeTextField() {
-		myTextField = new JTextField(FIELD_SIZE * 2);
+		myTextField = new JTextField(FIELD_SIZE);
 		myTextField.addKeyListener(myKeyListener);
 		// result.addFocusListener(myFocusListener);
 		myTextField.addActionListener(new ActionListener() {
@@ -270,9 +297,18 @@ public class View extends JFrame implements IView {
 	}
 
 	public void updatePositionLabel(Location location) {
+		myTurtlePositionLabel=" current turtle position: ( "+location.getX()+" , "+location.getY()+" )      ";
+		updateTurtleState();
+		
+	}
+
+	private void updateTurtleState() {
+		myTurtleState.setText(myTurtlePositionLabel+myTurtleHeadingLabel);
 	}
 
 	public void updateHeadingLabel(int heading) {
+		myTurtleHeadingLabel="     current heading direction: "+heading+" degrees";
+		updateTurtleState();
 	}
 
 	public void setModel(IModel model) {
