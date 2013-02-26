@@ -3,6 +3,6 @@ package util;
 import java.util.Iterator;
 
 
-public interface Datasource {
+public interface DataSource {
     public Iterator<Paintable> getPaintableIterator ();
 }

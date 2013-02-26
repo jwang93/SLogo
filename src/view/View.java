@@ -36,6 +36,8 @@ import model.IModel;
 import util.Location;
 
 public class View extends JFrame implements IView {
+        private static final long serialVersionUID = 401L;
+        
 	private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
 	private static final String USER_DIR = "user.dir";
 	private static final int FIELD_SIZE = 30;
@@ -49,7 +51,6 @@ public class View extends JFrame implements IView {
 	private JFileChooser myChooser;
 	private ResourceBundle myResources;
 	private KeyListener myKeyListener;
-	//private FocusListener myFocusListener;
 
 	private MouseListener myMouseListener;
 
@@ -62,7 +63,7 @@ public class View extends JFrame implements IView {
 		setTitle(title);
 		myModel = model;
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
-		myCanvas = new Canvas(new Dimension(600, 600));// TODO
+		myCanvas = new Canvas(new Dimension(600, 400));// TODO
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myChooser = new JFileChooser(System.getProperties().getProperty(
 				USER_DIR));
@@ -231,51 +232,6 @@ public class View extends JFrame implements IView {
 		}
 	}
 
-	/*protected void makeListeners() {
-		myKeyListener = new KeyListener() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-
-			}
-		};
-		myMouseListener = new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-
-			}
-		};
-
-	} */
-
 	private void echo(String s, KeyEvent e) {
 		showMessage(s + " char:" + e.getKeyChar() + " mod: "
 				+ KeyEvent.getKeyModifiersText(e.getModifiers()) + " mod: "
@@ -289,16 +245,17 @@ public class View extends JFrame implements IView {
 		myTextArea.setText("");
 	}
 
+	// TODO this needs to be done better
 	public void updatePositionLabel(Location location) {
 		myTurtlePositionLabel=" current turtle position: ( "+location.getX()+" , "+location.getY()+" )      ";
 		updateTurtleState();
 		
 	}
-
+	// TODO this needs to be done better
 	private void updateTurtleState() {
 		myTurtleState.setText(myTurtlePositionLabel+myTurtleHeadingLabel);
 	}
-
+	// TODO this needs to be done better
 	public void updateHeadingLabel(int heading) {
 		myTurtleHeadingLabel="     current heading direction: "+heading+" degrees";
 		updateTurtleState();
