@@ -1,22 +1,26 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -30,27 +34,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 import model.IModel;
+import model.Model;
 
 import util.Location;
 
 public class View extends JFrame implements IView {
-        private static final long serialVersionUID = 401L;
-        
-	private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
+	private static final String DEFAULT_RESOURCE_PACKAGE = "resources.";
 	private static final String USER_DIR = "user.dir";
 	private static final int FIELD_SIZE = 30;
 
 	private JTextArea myTextArea;
-	private JTextArea myTurtleState;
-	private String myTurtlePositionLabel;
-	private String myTurtleHeadingLabel;
-	
 	private JTextField myTextField;
 	private JFileChooser myChooser;
 	private ResourceBundle myResources;
 	private KeyListener myKeyListener;
+	private FocusListener myFocusListener;
 
 	private MouseListener myMouseListener;
 
@@ -59,22 +60,21 @@ public class View extends JFrame implements IView {
 	private IModel myModel;
 	private JComponent myCanvas;
 
-	public View(String title, IModel model, String language) {
+	public View(String title, IModel model) {
 		setTitle(title);
 		myModel = model;
-		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
-		myCanvas = new Canvas(new Dimension(600, 400));// TODO
+		myCanvas = new Canvas(new Dimension(300, 300));// TODO
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myChooser = new JFileChooser(System.getProperties().getProperty(
 				USER_DIR));
-		//makeListeners();
+		makeListeners();
 		getContentPane().add(makeCommandCenter(), BorderLayout.SOUTH);
 		getContentPane().add(new JSeparator());
 		getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
 		getContentPane().add(new JSeparator());
 		setJMenuBar(makeMenuBar());
 
-		getContentPane().add(makeTurtleDisplay(), BorderLayout.CENTER);
+		getContentPane().add(myCanvas, BorderLayout.CENTER);
 
 		pack();
 		setVisible(true);
@@ -89,7 +89,7 @@ public class View extends JFrame implements IView {
 	private JComponent makeCommandHistory() {
 		JPanel result = new JPanel();
 		result.setLayout(new BorderLayout());
-		result.add(new JLabel(myResources.getString("CommandHistory")), BorderLayout.NORTH);
+		result.add(new JLabel("Command History"), BorderLayout.NORTH);
 		myTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
 		myTextArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(myTextArea);
@@ -98,31 +98,10 @@ public class View extends JFrame implements IView {
 		return result;
 
 	}
-	private JComponent makeTurtleDisplay(){
-		JPanel result=new JPanel();
-		JPanel state=new JPanel();
-		state.setSize(10, 10);
-		result.setBorder(BorderFactory.createLineBorder(Color.black));
-		state.setBorder(BorderFactory.createLineBorder(Color.black));
-		result.setLayout(new BoxLayout(result,BoxLayout.PAGE_AXIS));
-		state.setLayout(new BoxLayout(state,BoxLayout.LINE_AXIS));
-		result.add(myCanvas);
-		
-		myTurtleState=new JTextArea();
-		myTurtleState.setEditable(false);
-		state.add(myTurtleState);
-		updateHeadingLabel(270);
-		updatePositionLabel(new Location(0,0));
-		result.add(state);
-		return result;
-		
-	}
 
 	private JComponent makeCommandCenter() {
-		JPanel result = new JPanel();
-		result.setLayout(new BoxLayout(result,BoxLayout.LINE_AXIS));
-		
-		result.add(new JLabel(myResources.getString("CommandLine")));
+		JComponent result = new JPanel();
+		result.add(new JLabel("Command-Line"));
 		result.add(makeTextField());
 		result.add(new JSeparator());
 		result.add(makeClearButton());
@@ -130,13 +109,13 @@ public class View extends JFrame implements IView {
 	}
 
 	private JTextField makeTextField() {
-		myTextField = new JTextField(FIELD_SIZE);
+		myTextField = new JTextField(FIELD_SIZE * 2);
 		myTextField.addKeyListener(myKeyListener);
 		// result.addFocusListener(myFocusListener);
 		myTextField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String givenCommand = myTextField.getText();
-				showMessage(myResources.getString("TextBoxCommand")
+				showMessage("Enter pressed" + "  the given Command is:  "
 						+ givenCommand);
 				// myModel.executeCommand(givenCommand);
 				myTextField.setText("");
@@ -154,8 +133,8 @@ public class View extends JFrame implements IView {
 	}
 
 	protected JMenu makeFileMenu() {
-		JMenu result = new JMenu(myResources.getString("File"));
-		result.add(new AbstractAction(myResources.getString("LoadCommand")) {
+		JMenu result = new JMenu("File");
+		result.add(new AbstractAction("LoadCommand") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -173,7 +152,7 @@ public class View extends JFrame implements IView {
 				}
 			}
 		});
-		result.add(new AbstractAction(myResources.getString("SaveCommand")) {
+		result.add(new AbstractAction("saveCommand") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -193,7 +172,7 @@ public class View extends JFrame implements IView {
 			}
 		});
 		result.add(new JSeparator());
-		result.add(new AbstractAction(myResources.getString("Quit")) {
+		result.add(new AbstractAction("Quit") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// clean up any open resources, then
@@ -205,7 +184,7 @@ public class View extends JFrame implements IView {
 	}
 
 	private JButton makeClearButton() {
-		myClearButton = new JButton(myResources.getString("ClearCommand"));
+		myClearButton = new JButton("Clear");
 		myClearButton.addMouseListener(myMouseListener);
 		myClearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -232,6 +211,51 @@ public class View extends JFrame implements IView {
 		}
 	}
 
+	protected void makeListeners() {
+		myKeyListener = new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+			}
+		};
+		myMouseListener = new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+		};
+
+	}
+
 	private void echo(String s, KeyEvent e) {
 		showMessage(s + " char:" + e.getKeyChar() + " mod: "
 				+ KeyEvent.getKeyModifiersText(e.getModifiers()) + " mod: "
@@ -245,24 +269,19 @@ public class View extends JFrame implements IView {
 		myTextArea.setText("");
 	}
 
-	// TODO this needs to be done better
 	public void updatePositionLabel(Location location) {
-		myTurtlePositionLabel=" current turtle position: ( "+location.getX()+" , "+location.getY()+" )      ";
-		updateTurtleState();
-		
 	}
-	// TODO this needs to be done better
-	private void updateTurtleState() {
-		myTurtleState.setText(myTurtlePositionLabel+myTurtleHeadingLabel);
-	}
-	// TODO this needs to be done better
+
 	public void updateHeadingLabel(int heading) {
-		myTurtleHeadingLabel="     current heading direction: "+heading+" degrees";
-		updateTurtleState();
 	}
 
 	public void setModel(IModel model) {
 		myModel = model;
+	}
+
+	public static void main(String[] args) {
+		Model model = new Model();
+		new View("SLogo", model);
 	}
 
 }

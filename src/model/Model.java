@@ -2,14 +2,14 @@ package model;
 
 import java.io.File;
 import java.util.Iterator;
-import util.DataSource;
+import util.Datasource;
 import util.Paintable;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
 
 
-public class Model implements IModel, DataSource {
+public class Model implements IModel, Datasource {
     private static final int ERROR_RETURN_VALUE = -1;
 
     private Parser myParser;

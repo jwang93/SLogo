@@ -9,7 +9,7 @@ import util.Vector;
 public class Turtle extends AbstractSprite {
 
     private Location myCenter;
-    private double myHeading;
+    private double myHeading; //angle direction the turtle is pointing in 
 
     public Location getCenter () {
         return myCenter;
