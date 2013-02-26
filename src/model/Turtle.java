@@ -1,6 +1,7 @@
 package model;
 
 import util.AbstractSprite;
+import util.Keywords;
 import util.Location;
 import util.Vector;
 
@@ -32,6 +33,10 @@ public class Turtle extends AbstractSprite {
 
     public void setHeading (double myHeading) {
         this.myHeading = myHeading;
+    }
+    
+    public void turn () {
+        myHeading = myHeading + Keywords.TURN_AROUND;
     }
 
 }

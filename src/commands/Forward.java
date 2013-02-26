@@ -15,7 +15,7 @@ public class Forward extends AbstractTurtleCommand {
     @Override
     public int execute () {
         Turtle turtle = getTurtle();
-        turtle.translate(new Vector(myIncrement, turtle.getHeading()));
+        turtle.translate(new Vector(turtle.getHeading(), myIncrement));
         return myIncrement;
     }
 
