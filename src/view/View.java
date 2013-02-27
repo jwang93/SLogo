@@ -43,20 +43,26 @@ import util.Location;
  * 
  */
 public class View extends JFrame implements IView {
+    private static final Location DEFAULT_POSITION = new Location(0, 0);
+
+    private static final int DEFAULT_HEADING = 270;
+
     private static final long serialVersionUID = 401L;
 
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
-    private static final int FIELD_SIZE = 30;
+    private static final int FIELD_SIZE = 20;
     private static final Dimension CANVAS_BOUNDS = new Dimension(600, 400);
-
-    private JTextArea myTextArea;
-    private JTextArea myTurtleState;
-    private String myTurtlePositionLabel;
-    private String myTurtleHeadingLabel;
+    private static final JFileChooser FILE_CHOOSER = new JFileChooser(System.getProperties()
+            .getProperty(USER_DIR));
+    
+    private JTextArea myCommandHistoryTextArea;
+    private JLabel myTurtlePositionLabel;
+    private JLabel myTurtleHeadingLabel;
 
     private JTextField myTextField;
-    private JFileChooser myChooser;
+
+    
     private ResourceBundle myResources;
     private KeyListener myKeyListener;
 
@@ -75,12 +81,10 @@ public class View extends JFrame implements IView {
      */
     public View (String title, String language) {
         setTitle(title);
-        
+
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(CANVAS_BOUNDS);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myChooser = new JFileChooser(System.getProperties().getProperty(
-                                                                        USER_DIR));
         getContentPane().add(makeCommandCenter(), BorderLayout.SOUTH);
         getContentPane().add(new JSeparator());
         getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
@@ -95,35 +99,38 @@ public class View extends JFrame implements IView {
     }
 
     private JComponent makeCommandHistory () {
-        JPanel result = new JPanel();
-        result.setLayout(new BorderLayout());
-        result.add(new JLabel(myResources.getString("CommandHistory")), BorderLayout.NORTH);
-        myTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
-        myTextArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(myTextArea);
-        result.add(scrollPane);
+        JPanel commandHistoryPanel = new JPanel();
+        commandHistoryPanel.setLayout(new BorderLayout());
+        commandHistoryPanel.add(new JLabel(myResources.getString("CommandHistory")), BorderLayout.NORTH);
+        myCommandHistoryTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
+        myCommandHistoryTextArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(myCommandHistoryTextArea);
+        commandHistoryPanel.add(scrollPane, BorderLayout.CENTER);
+        commandHistoryPanel.add(makeClearButton(), BorderLayout.SOUTH);
 
-        return result;
+        return commandHistoryPanel;
 
     }
 
     private JComponent makeTurtleDisplay () {
-        JPanel result = new JPanel();
-        JPanel state = new JPanel();
-        state.setSize(10, 10);
-        result.setBorder(BorderFactory.createLineBorder(Color.black));
-        state.setBorder(BorderFactory.createLineBorder(Color.black));
-        result.setLayout(new BoxLayout(result, BoxLayout.PAGE_AXIS));
-        state.setLayout(new BoxLayout(state, BoxLayout.LINE_AXIS));
-        result.add(myCanvas);
+        
+        JPanel turtleInfoPanel = new JPanel();
+        turtleInfoPanel.setLayout(new BorderLayout());
+        
+        JPanel canvasPanel = new JPanel();
+        canvasPanel.add(myCanvas);
+        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        turtleInfoPanel.add(canvasPanel, BorderLayout.CENTER);
 
-        myTurtleState = new JTextArea();
-        myTurtleState.setEditable(false);
-        state.add(myTurtleState);
-        updateHeadingLabel(270);
-        updatePositionLabel(new Location(0, 0));
-        result.add(state);
-        return result;
+        JPanel state = new JPanel();
+        myTurtlePositionLabel = new JLabel();
+        myTurtleHeadingLabel = new JLabel();
+        state.add(myTurtlePositionLabel);
+        state.add(myTurtleHeadingLabel);
+        updateHeadingLabel(DEFAULT_HEADING);
+        updatePositionLabel(DEFAULT_POSITION);
+        turtleInfoPanel.add(state, BorderLayout.SOUTH);
+        return turtleInfoPanel;
 
     }
 
@@ -134,7 +141,6 @@ public class View extends JFrame implements IView {
         result.add(new JLabel(myResources.getString("CommandLine")));
         result.add(makeTextField());
         result.add(new JSeparator());
-        result.add(makeClearButton());
         return result;
     }
 
@@ -163,16 +169,16 @@ public class View extends JFrame implements IView {
 
     }
 
-    //TODO so much repeated code here
+    // TODO so much repeated code here
     protected JMenu makeFileMenu () {
         JMenu result = new JMenu(myResources.getString("File"));
         result.add(new AbstractAction(myResources.getString("LoadCommand")) {
             @Override
             public void actionPerformed (ActionEvent e) {
                 try {
-                    int response = myChooser.showOpenDialog(null);
+                    int response = FILE_CHOOSER.showOpenDialog(null);
                     if (response == JFileChooser.APPROVE_OPTION) {
-                        File file = myChooser.getSelectedFile();
+                        File file = FILE_CHOOSER.getSelectedFile();
 
                         myModel.loadFunctionsAndVariables(file);
                         returnMessage(myResources.getString("FileLoaded") + file.getName());
@@ -190,9 +196,9 @@ public class View extends JFrame implements IView {
             public void actionPerformed (ActionEvent e) {
 
                 try {
-                    int response = myChooser.showOpenDialog(null);
+                    int response = FILE_CHOOSER.showOpenDialog(null);
                     if (response == JFileChooser.APPROVE_OPTION) {
-                        File file = myChooser.getSelectedFile();
+                        File file = FILE_CHOOSER.getSelectedFile();
 
                         myModel.saveFunctionsAndVariables(file);
                         returnMessage(myResources.getString("FileSaved") + file.getName());
@@ -255,34 +261,24 @@ public class View extends JFrame implements IView {
 
     @Override
     public void returnMessage (String message) {
-        myTextArea.append(message + "\n");
+        myCommandHistoryTextArea.append(message + "\n");
     }
 
     @Override
     public void clearCommandWindow () {
-        myTextArea.setText("");
+        myCommandHistoryTextArea.setText("");
     }
 
-    // TODO this needs to be done better
     @Override
     public void updatePositionLabel (Location location) {
-        myTurtlePositionLabel =
-                " current turtle position: ( " + location.getX() + " , " + location.getY() +
-                        " )      ";
-        updateTurtleState();
+        myTurtlePositionLabel.setText(myResources.getString("Position") + " " +  location.getX() + ", " + location.getY());
 
     }
 
-    // TODO this needs to be done better
-    private void updateTurtleState () {
-        myTurtleState.setText(myTurtlePositionLabel + myTurtleHeadingLabel);
-    }
-
-    // TODO this needs to be done better
     @Override
     public void updateHeadingLabel (int heading) {
-        myTurtleHeadingLabel = "     current heading direction: " + heading + " degrees";
-        updateTurtleState();
+        myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
+
     }
 
     @Override
