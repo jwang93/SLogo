@@ -5,9 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -59,17 +56,10 @@ public class View extends JFrame implements IView {
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
-
-    private JTextField myTextField;
-
+    private JTextField myCommandLineTextField;
+    private JButton myClearButton;
     
     private ResourceBundle myResources;
-    private KeyListener myKeyListener;
-
-    private MouseListener myMouseListener;
-
-    private JButton myClearButton;
-
     private IModel myModel;
     private JComponent myCanvas;
 
@@ -85,7 +75,7 @@ public class View extends JFrame implements IView {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(CANVAS_BOUNDS);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().add(makeCommandCenter(), BorderLayout.SOUTH);
+        getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
         getContentPane().add(new JSeparator());
         getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
         getContentPane().add(new JSeparator());
@@ -98,6 +88,10 @@ public class View extends JFrame implements IView {
 
     }
 
+    /**
+     * Creates the command history part of the window, including a label at the top, a non-user-editable text area to display the history and a clear button that clears the command history.
+     * @return JComponent representing the command history
+     */
     private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
         commandHistoryPanel.setLayout(new BorderLayout());
@@ -112,6 +106,10 @@ public class View extends JFrame implements IView {
 
     }
 
+    /**
+     *  Displays the canvas and the heading and position label for the turtle on the canvas.
+     * @return JComponent representing the canvas and turtle state information
+     */
     private JComponent makeTurtleDisplay () {
         
         JPanel turtleInfoPanel = new JPanel();
@@ -130,36 +128,37 @@ public class View extends JFrame implements IView {
         updateHeadingLabel(DEFAULT_HEADING);
         updatePositionLabel(DEFAULT_POSITION);
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
+        
         return turtleInfoPanel;
 
     }
 
-    private JComponent makeCommandCenter () {
-        JPanel result = new JPanel();
-        result.setLayout(new BoxLayout(result, BoxLayout.LINE_AXIS));
+    private JComponent makeCommandLinePanel () {
+        JPanel commandLinePanel = new JPanel();
+        commandLinePanel.setLayout(new BoxLayout(commandLinePanel, BoxLayout.LINE_AXIS));
 
-        result.add(new JLabel(myResources.getString("CommandLine")));
-        result.add(makeTextField());
-        result.add(new JSeparator());
-        return result;
+        commandLinePanel.add(new JLabel(myResources.getString("CommandLine")));
+        commandLinePanel.add(makeCommandLine());
+        commandLinePanel.add(new JSeparator());
+        return commandLinePanel;
     }
 
-    private JTextField makeTextField () {
-        myTextField = new JTextField(FIELD_SIZE);
-        myTextField.addKeyListener(myKeyListener);
-        // result.addFocusListener(myFocusListener);
-        myTextField.addActionListener(new ActionListener() {
+    
+    private JTextField makeCommandLine () {
+        myCommandLineTextField = new JTextField(FIELD_SIZE);
+        myCommandLineTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                String givenCommand = myTextField.getText();
+                String givenCommand = myCommandLineTextField.getText();
                 returnMessage(myResources.getString("TextBoxCommand")
                               + givenCommand);
+                //TODO connect with Model
                 // myModel.executeCommand(givenCommand);
-                myTextField.setText("");
+                myCommandLineTextField.setText("");
 
             }
         });
-        return myTextField;
+        return myCommandLineTextField;
     }
 
     private JMenuBar makeMenuBar () {
@@ -195,19 +194,12 @@ public class View extends JFrame implements IView {
             @Override
             public void actionPerformed (ActionEvent e) {
 
-                try {
-                    int response = FILE_CHOOSER.showOpenDialog(null);
-                    if (response == JFileChooser.APPROVE_OPTION) {
-                        File file = FILE_CHOOSER.getSelectedFile();
+                int response = FILE_CHOOSER.showOpenDialog(null);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    File file = FILE_CHOOSER.getSelectedFile();
 
-                        myModel.saveFunctionsAndVariables(file);
-                        returnMessage(myResources.getString("FileSaved") + file.getName());
-                        echo(new FileReader(file));
-                    }
-                }
-                catch (IOException io) {
-                    // let user know an error occurred, but keep going
-                    returnMessage(io.toString());
+                    myModel.saveFunctionsAndVariables(file);
+                    returnMessage(myResources.getString("FileSaved") + file.getName());
                 }
             }
         });
@@ -225,7 +217,6 @@ public class View extends JFrame implements IView {
 
     private JButton makeClearButton () {
         myClearButton = new JButton(myResources.getString("ClearCommand"));
-        myClearButton.addMouseListener(myMouseListener);
         myClearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
@@ -251,12 +242,6 @@ public class View extends JFrame implements IView {
         catch (IOException e) {
             returnMessage(e.toString());
         }
-    }
-
-    private void echo (String s, KeyEvent e) {
-        returnMessage(s + " char:" + e.getKeyChar() + " mod: "
-                      + KeyEvent.getKeyModifiersText(e.getModifiers()) + " mod: "
-                      + KeyEvent.getKeyText(e.getKeyCode()));
     }
 
     @Override
