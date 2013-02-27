@@ -48,6 +48,7 @@ public class View extends JFrame implements IView {
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
     private static final int FIELD_SIZE = 30;
+    private static final Dimension CANVAS_BOUNDS = new Dimension(600, 400);
 
     private JTextArea myTextArea;
     private JTextArea myTurtleState;
@@ -66,11 +67,17 @@ public class View extends JFrame implements IView {
     private IModel myModel;
     private JComponent myCanvas;
 
-    public View (String title, IModel model, String language) {
+    /**
+     * Creates the view window.
+     * 
+     * @param title title of window
+     * @param language localization language for configuration file
+     */
+    public View (String title, String language) {
         setTitle(title);
-        myModel = model;
+        
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
-        myCanvas = new Canvas(new Dimension(600, 400));// TODO
+        myCanvas = new Canvas(CANVAS_BOUNDS);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myChooser = new JFileChooser(System.getProperties().getProperty(
                                                                         USER_DIR));
@@ -85,11 +92,6 @@ public class View extends JFrame implements IView {
         pack();
         setVisible(true);
 
-    }
-
-    public void showMessage (String message) {
-        myTextArea.append(message + "\n");
-        myTextArea.setCaretPosition(myTextArea.getText().length());
     }
 
     private JComponent makeCommandHistory () {
@@ -144,8 +146,8 @@ public class View extends JFrame implements IView {
             @Override
             public void actionPerformed (ActionEvent e) {
                 String givenCommand = myTextField.getText();
-                showMessage(myResources.getString("TextBoxCommand")
-                            + givenCommand);
+                returnMessage(myResources.getString("TextBoxCommand")
+                              + givenCommand);
                 // myModel.executeCommand(givenCommand);
                 myTextField.setText("");
 
@@ -161,6 +163,7 @@ public class View extends JFrame implements IView {
 
     }
 
+    //TODO so much repeated code here
     protected JMenu makeFileMenu () {
         JMenu result = new JMenu(myResources.getString("File"));
         result.add(new AbstractAction(myResources.getString("LoadCommand")) {
@@ -172,13 +175,13 @@ public class View extends JFrame implements IView {
                         File file = myChooser.getSelectedFile();
 
                         myModel.loadFunctionsAndVariables(file);
-                        showMessage("file loaded:  " + file.getName());
+                        returnMessage(myResources.getString("FileLoaded") + file.getName());
                         echo(new FileReader(file));
                     }
                 }
                 catch (IOException io) {
                     // let user know an error occurred, but keep going
-                    showMessage(io.toString());
+                    returnMessage(io.toString());
                 }
             }
         });
@@ -192,13 +195,13 @@ public class View extends JFrame implements IView {
                         File file = myChooser.getSelectedFile();
 
                         myModel.saveFunctionsAndVariables(file);
-                        showMessage("file saved at:  " + file.getName());
+                        returnMessage(myResources.getString("FileSaved") + file.getName());
                         echo(new FileReader(file));
                     }
                 }
                 catch (IOException io) {
                     // let user know an error occurred, but keep going
-                    showMessage(io.toString());
+                    returnMessage(io.toString());
                 }
             }
         });
@@ -237,21 +240,22 @@ public class View extends JFrame implements IView {
                 s += line + "\n";
                 line = input.readLine();
             }
-            showMessage(s);
+            returnMessage(s);
         }
         catch (IOException e) {
-            showMessage(e.toString());
+            returnMessage(e.toString());
         }
     }
 
     private void echo (String s, KeyEvent e) {
-        showMessage(s + " char:" + e.getKeyChar() + " mod: "
-                    + KeyEvent.getKeyModifiersText(e.getModifiers()) + " mod: "
-                    + KeyEvent.getKeyText(e.getKeyCode()));
+        returnMessage(s + " char:" + e.getKeyChar() + " mod: "
+                      + KeyEvent.getKeyModifiersText(e.getModifiers()) + " mod: "
+                      + KeyEvent.getKeyText(e.getKeyCode()));
     }
 
     @Override
     public void returnMessage (String message) {
+        myTextArea.append(message + "\n");
     }
 
     @Override

@@ -1,18 +1,30 @@
 package main;
 
-import view.View;
 import model.Model;
+import view.View;
 
-public class Main {
+/**
+ * Starts the program.
+ * @author David Winegar
+ *
+ */
+final class Main {
 
     /**
-     * start running the program
+     * Do not allow instantiation of Main.
+     */
+    private Main () {
+    }
+    
+    /**
+     * Instantiates Model and View and sets them, starting the program.
      * 
-     * @param args
+     * @param args input arguments (not used)
      */
     public static void main (String[] args) {
-        Model model = new Model();              
-        new View("SLogo", model, "English");
+        View view = new View("SLogo", "English");
+        Model model = new Model(view);              
+        view.setModel(model);
     }
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 import util.DataSource;
 import util.Paintable;
+import view.IView;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
@@ -14,7 +15,7 @@ public class Model implements IModel, DataSource {
 
     private Parser myParser;
 
-    public Model () {
+    public Model (IView view) {
         // TODO make parser
     }
 
