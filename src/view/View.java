@@ -5,11 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -41,24 +37,21 @@ import util.Location;
  */
 public class View extends JFrame implements IView {
     private static final Location DEFAULT_POSITION = new Location(0, 0);
-
     private static final int DEFAULT_HEADING = 270;
-
     private static final long serialVersionUID = 401L;
-
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
     private static final int FIELD_SIZE = 20;
     private static final Dimension CANVAS_BOUNDS = new Dimension(600, 400);
     private static final JFileChooser FILE_CHOOSER = new JFileChooser(System.getProperties()
             .getProperty(USER_DIR));
-    
+
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
     private JTextField myCommandLineTextField;
     private JButton myClearButton;
-    
+
     private ResourceBundle myResources;
     private IModel myModel;
     private JComponent myCanvas;
@@ -74,28 +67,29 @@ public class View extends JFrame implements IView {
 
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(CANVAS_BOUNDS);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
-        getContentPane().add(new JSeparator());
-        getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
-        getContentPane().add(new JSeparator());
-        setJMenuBar(makeMenuBar());
 
+        getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
+        getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
         getContentPane().add(makeTurtleDisplay(), BorderLayout.CENTER);
+        setJMenuBar(makeMenuBar());
 
         pack();
         setVisible(true);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
-     * Creates the command history part of the window, including a label at the top, a non-user-editable text area to display the history and a clear button that clears the command history.
+     * Creates the command history part of the window, including a label at the top, a
+     * non-user-editable text area to display the history and a clear button that clears the command
+     * history.
+     * 
      * @return JComponent representing the command history
      */
     private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
         commandHistoryPanel.setLayout(new BorderLayout());
-        commandHistoryPanel.add(new JLabel(myResources.getString("CommandHistory")), BorderLayout.NORTH);
+        commandHistoryPanel.add(new JLabel(myResources.getString("CommandHistory")),
+                                BorderLayout.NORTH);
         myCommandHistoryTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
         myCommandHistoryTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(myCommandHistoryTextArea);
@@ -107,14 +101,15 @@ public class View extends JFrame implements IView {
     }
 
     /**
-     *  Displays the canvas and the heading and position label for the turtle on the canvas.
+     * Displays the canvas and the heading and position label for the turtle on the canvas.
+     * 
      * @return JComponent representing the canvas and turtle state information
      */
     private JComponent makeTurtleDisplay () {
-        
+
         JPanel turtleInfoPanel = new JPanel();
         turtleInfoPanel.setLayout(new BorderLayout());
-        
+
         JPanel canvasPanel = new JPanel();
         canvasPanel.add(myCanvas);
         canvasPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -128,22 +123,31 @@ public class View extends JFrame implements IView {
         updateHeadingLabel(DEFAULT_HEADING);
         updatePositionLabel(DEFAULT_POSITION);
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
-        
+
         return turtleInfoPanel;
 
     }
 
+    /**
+     * Creates the comand line, including a typable command line text box and a label.
+     * 
+     * @return JComponent representing the command line panel
+     */
     private JComponent makeCommandLinePanel () {
         JPanel commandLinePanel = new JPanel();
         commandLinePanel.setLayout(new BoxLayout(commandLinePanel, BoxLayout.LINE_AXIS));
 
         commandLinePanel.add(new JLabel(myResources.getString("CommandLine")));
         commandLinePanel.add(makeCommandLine());
-        commandLinePanel.add(new JSeparator());
         return commandLinePanel;
     }
 
-    
+    /**
+     * Creates a command line that passes info to the Model and clears the text field upon hitting
+     * enter.
+     * 
+     * @return JTextField representing the command line text field
+     */
     private JTextField makeCommandLine () {
         myCommandLineTextField = new JTextField(FIELD_SIZE);
         myCommandLineTextField.addActionListener(new ActionListener() {
@@ -152,7 +156,7 @@ public class View extends JFrame implements IView {
                 String givenCommand = myCommandLineTextField.getText();
                 returnMessage(myResources.getString("TextBoxCommand")
                               + givenCommand);
-                //TODO connect with Model
+                // TODO connect with Model
                 // myModel.executeCommand(givenCommand);
                 myCommandLineTextField.setText("");
 
@@ -161,6 +165,11 @@ public class View extends JFrame implements IView {
         return myCommandLineTextField;
     }
 
+    /**
+     * Creates the menu bar.
+     * 
+     * @return JMenuBar representing the menu bar
+     */
     private JMenuBar makeMenuBar () {
         JMenuBar result = new JMenuBar();
         result.add(makeFileMenu());
@@ -168,25 +177,24 @@ public class View extends JFrame implements IView {
 
     }
 
-    // TODO so much repeated code here
+    /**
+     * Creates a menu with 3 options: Save, Load, and Exit.
+     * 
+     * @return JMenu representing the menu.
+     *         TODO so much repeated code here
+     */
     protected JMenu makeFileMenu () {
         JMenu result = new JMenu(myResources.getString("File"));
         result.add(new AbstractAction(myResources.getString("LoadCommand")) {
             @Override
             public void actionPerformed (ActionEvent e) {
-                try {
-                    int response = FILE_CHOOSER.showOpenDialog(null);
-                    if (response == JFileChooser.APPROVE_OPTION) {
-                        File file = FILE_CHOOSER.getSelectedFile();
-
-                        myModel.loadFunctionsAndVariables(file);
-                        returnMessage(myResources.getString("FileLoaded") + file.getName());
-                        echo(new FileReader(file));
-                    }
-                }
-                catch (IOException io) {
-                    // let user know an error occurred, but keep going
-                    returnMessage(io.toString());
+                int response = FILE_CHOOSER.showOpenDialog(null);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    File file = FILE_CHOOSER.getSelectedFile();
+                    
+                    myModel.loadFunctionsAndVariables(file);
+                    returnMessage(myResources.getString("FileLoaded") + file.getName());
+                    
                 }
             }
         });
@@ -200,6 +208,7 @@ public class View extends JFrame implements IView {
 
                     myModel.saveFunctionsAndVariables(file);
                     returnMessage(myResources.getString("FileSaved") + file.getName());
+                    
                 }
             }
         });
@@ -207,14 +216,18 @@ public class View extends JFrame implements IView {
         result.add(new AbstractAction(myResources.getString("Quit")) {
             @Override
             public void actionPerformed (ActionEvent e) {
-                // clean up any open resources, then
-                // end program
+                // clean up any open resources, then end program
                 System.exit(0);
             }
         });
         return result;
     }
 
+    /**
+     * Makes the button that clears the command history.
+     * 
+     * @return JButton representing the clear button
+     */
     private JButton makeClearButton () {
         myClearButton = new JButton(myResources.getString("ClearCommand"));
         myClearButton.addActionListener(new ActionListener() {
@@ -223,25 +236,7 @@ public class View extends JFrame implements IView {
                 clearCommandWindow();
             }
         });
-        myClearButton.setActionCommand("clear");
         return myClearButton;
-
-    }
-
-    private void echo (Reader r) {
-        try {
-            String s = "";
-            BufferedReader input = new BufferedReader(r);
-            String line = input.readLine();
-            while (line != null) {
-                s += line + "\n";
-                line = input.readLine();
-            }
-            returnMessage(s);
-        }
-        catch (IOException e) {
-            returnMessage(e.toString());
-        }
     }
 
     @Override
@@ -256,14 +251,13 @@ public class View extends JFrame implements IView {
 
     @Override
     public void updatePositionLabel (Location location) {
-        myTurtlePositionLabel.setText(myResources.getString("Position") + " " +  location.getX() + ", " + location.getY());
-
+        myTurtlePositionLabel.setText(myResources.getString("Position") + " " + location.getX() +
+                                      ", " + location.getY());
     }
 
     @Override
     public void updateHeadingLabel (int heading) {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
-
     }
 
     @Override
