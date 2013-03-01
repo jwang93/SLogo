@@ -11,8 +11,9 @@ public class ParserInitializer {
         // TODO Auto-generated constructor stub
     }
 
-    protected Map<String, ICommand> initializeMap () {
-        Map<String, ICommand> map = new HashMap<String, ICommand>();
+    protected Map<String, CommandInfo> initializeMap () {
+        Map<String, CommandInfo> map = new HashMap<String, CommandInfo>();
+        map.put( "fd", new CommandInfo("forward", 1));
         return map;
     }
 
