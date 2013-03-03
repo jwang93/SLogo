@@ -44,7 +44,6 @@ public class View extends JFrame implements Observer {
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
     private static final int FIELD_SIZE = 20;
-    private static final Dimension CANVAS_BOUNDS = new Dimension(600, 400);
     private static final JFileChooser FILE_CHOOSER = new JFileChooser(System.getProperties()
             .getProperty(USER_DIR));
 
@@ -67,13 +66,13 @@ public class View extends JFrame implements Observer {
      * @param model IModel held in state
      * @param dataSource DataSource held in state
      */
-    public View (String title, String language, IModel model, DataSource dataSource) {
+    public View (String title, String language, IModel model, DataSource dataSource, Dimension canvasBounds) {
         setTitle(title);
         myModel = model;
         myDataSource = dataSource;
 
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
-        myCanvas = new Canvas(CANVAS_BOUNDS);
+        myCanvas = new Canvas(canvasBounds);
 
         getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
         getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
