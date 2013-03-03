@@ -1,12 +1,23 @@
 package model;
 
-import util.AbstractSprite;
+import java.awt.Graphics2D;
+import util.Location;
+import util.Paintable;
 
 
-public class Line extends AbstractSprite {
+public class Line implements Paintable {
 
-    public Line () {
-        // TODO Auto-generated constructor stub
+    private Location myStartLocation;
+    private Location myEndLocation;
+    
+    public Line (Location start, Location end) {
+        myStartLocation = start;
+        myEndLocation = end;
+    }
+    
+    @Override
+    public void paint (Graphics2D pen) {
+        pen.drawLine((int) myStartLocation.getX(), (int) myStartLocation.getY(), (int) myEndLocation.getX(), (int) myEndLocation.getY());
     }
 
 }
