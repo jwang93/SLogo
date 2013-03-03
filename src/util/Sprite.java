@@ -14,7 +14,7 @@ import java.awt.geom.Point2D;
  * 
  * @author Robert C. Duvall
  */
-public abstract class Sprite {
+public abstract class Sprite implements Paintable {
     // canonical directions for a collision
     public static final int RIGHT_DIRECTION = 0;
     public static final int DOWN_DIRECTION = 90;
