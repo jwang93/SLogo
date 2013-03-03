@@ -21,10 +21,10 @@ import util.Paintable;
  * @author David Winegar
  * @author Zhen Gou
  */
-public class Canvas extends JComponent implements Observer {
+public class Canvas extends JComponent {
     // default serialization ID
     private static final long serialVersionUID = 1L;
-
+    
     private Iterator<Paintable> myPaintableIterator;
 
     /**
@@ -60,18 +60,9 @@ public class Canvas extends JComponent implements Observer {
         }
     }
 
-    /**
-     * Implements the Observer update function by getting the current sprites and then calling
-     * repaint() to paint them.
-     * 
-     * @param arg0 Obeservable object, in this case a DataSource object
-     * @param arg1 Object passed in to observer, unused in this class
-     */
-    @Override
-    public void update (Observable arg0, Object arg1) {
-        DataSource paintableSource = (DataSource) arg0;
-        myPaintableIterator = paintableSource.getPaintableIterator();
+    
+    public void update (Iterator<Paintable> iterator) {
+        myPaintableIterator = iterator;
         repaint();
     }
-
 }

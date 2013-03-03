@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -19,10 +21,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import model.IModel;
+import util.DataSource;
 import util.Location;
 
 
@@ -35,7 +37,7 @@ import util.Location;
  * @author David Winegar
  * 
  */
-public class View extends JFrame implements IView {
+public class View extends JFrame implements Observer {
     private static final Location DEFAULT_POSITION = new Location(0, 0);
     private static final int DEFAULT_HEADING = 270;
     private static final long serialVersionUID = 401L;
@@ -54,16 +56,21 @@ public class View extends JFrame implements IView {
 
     private ResourceBundle myResources;
     private IModel myModel;
-    private JComponent myCanvas;
+    private Canvas myCanvas;
+    private DataSource myDataSource;
 
     /**
      * Creates the view window.
      * 
      * @param title title of window
      * @param language localization language for configuration file
+     * @param model IModel held in state
+     * @param dataSource DataSource held in state
      */
-    public View (String title, String language) {
+    public View (String title, String language, IModel model, DataSource dataSource) {
         setTitle(title);
+        myModel = model;
+        myDataSource = dataSource;
 
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(CANVAS_BOUNDS);
@@ -154,7 +161,7 @@ public class View extends JFrame implements IView {
             @Override
             public void actionPerformed (ActionEvent e) {
                 String givenCommand = myCommandLineTextField.getText();
-                returnMessage(myResources.getString("TextBoxCommand")
+                showMessage(myResources.getString("TextBoxCommand")
                               + givenCommand);
                 // TODO connect with Model
                 // myModel.executeCommand(givenCommand);
@@ -193,7 +200,7 @@ public class View extends JFrame implements IView {
                     File file = FILE_CHOOSER.getSelectedFile();
                     
                     myModel.loadFunctionsAndVariables(file);
-                    returnMessage(myResources.getString("FileLoaded") + file.getName());
+                    showMessage(myResources.getString("FileLoaded") + file.getName());
                     
                 }
             }
@@ -207,7 +214,7 @@ public class View extends JFrame implements IView {
                     File file = FILE_CHOOSER.getSelectedFile();
 
                     myModel.saveFunctionsAndVariables(file);
-                    returnMessage(myResources.getString("FileSaved") + file.getName());
+                    showMessage(myResources.getString("FileSaved") + file.getName());
                     
                 }
             }
@@ -239,30 +246,39 @@ public class View extends JFrame implements IView {
         return myClearButton;
     }
 
-    @Override
-    public void returnMessage (String message) {
+    private void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
     }
 
-    @Override
-    public void clearCommandWindow () {
+    private void clearCommandWindow () {
         myCommandHistoryTextArea.setText("");
     }
 
-    @Override
-    public void updatePositionLabel (Location location) {
+    private void updatePositionLabel (Location location) {
         myTurtlePositionLabel.setText(myResources.getString("Position") + " " + location.getX() +
                                       ", " + location.getY());
     }
 
-    @Override
-    public void updateHeadingLabel (int heading) {
+    private void updateHeadingLabel (int heading) {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
+
     }
 
+
+    /**
+     * Implements the Observer update function by getting the current sprites and then calling
+     * repaint() to paint them.
+     * TODO rewrite comment
+     * @param arg0 Obeservable object, in this case a DataSource object
+     * @param arg1 Object passed in to observer, unused in this class
+     */
     @Override
-    public void setModel (IModel model) {
-        myModel = model;
+    public void update (Observable arg0, Object arg1) {
+        myCanvas.update(myDataSource.getPaintableIterator());
+        updateHeadingLabel(myDataSource.getTurtleHeading());
+        updatePositionLabel(myDataSource.getTurtlePosition());
+        showMessage("" + myDataSource.getReturnValue());
+        showMessage(myDataSource.showMessage());
     }
 
 }

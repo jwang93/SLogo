@@ -1,28 +1,18 @@
 package model;
 
 import java.io.File;
-import java.util.Iterator;
-import util.DataSource;
-import util.Paintable;
-import view.IView;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
 
 
-public class Model implements IModel, DataSource {
+public class Model implements IModel {
     private static final int ERROR_RETURN_VALUE = -1;
 
     private Parser myParser;
 
-    public Model (IView view) {
+    public Model () {
         // TODO make parser
-    }
-
-    @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
