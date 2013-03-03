@@ -264,6 +264,6 @@ public abstract class Sprite implements Paintable {
     }
     
     protected Location getLocation () {
-        return myCenter;
+        return new Location(myCenter.getX(), myCenter.getY());
     }
 }

@@ -22,10 +22,49 @@ public class Turtle extends Sprite {
         myCanvasBounds = canvasBounds;
     }
     
-    public int move (int pixels) {
-        //TODO implement move with lines
-        
+    public int move (int pixels) {     
+        moveRecursiveHelper(pixels);
         return pixels;
+    }
+    
+    private void moveRecursiveHelper (int pixels) {
+        if(pixels == 0){
+            return;
+        }
+        double angle = getVelocity().getDirection();
+        Location currentLocation = getLocation();
+        Location nextLocation = getLocation();
+        nextLocation.translate(new Vector(getVelocity().getDirection(), pixels));
+        // top
+        if(nextLocation.getY() < 0){
+            nextLocation = new Location(getX() + getY()/Math.tan(angle), 0);
+            setCenter(new Location(getX() + getY()/Math.tan(angle), myCanvasBounds.getHeight()));
+        //bottom
+        } else if(nextLocation.getY() > myCanvasBounds.getHeight()) {
+            nextLocation = new Location(getX() + getY()/Math.tan(angle), myCanvasBounds.getHeight());   
+            setCenter(new Location(getX() + getY()/Math.tan(angle), 0));
+        //right
+        } else if(nextLocation.getX() > myCanvasBounds.getWidth()) {
+            nextLocation = new Location(myCanvasBounds.getWidth(), getY() + getX()/Math.tan(angle));
+            setCenter(new Location(0, getY() + getX()/Math.tan(angle)));
+        //left
+        } else if(nextLocation.getX() < 0) {
+            nextLocation = new Location(0, getY() + getX()/Math.tan(angle));
+            setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX()/Math.tan(angle)));
+        } 
+        
+
+        pixels -= (int) Vector.distanceBetween(currentLocation, nextLocation) * Math.signum(pixels);
+        
+        addLine(currentLocation, nextLocation);
+        
+        moveRecursiveHelper(pixels);
+    }
+    
+    private void addLine(Location loc1, Location loc2){
+        if(myPenDown){
+            myLineList.add(new Line(loc1, loc2));
+        }
     }
     
     public double turn (double degrees) {
@@ -38,12 +77,14 @@ public class Turtle extends Sprite {
         return heading;
     }
     
+    //TODO change location coords
     public double towards (Location location) {
         double turnDistance = Vector.angleBetween(new Location(getX(), getY()), location);
         turn(turnDistance);
         return turnDistance;
     }
     
+    //TODO change location coords
     public int setLocation (Location location) {
         double heading = getHeading();
         towards(location);
