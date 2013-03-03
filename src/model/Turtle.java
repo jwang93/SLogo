@@ -20,7 +20,6 @@ public class Turtle extends Sprite {
     public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
         myCanvasBounds = canvasBounds;
-        
     }
     
     public int move (int pixels) {
@@ -46,8 +45,11 @@ public class Turtle extends Sprite {
     }
     
     public int setLocation (Location location) {
-        //TODO implement move with lines
-        return 0;
+        double heading = getHeading();
+        towards(location);
+        int distance = (int) Vector.distanceBetween(location, getLocation());
+        setHeading(heading);
+        return distance;
     }
     
     public int showTurtle () {
@@ -99,6 +101,10 @@ public class Turtle extends Sprite {
         return 0;
     }
 
+    public double getHeading () {
+        return getVelocity().getDirection();
+    }
+    
     @Override
     public void update (double elapsedTime, Dimension bounds) {
         
