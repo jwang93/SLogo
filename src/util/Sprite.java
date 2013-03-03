@@ -262,4 +262,8 @@ public abstract class Sprite implements Paintable {
         return 0;
         // return Double.NaN;
     }
+    
+    protected Location getLocation () {
+        return myCenter;
+    }
 }

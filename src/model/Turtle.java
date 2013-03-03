@@ -10,6 +10,9 @@ public class Turtle extends Sprite {
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
+    private static final int CENTER_X_VALUE = 0;
+    private static final int CENTER_Y_VALUE = 0;
+
     
     public Turtle (Pixmap image, Location center, Dimension size) {
         super(image, center, size);
@@ -21,47 +24,74 @@ public class Turtle extends Sprite {
         return pixels;
     }
     
-    public int turn (int degrees) {
+    public double turn (double degrees) {
         setVelocity(getVelocity().getDirection() + degrees, 0);
         return degrees;
     }
     
-    public void setHeading (int heading) {
+    public double setHeading (double heading) {
         setVelocity(heading, 0);
+        return heading;
     }
     
-    public void towards (Location location) {
-        setVelocity(Vector.angleBetween(new Location(getX(), getY()), location) , 0);
+    public double towards (Location location) {
+        double turnDistance = Vector.angleBetween(new Location(getX(), getY()), location);
+        turn(turnDistance);
+        return turnDistance;
     }
     
-    public void setLocation (Location location) {
+    public int setLocation (Location location) {
         //TODO implement move with lines
+        return 0;
     }
     
-    public void toggleShowTurtle () {
-        myTurtleShowing = !myTurtleShowing;
+    public int showTurtle () {
+        myTurtleShowing = true;
+        return 1;
     }
     
-    public void togglePen () {
-        myPenDown = !myPenDown;
+    public int hideTurtle () {
+        myTurtleShowing = false;
+        return 0;
     }
     
-    public void home () {
-        setLocation(new Location (0, 0));
+    public int showPen () {
+        myPenDown = true;
+        return 1;
+    }
+    
+    public int hidePen () {
+        myPenDown = false;
+        return 0;
+    }
+    
+    public int home () {
+        // TODO change center to not be 0, 0
+        Location center = new Location (0, 0);
+        int distance = (int) Vector.distanceBetween(getLocation(), center);
+        setLocation(center);
         setHeading(UP_DIRECTION);
+        return distance;
     }
     
-    public void clearScreen () {
-        home();
+    public int clearScreen () {
+        int distance = home();
         //TODO delete lines
+        return distance;
     }
     
-    public boolean isTurtleShowing () {
-        return myTurtleShowing;
+    public int isTurtleShowing () {
+        if(myTurtleShowing) {
+            return 1;
+        }
+        return 0;
     }
     
-    public boolean isPenDown () {
-        return myPenDown;
+    public int isPenDown () {
+        if(myPenDown) {
+            return 1;
+        }
+        return 0;
     }
 
     @Override
