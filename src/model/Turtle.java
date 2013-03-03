@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 import util.Location;
 import util.Pixmap;
 import util.Sprite;
@@ -12,15 +14,18 @@ public class Turtle extends Sprite {
     private boolean myTurtleShowing = true;
     private static final int CENTER_X_VALUE = 0;
     private static final int CENTER_Y_VALUE = 0;
-
+    private List<Line> myLineList = new ArrayList<Line>();
+    private Dimension myCanvasBounds;
     
-    public Turtle (Pixmap image, Location center, Dimension size) {
+    public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
+        myCanvasBounds = canvasBounds;
         
     }
     
     public int move (int pixels) {
         //TODO implement move with lines
+        
         return pixels;
     }
     
@@ -76,7 +81,7 @@ public class Turtle extends Sprite {
     
     public int clearScreen () {
         int distance = home();
-        //TODO delete lines
+        myLineList.clear();
         return distance;
     }
     
@@ -98,4 +103,5 @@ public class Turtle extends Sprite {
     public void update (double elapsedTime, Dimension bounds) {
         
     }
+    
 }
