@@ -35,7 +35,7 @@ import util.Location;
  * @author David Winegar
  * 
  */
-public class View extends JFrame implements IView {
+public class View extends JFrame {
     private static final Location DEFAULT_POSITION = new Location(0, 0);
     private static final int DEFAULT_HEADING = 270;
     private static final long serialVersionUID = 401L;
@@ -238,17 +238,14 @@ public class View extends JFrame implements IView {
         return myClearButton;
     }
 
-    @Override
     public void returnMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
     }
 
-    @Override
     public void clearCommandWindow () {
         myCommandHistoryTextArea.setText("");
     }
 
-    @Override
     public void updatePositionLabel (Location location) {
         myTurtlePositionLabel.setText(myResources.getString("Position") + " " + location.getX() +
                                       ", " + location.getY());
@@ -260,7 +257,6 @@ public class View extends JFrame implements IView {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
     }
 
-    @Override
     public void setModel (IModel model) {
         myModel = model;
     }

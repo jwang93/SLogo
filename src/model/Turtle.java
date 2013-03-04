@@ -3,20 +3,31 @@ package model;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import util.DataSource;
 import util.Location;
+import util.Paintable;
 import util.Pixmap;
 import util.Sprite;
 import util.Vector;
 
-public class Turtle extends Sprite {
+public class Turtle extends Sprite implements DataSource, Paintable  {
 
-    private boolean myPenDown = true;
-    private boolean myTurtleShowing = true;
-    private  final int CENTER_X_VALUE;
-    private  final int CENTER_Y_VALUE;
-    private List<Line> myLineList = new ArrayList<Line>();
-    private Dimension myCanvasBounds;
+	private boolean myPenDown = true;
+	private boolean myTurtleShowing = true;
+	private double myHeading;
+	
+	private final double DEFAULT_HEADING = 270;
+	private final int CENTER_X_VALUE;
+	private final int CENTER_Y_VALUE;
+
+	private List<Line> myLineList = new ArrayList<Line>();
+	private Dimension myCanvasBounds;
+
+	private int myReturnValue;
+	private String myMessage;
     
     public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
@@ -157,5 +168,31 @@ public class Turtle extends Sprite {
         return new Location(location.getX() - CENTER_X_VALUE, location.getY() - CENTER_Y_VALUE);
     }
     
+
+	// implementing DataSource methods
+
+	public Iterator<Paintable> getPaintableIterator() {
+		ArrayList<Paintable> paintList = new ArrayList<Paintable>();
+		paintList.add(this);
+		paintList.addAll(myLineList);
+		return paintList.iterator();
+	}
+
+	public int getReturnValue() {
+		return myReturnValue;
+	}
+
+	public Location getTurtlePosition() {
+		return convertFromViewCoordinates(getLocation());
+
+	}
+
+	public int getTurtleHeading() {
+		return (int) myHeading;
+	}
+
+	public String showMessage() {
+		return myMessage;
+	}
 }
 

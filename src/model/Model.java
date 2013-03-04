@@ -5,6 +5,7 @@ import java.util.Iterator;
 import util.DataSource;
 import util.Paintable;
 import view.IView;
+import view.View;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
@@ -16,7 +17,7 @@ public class Model implements IModel, DataSource {
     private Parser myParser;
     private Turtle myTurtle; // TODO instantiate
 
-    public Model (IView view) {
+    public Model (View view) {
         // TODO make parser
     }
 
