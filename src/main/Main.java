@@ -1,6 +1,8 @@
 package main;
 
+import java.awt.Dimension;
 import model.Model;
+import util.DataSource;
 import view.View;
 
 /**
@@ -9,6 +11,8 @@ import view.View;
  *
  */
 final class Main {
+
+    private static final Dimension CANVAS_BOUNDS = new Dimension(600, 400);
 
     /**
      * Do not allow instantiation of Main.
@@ -22,9 +26,7 @@ final class Main {
      * @param args input arguments (not used)
      */
     public static void main (String[] args) {
-        View view = new View("SLogo", "English");
-        Model model = new Model(view);              
-        view.setModel(model);
+        View view = new View("SLogo", "English", new Model(), new Model(), CANVAS_BOUNDS);
     }
 
 }
