@@ -27,8 +27,8 @@ final class Main {
      * @param args input arguments (not used)
      */
     public static void main (String[] args) {
-        Model model = new Model();
-        View view = new View("SLogo", "English", model.getDataSource(), CANVAS_BOUNDS);
+        Model model = new Model(CANVAS_BOUNDS);
+        View view = new View("SLogo", "English", model, CANVAS_BOUNDS);
 
     }
 

@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import model.IModel;
+import model.Model;
 import util.DataSource;
 import util.Location;
 
@@ -64,9 +65,10 @@ public class View extends JFrame implements Observer {
      * @param title title of window
      * @param language localization language for configuration file
      */
-    public View (String title, String language, DataSource dataSource, Dimension canvasBounds) {
+    public View (String title, String language, Model model, Dimension canvasBounds) {
         setTitle(title);
-        myDataSource = dataSource;
+        myModel = model;
+        myDataSource = model.getDataSource();
 
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(canvasBounds);

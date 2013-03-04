@@ -1,7 +1,9 @@
 package model;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.util.Iterator;
+import java.util.Observer;
 import util.DataSource;
 import util.Paintable;
 import commands.ICommand;
@@ -12,20 +14,14 @@ import factory.Parser;
 public class Model implements IModel {
 
     private Parser myParser;
-    private Turtle myTurtle; // TODO instantiate
+    private Turtle myTurtle; // TODO instantiate, pass canvasbounds
 
-    public Model () {
+    public Model (Dimension canvasBounds) {
         // TODO make parser
     }
 
     @Override
-
-	
-
-	
     public void executeCommand (String command) {
-
-	
 
         ICommand executable;
         try {
@@ -57,7 +53,11 @@ public class Model implements IModel {
 
     @Override
     public DataSource getDataSource () {
-        return null;
+        return myTurtle;
+    }
+
+    public void addObserver (Observer observer) {
+        myTurtle.addObserver(observer);
     }
 
 }

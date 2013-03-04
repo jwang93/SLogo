@@ -12,6 +12,13 @@ import util.Sprite;
 import util.Vector;
 
 
+/**
+ * Represents the turtle on the canvas. Can be painted. Can be called with its custom methods by
+ * commands. Also implements dataSource and can be accessed to give information about itself.
+ * 
+ * @author David Winegar
+ * @author Zhen Gou
+ */
 public class Turtle extends Sprite implements DataSource, Paintable {
 
     private boolean myPenDown = true;

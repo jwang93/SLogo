@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
-
+import java.util.Observable;
 
 /**
  * This class represents a shape that moves on its own.
@@ -14,7 +14,7 @@ import java.awt.geom.Point2D;
  * 
  * @author Robert C. Duvall
  */
-public abstract class Sprite implements Paintable {
+public abstract class Sprite extends Observable implements Paintable {
     // canonical directions for a collision
     public static final int RIGHT_DIRECTION = 0;
     public static final int DOWN_DIRECTION = 90;

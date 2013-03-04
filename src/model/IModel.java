@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.util.Observer;
 import util.DataSource;
 
 
@@ -12,5 +13,7 @@ public interface IModel {
     public void loadFunctionsAndVariables (File fileToLoad);
     
     public DataSource getDataSource();
+    
+    public void addObserver (Observer observer);
 
 }
