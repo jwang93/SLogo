@@ -4,20 +4,17 @@ import java.io.File;
 import java.util.Iterator;
 import util.DataSource;
 import util.Paintable;
-import view.IView;
-import view.View;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
 
 
-public class Model implements IModel, DataSource {
-    private static final int ERROR_RETURN_VALUE = -1;
+public class Model implements IModel {
 
     private Parser myParser;
     private Turtle myTurtle; // TODO instantiate
 
-    public Model (View view) {
+    public Model () {
         // TODO make parser
     }
 
@@ -55,38 +52,6 @@ public class Model implements IModel, DataSource {
 
     public Turtle getTurtle () {
         return myTurtle;
-
-    }
-    
-    @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public int getReturnValue () {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public Location getTurtlePosition () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public int getTurtleHeading () {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public String showMessage () {
-        // TODO Auto-generated method stub
-        return null;
-
 
     }
 
