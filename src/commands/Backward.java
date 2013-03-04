@@ -15,7 +15,7 @@ public class Backward extends AbstractTurtleCommand {
     @Override
     public int execute () {
         Turtle turtle = getTurtle();
-        turtle.turn();
+        //turtle.turn();
         turtle.translate(new Vector(turtle.getHeading(), myIncrement));
         return myIncrement;
     }

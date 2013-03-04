@@ -212,7 +212,6 @@ public class View extends JFrame implements IView {
                 }
             }
         });
-        result.add(new JSeparator());
         result.add(new AbstractAction(myResources.getString("Quit")) {
             @Override
             public void actionPerformed (ActionEvent e) {
@@ -255,8 +254,9 @@ public class View extends JFrame implements IView {
                                       ", " + location.getY());
     }
 
-    @Override
-    public void updateHeadingLabel (int heading) {
+
+    private void updateHeadingLabel (double heading) {
+
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
     }
 

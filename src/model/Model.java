@@ -21,22 +21,21 @@ public class Model implements IModel, DataSource {
     }
 
     @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    @Override
-    public int executeCommand (String command) {
+	
+
+	
+    public void executeCommand (String command) {
+
+	
 
         ICommand executable;
         try {
             executable = myParser.parse(command);
-            return executable.execute();
         }
         catch (FormattingException e) {
             // TODO Make Duvall Happy
-            return ERROR_RETURN_VALUE;
+            // TODO change return message in datasource, notify, then change back to nothing
         }
 
     }
@@ -55,6 +54,39 @@ public class Model implements IModel, DataSource {
 
     public Turtle getTurtle () {
         return myTurtle;
+
+    }
+    
+    @Override
+    public Iterator<Paintable> getPaintableIterator () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int getReturnValue () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public Location getTurtlePosition () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int getTurtleHeading () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public String showMessage () {
+        // TODO Auto-generated method stub
+        return null;
+
+
     }
 
 }
