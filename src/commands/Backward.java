@@ -9,7 +9,7 @@ public class Backward extends AbstractTurtleCommand {
     private int myIncrement;
 
     public Backward (List<ICommand> commands, Turtle turtle) {
-        super( commands , turtle);
+        super(commands, turtle);
     }
 
     @Override
@@ -19,5 +19,5 @@ public class Backward extends AbstractTurtleCommand {
         turtle.translate(new Vector(turtle.getHeading(), myIncrement));
         return myIncrement;
     }
-    
+
 }

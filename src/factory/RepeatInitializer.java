@@ -1,10 +1,10 @@
 package factory;
 
-import java.util.Iterator;
 import java.util.List;
+import model.Model;
 import commands.ICommand;
 import commands.Repeat;
-import model.Model;
+
 
 public class RepeatInitializer extends AbstractInitializer {
 
@@ -12,8 +12,6 @@ public class RepeatInitializer extends AbstractInitializer {
         super(model, parser);
         setNumArgs(Repeat.NUM_ARGS);
     }
-
-   
 
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {

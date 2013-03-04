@@ -1,13 +1,13 @@
 package factory;
 
+import model.Model;
 import commands.ICommand;
 import exceptions.FormattingException;
-import model.Model;
+
 
 public class ParserTest {
-    
-    
-    public static void main(String[] args){
+
+    public static void main (String[] args) {
         Parser parser = new Parser(new Model(null));
         try {
             ICommand command = parser.parse("fd 50 rt 20");
@@ -18,7 +18,5 @@ public class ParserTest {
             e.printStackTrace();
         }
     }
-    
-  
 
 }

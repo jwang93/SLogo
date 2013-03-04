@@ -9,7 +9,7 @@ import util.Vector;
 public class Turtle extends AbstractSprite {
 
     private Location myCenter;
-    private double myHeading; //angle direction the turtle is pointing in 
+    private double myHeading; // angle direction the turtle is pointing in
 
     public Location getCenter () {
         return myCenter;
@@ -34,7 +34,7 @@ public class Turtle extends AbstractSprite {
     public void setHeading (double myHeading) {
         this.myHeading = myHeading;
     }
-    
+
     public void turn () {
         myHeading = myHeading + Keywords.TURN_AROUND;
     }
