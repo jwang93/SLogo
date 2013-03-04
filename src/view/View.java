@@ -258,7 +258,7 @@ public class View extends JFrame implements Observer {
                                       ", " + location.getY());
     }
 
-    private void updateHeadingLabel (int heading) {
+    private void updateHeadingLabel (double heading) {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
 
     }

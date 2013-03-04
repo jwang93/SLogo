@@ -21,16 +21,15 @@ public class Model implements IModel, DataSource {
     }
 
     @Override
-    public int executeCommand (String command) {
+    public void executeCommand (String command) {
 
         ICommand executable;
         try {
             executable = myParser.parse(command);
-            return executable.execute();
         }
         catch (FormattingException e) {
             // TODO Make Duvall Happy
-            return ERROR_RETURN_VALUE;
+            // TODO change return message in datasource, notify, then change back to nothing
         }
 
     }
