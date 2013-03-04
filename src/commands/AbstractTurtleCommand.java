@@ -1,13 +1,16 @@
 package commands;
 
+import java.util.List;
 import model.Turtle;
 
 
-public abstract class AbstractTurtleCommand implements ICommand {
+public abstract class AbstractTurtleCommand extends CommandList implements ICommand {
 
+   
+    
     private Turtle myTurtle;
 
-    public AbstractTurtleCommand (Turtle turtle) {
+    public AbstractTurtleCommand (List<ICommand> parameters, Turtle turtle) {
         myTurtle = turtle;
     }
 

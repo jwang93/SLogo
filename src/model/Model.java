@@ -14,6 +14,7 @@ public class Model implements IModel, DataSource {
     private static final int ERROR_RETURN_VALUE = -1;
 
     private Parser myParser;
+    private Turtle myTurtle; //TODO instantiate
 
     public Model (IView view) {
         // TODO make parser
@@ -50,6 +51,10 @@ public class Model implements IModel, DataSource {
     public void loadFunctionsAndVariables (File fileToLoad) {
         // TODO Auto-generated method stub
 
+    }
+
+    public Turtle getTurtle () {
+        return myTurtle;
     }
 
 }

@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.List;
 import model.Turtle;
 import util.Vector;
 
@@ -7,9 +8,8 @@ import util.Vector;
 public class Backward extends AbstractTurtleCommand {
     private int myIncrement;
 
-    public Backward (Turtle turtle, int increment) {
-        super(turtle);
-        myIncrement = increment;
+    public Backward (List<ICommand> commands, Turtle turtle) {
+        super( commands , turtle);
     }
 
     @Override

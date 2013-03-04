@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.List;
 import model.Turtle;
 
 
@@ -7,9 +8,8 @@ public class Left extends AbstractTurtleCommand {
 
     private double myAngle;
 
-    public Left (Turtle turtle, double angle) {
-        super(turtle);
-        myAngle = angle;
+    public Left (List<ICommand> commands, Turtle turtle) {
+       super( commands , turtle);
     }
 
     @Override

@@ -212,7 +212,7 @@ public class View extends JFrame implements IView {
                 }
             }
         });
-
+        result.add(new JSeparator());
         result.add(new AbstractAction(myResources.getString("Quit")) {
             @Override
             public void actionPerformed (ActionEvent e) {
