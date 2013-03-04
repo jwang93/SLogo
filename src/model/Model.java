@@ -55,4 +55,9 @@ public class Model implements IModel {
 
     }
 
+    @Override
+    public DataSource getDataSource () {
+        return null;
+    }
+
 }

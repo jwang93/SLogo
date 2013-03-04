@@ -7,10 +7,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JComponent;
-import util.DataSource;
 import util.Paintable;
 
 
@@ -21,7 +18,7 @@ import util.Paintable;
  * @author David Winegar
  * @author Zhen Gou
  */
-public class Canvas extends JComponent implements Observer {
+public class Canvas extends JComponent {
     // default serialization ID
     private static final long serialVersionUID = 1L;
 
@@ -66,11 +63,10 @@ public class Canvas extends JComponent implements Observer {
      * 
      * @param arg0 Obeservable object, in this case a DataSource object
      * @param arg1 Object passed in to observer, unused in this class
+     *        TODO recomment
      */
-    @Override
-    public void update (Observable arg0, Object arg1) {
-        DataSource paintableSource = (DataSource) arg0;
-        myPaintableIterator = paintableSource.getPaintableIterator();
+    public void update (Iterator<Paintable> iterator) {
+        myPaintableIterator = iterator;
         repaint();
     }
 
