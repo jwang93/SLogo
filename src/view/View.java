@@ -218,7 +218,6 @@ public class View extends JFrame implements Observer {
                 }
             }
         });
-        result.add(new JSeparator());
         result.add(new AbstractAction(myResources.getString("Quit")) {
             @Override
             public void actionPerformed (ActionEvent e) {

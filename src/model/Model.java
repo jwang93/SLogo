@@ -49,7 +49,8 @@ public class Model implements IModel, DataSource {
 
     public Turtle getTurtle () {
         return myTurtle;
-
+    }
+    
     @Override
     public Iterator<Paintable> getPaintableIterator () {
         // TODO Auto-generated method stub
