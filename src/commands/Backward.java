@@ -5,7 +5,7 @@ import model.Turtle;
 import util.Vector;
 
 
-public class Backward extends AbstractTurtleCommand {
+public class Backward extends AbstractSingleParameterCommand {
     private int myIncrement;
 
     public Backward (List<ICommand> commands, Turtle turtle) {

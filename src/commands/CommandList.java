@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * represents a collection of commands to be executed. This is the base class for
+ * anything that involves multiple commands, including if statements and
+ * repeat commands, which can have a block of commands to be executed.
+ * This can also be used to make the custom commands that the user enters.
+ * In addition this can function as a root or main command from which a program
+ * is executed.
+ */
 public class CommandList implements ICommand {
 
     private static final int DEFAULT_RETURN = 0;
-    /**
-     * represents a collection of commands to be executed. This is the base class for
-     * anything that involves multiple commands, including if statements and
-     * repeat commands, which can have a block of commands to be executed.
-     * This can also be used to make the custom commands that the user enters
-     */
 
     private List<ICommand> myCommands = new ArrayList<ICommand>();
     private int myReturn = DEFAULT_RETURN;

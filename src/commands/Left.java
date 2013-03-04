@@ -4,7 +4,7 @@ import java.util.List;
 import model.Turtle;
 
 
-public class Left extends AbstractTurtleCommand {
+public class Left extends AbstractSingleParameterCommand {
 
     private double myAngle;
 
