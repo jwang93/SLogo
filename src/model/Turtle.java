@@ -12,14 +12,16 @@ public class Turtle extends Sprite {
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
-    private static final int CENTER_X_VALUE = 0;
-    private static final int CENTER_Y_VALUE = 0;
+    private  final int CENTER_X_VALUE;
+    private  final int CENTER_Y_VALUE;
     private List<Line> myLineList = new ArrayList<Line>();
     private Dimension myCanvasBounds;
     
     public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
         myCanvasBounds = canvasBounds;
+        CENTER_X_VALUE = (int) myCanvasBounds.getWidth()/2;
+        CENTER_Y_VALUE = (int) myCanvasBounds.getHeight()/2;
     }
     
     public int move (int pixels) {     
@@ -77,15 +79,15 @@ public class Turtle extends Sprite {
         return heading;
     }
     
-    //TODO change location coords
     public double towards (Location location) {
+        location = convertFromViewCoordinates(location);
         double turnDistance = Vector.angleBetween(new Location(getX(), getY()), location);
         turn(turnDistance);
         return turnDistance;
     }
     
-    //TODO change location coords
     public int setLocation (Location location) {
+        location = convertFromViewCoordinates(location);
         double heading = getHeading();
         towards(location);
         int distance = (int) Vector.distanceBetween(location, getLocation());
@@ -114,8 +116,7 @@ public class Turtle extends Sprite {
     }
     
     public int home () {
-        // TODO change center to not be 0, 0
-        Location center = new Location (0, 0);
+        Location center = new Location (CENTER_X_VALUE, CENTER_Y_VALUE);
         int distance = (int) Vector.distanceBetween(getLocation(), center);
         setLocation(center);
         setHeading(UP_DIRECTION);
@@ -149,6 +150,10 @@ public class Turtle extends Sprite {
     @Override
     public void update (double elapsedTime, Dimension bounds) {
         
+    }
+    
+    private Location convertFromViewCoordinates (Location location) {
+        return new Location(location.getX() - CENTER_X_VALUE, location.getY() - CENTER_Y_VALUE);
     }
     
 }
