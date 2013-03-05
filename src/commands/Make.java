@@ -2,15 +2,15 @@ package commands;
 
 import java.util.List;
 import model.Scope;
-import commands.CommandList;
 import exceptions.VariableNotFoundException;
+
 
 public class Make extends AbstractSingleParameterCommand implements ICommand {
     // don't count the variable name, just the number -- "make varname expression"
     public static final int NUM_ARGS = 1;
     private Scope myScope;
     private String myName;
-    
+
     public Make (List<ICommand> parameters, String varName, Scope scope) {
         super(parameters);
         myName = varName;
@@ -23,9 +23,10 @@ public class Make extends AbstractSingleParameterCommand implements ICommand {
         myScope.setVariable(myName, getOnlyParameter());
         return getOnlyParameter();
     }
-   
-    public String toString(){
-        return "make :" + myName+ " " + getCommands().get(0);
+
+    @Override
+    public String toString () {
+        return "make :" + myName + " " + getCommands().get(0);
     }
 
 }

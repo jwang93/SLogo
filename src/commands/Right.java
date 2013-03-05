@@ -17,7 +17,9 @@ public class Right extends AbstractSingleParameterTurtleCommand {
 
         return 0; // TODO fixme
     }
-    public String toString(){
+
+    @Override
+    public String toString () {
         return "right " + getCommands().get(0).toString();
     }
 

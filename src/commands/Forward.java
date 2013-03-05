@@ -1,14 +1,12 @@
 package commands;
 
-import java.util.ArrayList;
 import java.util.List;
-import exceptions.VariableNotFoundException;
 import model.Turtle;
+import exceptions.VariableNotFoundException;
 
 
 public class Forward extends AbstractSingleParameterTurtleCommand {
     public static final int NUM_ARGS = 1;
-
 
     public Forward (List<ICommand> commands, Turtle turtle) {
         super(commands, turtle);
@@ -28,8 +26,10 @@ public class Forward extends AbstractSingleParameterTurtleCommand {
         return getOnlyParameter();
 
     }
-    public String toString(){
-        return "forward " + getCommands().get(0).toString() ;
+
+    @Override
+    public String toString () {
+        return "forward " + getCommands().get(0).toString();
     }
 
 }

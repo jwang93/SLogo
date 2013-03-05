@@ -4,12 +4,11 @@ import java.util.List;
 import model.Turtle;
 
 
-public abstract class AbstractSingleParameterTurtleCommand extends AbstractSingleParameterCommand
+public abstract class AbstractDoubleParameterTurtleCommand extends AbstractDoubleParameterCommand
         implements ICommand {
-
     private Turtle myTurtle;
 
-    public AbstractSingleParameterTurtleCommand (List<ICommand> parameters, Turtle turtle) {
+    public AbstractDoubleParameterTurtleCommand (List<ICommand> parameters, Turtle turtle) {
         super(parameters);
         myTurtle = turtle;
     }
@@ -17,5 +16,4 @@ public abstract class AbstractSingleParameterTurtleCommand extends AbstractSingl
     protected Turtle getTurtle () {
         return myTurtle;
     }
-
 }

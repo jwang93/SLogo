@@ -1,12 +1,14 @@
 package commands;
 
-import exceptions.VariableNotFoundException;
 import model.Model;
+import exceptions.VariableNotFoundException;
+
 
 public class Variable implements ICommand {
-    
+
     private String myName;
     private Model myModel;
+
     public Variable (String name, Model model) {
         myName = name;
         myModel = model;
@@ -20,10 +22,12 @@ public class Variable implements ICommand {
         catch (VariableNotFoundException e) {
             throw new VariableNotFoundException();
         }
-        
+
     }
-    public String toString(){
-        return ":"+myName;
+
+    @Override
+    public String toString () {
+        return ":" + myName;
     }
 
 }

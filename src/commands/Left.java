@@ -22,8 +22,9 @@ public class Left extends AbstractSingleParameterTurtleCommand {
         turtle.setHeading(newHeading);
         return (int) newHeading;  // returns the new direction turtle is pointing it
     }
-    
-    public String toString(){
+
+    @Override
+    public String toString () {
         return "left " + getCommands().get(0).toString() + " ";
     }
 
