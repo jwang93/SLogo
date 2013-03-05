@@ -17,7 +17,5 @@ public class ForwardInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
         return new Forward(parameters, getModel().getTurtle());
     }
-    
-  
-
+ 
 }

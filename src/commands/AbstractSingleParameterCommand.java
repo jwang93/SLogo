@@ -44,6 +44,5 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
     protected void setOnlyParameter (int myOnlyParameter) {
         this.myOnlyParameter = myOnlyParameter;
     }
-    
 
 }

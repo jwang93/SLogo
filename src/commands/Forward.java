@@ -29,5 +29,5 @@ public class Forward extends AbstractSingleParameterCommand {
         return getOnlyParameter();
 
     }
-
+    
 }
