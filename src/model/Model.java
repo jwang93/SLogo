@@ -17,9 +17,13 @@ public class Model implements IModel {
     private Turtle myTurtle; // TODO instantiate, pass canvasbounds
     private Scope myScope;
 
+    public Scope getScope () {
+        return myScope;
+    }
+
     public Model (Dimension canvasBounds) {
-        // TODO make parser
-        // TODO make Scope
+        myScope = new Scope();
+        myParser = new Parser(this);
     }
 
     @Override
