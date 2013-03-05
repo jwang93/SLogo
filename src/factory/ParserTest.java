@@ -11,7 +11,7 @@ public class ParserTest {
 
     public static void main (String[] args) {
 
-        Parser parser = new Parser(new Model(new Dimension()));
+        Parser parser = new Parser(new Model(new Dimension(600, 400)));
         try {
             String command = "sum 10 quotient 10 2 ]";
             ICommand main = parser.parse(command);
