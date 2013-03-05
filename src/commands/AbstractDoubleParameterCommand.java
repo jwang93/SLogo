@@ -56,7 +56,7 @@ public abstract class AbstractDoubleParameterCommand extends CommandList impleme
     }
     
     public String toString(){
-        return "sum " + getCommands().get(FIRST_PARAMETER_INDEX).toString() + " " + getCommands().get(SECOND_PARAMETER_INDEX) + " ";
+        return "sum " + getCommands().get(FIRST_PARAMETER_INDEX).toString() + " " + getCommands().get(SECOND_PARAMETER_INDEX);
     }
     
     protected void setSecondParameter (int mySecondParameter) {

@@ -19,5 +19,8 @@ public class Backward extends AbstractSingleParameterCommand {
         turtle.translate(new Vector(turtle.getHeading(), myIncrement));
         return myIncrement;
     }
+    public String toString(){
+        return "back " + getCommands().get(0).toString() + " ";
+    }
 
 }

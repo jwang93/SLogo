@@ -18,5 +18,8 @@ public class Constant implements ICommand {
     public int execute () {
         return myNum;
     }
+    public String toString(){
+        return "" + myNum;
+    }
 
 }

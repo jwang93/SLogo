@@ -28,6 +28,9 @@ public class Sum extends AbstractDoubleParameterCommand {
         resolveParameters();
         return getFirstParameter() + getSecondParameter();
     }
+    public String toString(){
+        return "sum " + getCommands().get(0) + " " + getCommands().get(1);
+    }
     
 
 }

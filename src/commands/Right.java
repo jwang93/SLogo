@@ -17,5 +17,8 @@ public class Right extends AbstractSingleParameterCommand {
 
         return 0; // TODO fixme
     }
+    public String toString(){
+        return "right " + getCommands().get(0).toString();
+    }
 
 }

@@ -26,6 +26,8 @@ public class Difference extends AbstractDoubleParameterCommand {
         return getFirstParameter() - getSecondParameter();
     }
     
-
+    public String toString(){
+        return "difference " + getCommands().get(0).toString() + " " + getCommands().get(1).toString(); 
+    }
 }
 
