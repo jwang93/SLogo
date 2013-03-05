@@ -12,11 +12,11 @@ import exceptions.FormattingException;
 public class Parser {
     private static final String END_OF_CODE_BLOCK = "]";
     private Map<String, AbstractInitializer> myInitializers;
-    private Map<String, ICommand> myUserFunctions;
+    private Map<String, UserFunctionMetaData> myUserFunctions;
     private Model myModel;
 
     public Parser (Model model) {
-        myUserFunctions = new HashMap<String, ICommand>();
+        myUserFunctions = new HashMap<String, UserFunctionMetaData>();
         myModel = model;
         ParserInitializer init = new ParserInitializer(myModel, this);
         myInitializers = init.initializeMap();
@@ -36,14 +36,19 @@ public class Parser {
             String keyword = commandStream.remove();
             if (keyword.equals(END_OF_CODE_BLOCK))
                 return main;
-            if (myUserFunctions.containsKey(keyword)) {
-                main.add(myUserFunctions.get(keyword));
-                continue;
+            if(! myInitializers.containsKey(keyword)){
+                throw new FormattingException();
             }
             AbstractInitializer init = myInitializers.get(keyword);
             main.add(init.build(commandStream));
         }
         return main;
+    }
+
+    public void add (UserFunctionMetaData metadata) {
+        myUserFunctions.put(metadata.getFunctionName(), metadata);
+        // myInitializers.put( metadata.getFunctionName(), new UserFunctionInitializer( myModel, this , metadata));
+
     }
 
 }

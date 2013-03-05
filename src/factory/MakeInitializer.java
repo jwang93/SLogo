@@ -10,7 +10,7 @@ import exceptions.FormattingException;
 
 public class MakeInitializer extends AbstractInitializer {
 
-    private static final String VARIABLE_REGEX = ":[a-zA-z]+";
+    
     private String myName;
 
     public MakeInitializer (Model model, Parser parser) {
@@ -34,7 +34,7 @@ public class MakeInitializer extends AbstractInitializer {
         String next = commandStream.peek();
         if (!next.matches(VARIABLE_REGEX))
             throw new FormattingException();
-        return commandStream.remove().substring(VARIABLE_PREFIX.length());
+        return commandStream.remove().substring(1);
     }
 
     @Override

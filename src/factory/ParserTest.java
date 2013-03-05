@@ -13,7 +13,7 @@ public class ParserTest {
 
         Parser parser = new Parser(new Model(new Dimension()));
         try {
-            String command = "sum 10 quotient 10 2 ]";
+            String command = "sum 10 quotient 10 2 ";
             ICommand main = parser.parse(command);
             System.out.println(main);
         }

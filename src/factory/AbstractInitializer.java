@@ -37,11 +37,13 @@ import exceptions.FormattingException;
  *
  */
 public abstract class AbstractInitializer {
-    protected static final String VARIABLE_PREFIX = ":";
-    private static final String BEGIN_CODE_BLOCK = "[";
+    protected static final String VARIABLE_REGEX = ":[a-zA-z]+";
+    protected static final String BEGIN_CODE_BLOCK = "[";
     protected static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private Parser myParser;
+    
+
     private Model myModel;
     private int numArgs;
     private List<ICommand> myParameters = new ArrayList<ICommand>();
@@ -187,9 +189,9 @@ public abstract class AbstractInitializer {
      */
     protected boolean parseVariable (LinkedList<String> commandStream) {
         String next = commandStream.peek();
-        if (next.startsWith(VARIABLE_PREFIX)) {
+        if (next.matches(VARIABLE_REGEX)) {
             String varName = commandStream.remove();
-            String variableName = varName.substring(VARIABLE_PREFIX.length());
+            String variableName = varName.substring(1);
             myParameters.add(new Variable(variableName, myModel));
             return true;
         }
@@ -206,6 +208,9 @@ public abstract class AbstractInitializer {
 
     protected Model getModel () {
         return myModel;
+    }
+    protected Parser getParser () {
+        return myParser;
     }
 
 }
