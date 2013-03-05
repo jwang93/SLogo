@@ -29,7 +29,7 @@ public class Forward extends AbstractSingleParameterCommand {
 
     }
     public String toString(){
-        return "Forward " + getCommands().get(0).toString() + " ";
+        return "Forward " + getCommands().get(0).toString() ;
     }
 
 }

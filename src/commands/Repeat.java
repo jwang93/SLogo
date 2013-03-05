@@ -41,7 +41,7 @@ public class Repeat extends CommandList implements ICommand {
 
     }
     public String toString(){
-        return "repeat " + getCommands().get(INDEX_OF_PARAMETER) +" [ "+ getCommands().get(INDEX_OF_CODE_BLOCK) + " ]";
+        return "repeat " + getCommands().get(INDEX_OF_PARAMETER) +" [ "+ getCommands().get(INDEX_OF_CODE_BLOCK) + "]";
     }
 
     private void resolveParameters () {
