@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import exceptions.VariableNotFoundException;
 import model.Turtle;
 
 /**
@@ -35,7 +36,7 @@ public abstract class AbstractDoubleParameterCommand extends CommandList impleme
      * CONCERN: I am concerned with how to determine where the first parameter ends and second parameter begins. 
      * @param parameters
      */
-    protected void resolveParameters(){
+    protected void resolveParameters ()throws VariableNotFoundException{
         List<ICommand> myChildren = getCommands();
         setFirstParameter(myChildren.get(FIRST_PARAMETER_INDEX).execute());
         setSecondParameter(myChildren.get(SECOND_PARAMETER_INDEX).execute());

@@ -2,6 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import exceptions.VariableNotFoundException;
 import model.Turtle;
 
 /**
@@ -20,10 +21,11 @@ public class Difference extends AbstractDoubleParameterCommand {
     /**
      * @return the sum of the two parameters
      */
-    public int execute () {
+    public int execute () throws VariableNotFoundException {
         resolveParameters();
         return getFirstParameter() - getSecondParameter();
     }
     
 
 }
+
