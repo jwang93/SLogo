@@ -11,7 +11,7 @@ import exceptions.FormattingException;
 
 
 public abstract class AbstractInitializer {
-    private static final String VARIABLE_PREFIX = ":";
+    protected static final String VARIABLE_PREFIX = ":";
     private static final String BEGIN_CODE_BLOCK = "[";
     private static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
@@ -19,6 +19,10 @@ public abstract class AbstractInitializer {
     private Model myModel;
     private int numArgs;
     private List<ICommand> myParameters = new ArrayList<ICommand>();
+
+    protected List<ICommand> getParameters () {
+        return myParameters;
+    }
 
     public AbstractInitializer (Model model, Parser parser) {
         myModel = model;

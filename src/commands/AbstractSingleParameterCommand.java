@@ -14,19 +14,15 @@ import model.Turtle;
  */
 public abstract class AbstractSingleParameterCommand extends CommandList implements ICommand {
     private static final int PARAMETER_INDEX =0;
-    private Turtle myTurtle;
     private int myOnlyParameter;
     
     
 
-    public AbstractSingleParameterCommand (List<ICommand> parameters, Turtle turtle) {
+    public AbstractSingleParameterCommand (List<ICommand> parameters) {
        super(parameters);
-        myTurtle = turtle;
     }
 
-    protected Turtle getTurtle () {
-        return myTurtle;
-    }
+   
     /**
      * Called by execute at runtime to recursively execute the function's
      * parameter(s) until it can be resolved to an integer.

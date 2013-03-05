@@ -3,20 +3,29 @@ package commands;
 import java.util.List;
 import model.Scope;
 import commands.CommandList;
+import exceptions.VariableNotFoundException;
 
-public class Make extends CommandList implements ICommand {
-    
+public class Make extends AbstractSingleParameterCommand implements ICommand {
+    // don't count the variable name, just the number -- "make varname expression"
+    public static final int NUM_ARGS = 1;
     private Scope myScope;
-    public Make (List<ICommand> parameters, Scope scope) {
+    private String myName;
+    
+    public Make (List<ICommand> parameters, String varName, Scope scope) {
         super(parameters);
+        myName = varName;
         myScope = scope;
     }
 
     @Override
-    public int execute () {
-        // TODO Auto-generated method stub
-        return 0;
+    public int execute () throws VariableNotFoundException {
+        resolveParameters();
+        myScope.setVariable(myName, getOnlyParameter());
+        return getOnlyParameter();
     }
    
+    public String toString(){
+        return "make :" + myName+ " " + getCommands().get(0);
+    }
 
 }

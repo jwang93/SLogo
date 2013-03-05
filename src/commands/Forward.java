@@ -6,7 +6,7 @@ import exceptions.VariableNotFoundException;
 import model.Turtle;
 
 
-public class Forward extends AbstractSingleParameterCommand {
+public class Forward extends AbstractSingleParameterTurtleCommand {
     public static final int NUM_ARGS = 1;
 
 
@@ -29,7 +29,7 @@ public class Forward extends AbstractSingleParameterCommand {
 
     }
     public String toString(){
-        return "Forward " + getCommands().get(0).toString() ;
+        return "forward " + getCommands().get(0).toString() ;
     }
 
 }
