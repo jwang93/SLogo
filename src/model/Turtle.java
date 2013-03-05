@@ -29,7 +29,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
     private final int CENTER_X_VALUE;
     private final int CENTER_Y_VALUE;
 
-    private List<Line> myLineList = new ArrayList<Line>();
+    private Line myLine;
     private Dimension myCanvasBounds;
 
     private int myReturnValue;
@@ -40,6 +40,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         myCanvasBounds = canvasBounds;
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
+        myHeading=DEFAULT_HEADING;
     }
 
     public int move (int pixels) {
@@ -49,45 +50,39 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
     private void moveRecursiveHelper (int pixels) {
         if (pixels == 0) return;
-        double angle = getVelocity().getDirection();
-        Location currentLocation = getLocation();
+        Location currentLocation = getLocation();  // might be buggy here, does getLocation gives a new object or just a pointer to myCenter, if just pointer then this location is changed when it translates
         Location nextLocation = getLocation();
         nextLocation.translate(new Vector(getVelocity().getDirection(), pixels));
         // top
         if (nextLocation.getY() < 0) {
-            nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
-            setCenter(new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight()));
+            nextLocation = new Location(getX() + getY() / Math.tan(myHeading), 0);
+            setCenter(new Location(getX() + getY() / Math.tan(myHeading), myCanvasBounds.getHeight()));
             // bottom
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
             nextLocation =
-                    new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
-            setCenter(new Location(getX() + getY() / Math.tan(angle), 0));
+                    new Location(getX() + getY() / Math.tan(myHeading), myCanvasBounds.getHeight());
+            setCenter(new Location(getX() + getY() / Math.tan(myHeading), 0));
             // right
         }
         else if (nextLocation.getX() > myCanvasBounds.getWidth()) {
             nextLocation =
-                    new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(angle));
-            setCenter(new Location(0, getY() + getX() / Math.tan(angle)));
+                    new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(myHeading));
+            setCenter(new Location(0, getY() + getX() / Math.tan(myHeading)));
             // left
         }
         else if (nextLocation.getX() < 0) {
-            nextLocation = new Location(0, getY() + getX() / Math.tan(angle));
-            setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(angle)));
+            nextLocation = new Location(0, getY() + getX() / Math.tan(myHeading));
+            setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(myHeading)));
         }
 
         pixels -= (int) Vector.distanceBetween(currentLocation, nextLocation) * Math.signum(pixels);
 
-        addLine(currentLocation, nextLocation);
+        myLine.addLineSegment(currentLocation, nextLocation);
 
         moveRecursiveHelper(pixels);
     }
 
-    private void addLine (Location loc1, Location loc2) {
-        if (myPenDown) {
-            myLineList.add(new Line(loc1, loc2));
-        }
-    }
 
     public double turn (double degrees) {
         setVelocity(getVelocity().getDirection() + degrees, 0);
@@ -145,7 +140,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
     public int clearScreen () {
         int distance = home();
-        myLineList.clear();
+        myLine.clear();
         return distance;
     }
 
@@ -178,7 +173,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
     public Iterator<Paintable> getPaintableIterator () {
         ArrayList<Paintable> paintList = new ArrayList<Paintable>();
         paintList.add(this);
-        paintList.addAll(myLineList);
+        paintList.add(myLine);
         return paintList.iterator();
     }
 

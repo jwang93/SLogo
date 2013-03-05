@@ -14,8 +14,8 @@ public class Repeat extends CommandList implements ICommand {
      * 
      * I don't think Duvall would like this. Wish I understood reflection...
      */
-    private static final int INDEX_OF_PARAMETER = 1;
-    private static final int INDEX_OF_CODE_BLOCK = 2;
+    private static final int INDEX_OF_PARAMETER = 0;
+    private static final int INDEX_OF_CODE_BLOCK = 1;
     private int myParameter;
     private ICommand myCodeBlock;
 

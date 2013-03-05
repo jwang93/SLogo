@@ -13,7 +13,7 @@ import model.Turtle;
  *
  */
 public abstract class AbstractSingleParameterCommand extends CommandList implements ICommand {
-    private static final int PARAMETER_INDEX =1;
+    private static final int PARAMETER_INDEX =0;
     private Turtle myTurtle;
     private int myOnlyParameter;
     

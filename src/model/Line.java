@@ -1,27 +1,37 @@
 package model;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import util.Location;
 import util.Paintable;
 
-/**
- * Represents a line on a canvas. Can be painted.
- * @author David Winegar
- *
- */
-public class Line implements Paintable {
 
-    private Location myStartLocation;
-    private Location myEndLocation;
+  Represents all the line segments on a canvas. Can be painted.
+  @author David Winegar
+  @author Zhen Gou
+ 
+ 
+public class Line implements Paintable {
+	private ArrayListLineSegment myLineSegmentList;
+
+    public Line () {
+    	myLineSegmentList=new ArrayListLineSegment();
+    }
     
-    public Line (Location start, Location end) {
-        myStartLocation = start;
-        myEndLocation = end;
+    public void addLineSegment(Location currentLocation, Location nextLocation){
+    	myLineSegmentList.add(new LineSegment(currentLocation,nextLocation));
+    }
+    
+    public void clear(){
+    	myLineSegmentList.clear();
     }
     
     @Override
     public void paint (Graphics2D pen) {
-        pen.drawLine((int) myStartLocation.getX(), (int) myStartLocation.getY(), (int) myEndLocation.getX(), (int) myEndLocation.getY());
+    	for (LineSegment ls myLineSegmentList){
+    		ls.paint(pen);
+    	}
     }
 
 }

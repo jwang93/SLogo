@@ -48,6 +48,20 @@ public class CommandList implements ICommand {
             myReturn = command.execute();
         }
         return myReturn;
+    }   
+	  	
+    public void printInfo() {
+	  	
+        System.out.println("Size: " + myCommands.size());
+	  	
+        for (ICommand command : myCommands) {
+	  	
+            System.out.println("Command name: " + command.getClass().toString());
+	  	
+        }
+	  	
+        System.out.println();
+	  	
     }
 
     public void add (ICommand command) {
