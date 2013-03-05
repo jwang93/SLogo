@@ -15,9 +15,11 @@ public class Model implements IModel {
 
     private Parser myParser;
     private Turtle myTurtle; // TODO instantiate, pass canvasbounds
+    private Scope myScope;
 
     public Model (Dimension canvasBounds) {
         // TODO make parser
+        // TODO make Scope
     }
 
     @Override
