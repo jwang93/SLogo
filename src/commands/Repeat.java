@@ -40,6 +40,9 @@ public class Repeat extends CommandList implements ICommand {
         return returnValue;
 
     }
+    public String toString(){
+        return "repeat " + getCommands().get(INDEX_OF_PARAMETER) +" [ "+ getCommands().get(INDEX_OF_CODE_BLOCK) + " ] ";
+    }
 
     private void resolveParameters () {
         List<ICommand> commands = getCommands();

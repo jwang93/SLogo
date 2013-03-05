@@ -64,6 +64,13 @@ public class CommandList implements ICommand {
 	  	
     }
 
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for (ICommand command : myCommands){
+            sb.append(command.toString() + " ");
+        }
+        return sb.toString();
+    }
     public void add (ICommand command) {
         myCommands.add(command);
     }

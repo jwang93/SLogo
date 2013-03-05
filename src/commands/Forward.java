@@ -9,7 +9,6 @@ import model.Turtle;
 public class Forward extends AbstractSingleParameterCommand {
     public static final int NUM_ARGS = 1;
 
-    List<ICommand> myParameters = new ArrayList<ICommand>();
 
     public Forward (List<ICommand> commands, Turtle turtle) {
         super(commands, turtle);
@@ -28,6 +27,9 @@ public class Forward extends AbstractSingleParameterCommand {
         turtle.move(getOnlyParameter());
         return getOnlyParameter();
 
+    }
+    public String toString(){
+        return "Forward " + getCommands().get(0).toString() + " ";
     }
 
 }

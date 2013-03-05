@@ -22,5 +22,8 @@ public class Variable implements ICommand {
         }
         
     }
+    public String toString(){
+        return ":"+myName+" ";
+    }
 
 }
