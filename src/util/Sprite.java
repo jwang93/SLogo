@@ -14,7 +14,7 @@ import java.util.Observable;
  * 
  * @author Robert C. Duvall
  */
-public abstract class Sprite extends Observable implements Paintable {
+public abstract class Sprite implements Paintable {
     // canonical directions for a collision
     public static final int RIGHT_DIRECTION = 0;
     public static final int DOWN_DIRECTION = 90;

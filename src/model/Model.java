@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.util.Observable;
 import java.util.Observer;
 import util.DataSource;
 import util.Location;
@@ -12,7 +13,7 @@ import exceptions.VariableNotFoundException;
 import factory.Parser;
 
 
-public class Model implements IModel {
+public class Model extends Observable implements IModel {
 
     private Parser myParser;
     private Turtle myTurtle;
@@ -50,9 +51,14 @@ public class Model implements IModel {
         }
         finally {
             // TODO anything else that should be done in both cases
-
+            notifyView();
         }
 
+    }
+    
+    private void notifyView () {
+        setChanged();
+        notify();
     }
 
     @Override
@@ -76,10 +82,9 @@ public class Model implements IModel {
     public DataSource getDataSource () {
         return myTurtle;
     }
-
-    @Override
-    public void addObserver (Observer observer) {
-        myTurtle.addObserver(observer);
+    
+    public void initializeObserver (Observer observer) {
+        addObserver(observer);
+        notifyView();
     }
-
 }

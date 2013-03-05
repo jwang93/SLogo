@@ -29,7 +29,7 @@ final class Main {
     public static void main (String[] args) {
         Model model = new Model(CANVAS_BOUNDS);
         View view = new View("SLogo", "English", model, CANVAS_BOUNDS);
-
+        model.addObserver(view);
     }
 
 }
