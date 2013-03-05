@@ -29,7 +29,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
     private final int CENTER_X_VALUE;
     private final int CENTER_Y_VALUE;
 
-    private List<Line> myLineList = new ArrayList<Line>();
+    private Line myLine;
     private Dimension myCanvasBounds;
 
     private int myReturnValue;
@@ -78,16 +78,11 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
         pixels -= (int) Vector.distanceBetween(currentLocation, nextLocation) * Math.signum(pixels);
 
-        addLine(currentLocation, nextLocation);
+        myLine.addLineSegment(currentLocation, nextLocation);
 
         moveRecursiveHelper(pixels);
     }
 
-    private void addLine (Location loc1, Location loc2) {
-        if (myPenDown) {
-            myLineList.add(new Line(loc1, loc2));
-        }
-    }
 
     public double turn (double degrees) {
         setVelocity(getVelocity().getDirection() + degrees, 0);
@@ -145,7 +140,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
     public int clearScreen () {
         int distance = home();
-        myLineList.clear();
+        myLine.clear();
         return distance;
     }
 
@@ -178,7 +173,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
     public Iterator<Paintable> getPaintableIterator () {
         ArrayList<Paintable> paintList = new ArrayList<Paintable>();
         paintList.add(this);
-        paintList.addAll(myLineList);
+        paintList.add(myLine);
         return paintList.iterator();
     }
 
