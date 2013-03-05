@@ -5,18 +5,18 @@ import model.Turtle;
 
 /**
  * This class is the base class for commands that take a single Slogo parameter. It may also take 
- * other parameters in Java, but its list of commands should only have a single command
- * in it, usually a constant command. When constructing, this class will ignore all commands in the
+ * other parameters in Java, but its list of commands should only have a two commands
+ * in it, usually constant commands - though not necessarily. When constructing, this class will ignore all commands in the
  * <code>parameters<code> argument other the first one.
  * @author Will Nance, Jay Wang
  *
  */
 public abstract class AbstractDoubleParameterCommand extends CommandList implements ICommand {
-    private static final int FIRST_PARAMETER_INDEX = 1;
-    private static final int SECOND_PARAMETER_INDEX = 2;
+    private static final int FIRST_PARAMETER_INDEX = 0;
+    private static final int SECOND_PARAMETER_INDEX = 1;
 
     private Turtle myTurtle;
-    private int myFirstParameter;
+    private int myFirstParameter; 
     private int mySecondParameter;
     
 
@@ -31,6 +31,8 @@ public abstract class AbstractDoubleParameterCommand extends CommandList impleme
     /**
      * Called by execute at runtime to recursively execute the function's
      * parameter(s) until it can be resolved to an integer.
+     * 
+     * CONCERN: I am concerned with how to determine where the first parameter ends and second parameter begins. 
      * @param parameters
      */
     protected void resolveParameters(){

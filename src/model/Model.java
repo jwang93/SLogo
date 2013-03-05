@@ -32,6 +32,7 @@ public class Model implements IModel {
         ICommand executable;
         try {
             executable = myParser.parse(command);
+            System.out.println("Return value of command: // " + command + " // = " + executable.execute());
         }
         catch (FormattingException e) {
             // TODO Make Duvall Happy

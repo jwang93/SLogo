@@ -10,7 +10,6 @@ public class ForwardInitializer extends AbstractInitializer {
     public ForwardInitializer (Model model, Parser parser) {
         super(model, parser);
         setNumArgs(Forward.NUM_ARGS);
-
     }
 
     @Override
