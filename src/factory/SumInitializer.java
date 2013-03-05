@@ -5,6 +5,7 @@ import model.Model;
 import commands.ICommand;
 import commands.Sum;
 
+
 public class SumInitializer extends AbstractInitializer {
 
     public SumInitializer (Model model, Parser parser) {
@@ -16,6 +17,5 @@ public class SumInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
         return new Sum(parameters);
     }
-    
 
 }

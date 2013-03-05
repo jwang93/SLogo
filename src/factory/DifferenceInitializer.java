@@ -5,6 +5,7 @@ import model.Model;
 import commands.Difference;
 import commands.ICommand;
 
+
 public class DifferenceInitializer extends AbstractInitializer {
 
     public DifferenceInitializer (Model model, Parser parser) {
@@ -16,6 +17,5 @@ public class DifferenceInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
         return new Difference(parameters);
     }
-    
 
 }

@@ -9,7 +9,33 @@ import commands.ICommand;
 import commands.Variable;
 import exceptions.FormattingException;
 
-
+/**
+ * <p>
+ * This class contains a lot of utility parsing functions for initializers in general
+ * as well as a framework for creating simple commands, as well as overriding 
+ * abilities to construct more complex objects
+ * </p>
+ * <p>
+ * The main method called from the parser is build which takes a stream of 
+ * slogo token strings. THe primary function of an initializer class is to 
+ * resolve all necessary arguments to construct a  function. Arguments are 
+ * grouped in two ways, either in the parameters for the actual SLogo command,
+ * which may be a constant, a list of commands, a nested function, or a variable, 
+ * or command specific (implicit) arguments, such as a turtle for commands that 
+ * affect the turtle, or a scope for variables that deal with variables.  
+ * </p>
+ * <p>
+ * The framework in this abstract class provides a system for processing
+ * the first kind, the explicit slogo parameters, through a recursive algorithm
+ * that can handle arbitrarily complex nested syntax. Build calls processParameters
+ * which loops a number of times equal to the number of explicit slogo arguments a
+ * command takes (defined as a constant in the subclass). process parameters returns
+ * a list of ICommands which are to be passed into instantiate, an abstract function
+ * responsible for returning a constructed command. 
+ * </p>
+ * @author Will Nance
+ *
+ */
 public abstract class AbstractInitializer {
     protected static final String VARIABLE_PREFIX = ":";
     private static final String BEGIN_CODE_BLOCK = "[";
