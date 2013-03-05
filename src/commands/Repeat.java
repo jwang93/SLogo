@@ -1,25 +1,28 @@
 package commands;
 
 import java.util.List;
+import exceptions.VariableNotFoundException;
 
 
 public class Repeat extends CommandList implements ICommand {
     public static final int NUM_ARGS = 2;
-    /*The parser parses variabes in order, so the syntax of a repeat statement,
-     * repeat [parameter] [codeblock], is reflected in the ordering of the 
-     * parameters in its parameter list. Unfortunately these must be maintained 
-     * by the developer if a new parser is written 
+    /*
+     * The parser parses variabes in order, so the syntax of a repeat statement,
+     * repeat [parameter] [codeblock], is reflected in the ordering of the
+     * parameters in its parameter list. Unfortunately these must be maintained
+     * by the developer if a new parser is written
      * 
      * I don't think Duvall would like this. Wish I understood reflection...
      */
-    private static final int INDEX_OF_PARAMETER =1;
-    private static final int INDEX_OF_CODE_BLOCK=2;
+    private static final int INDEX_OF_PARAMETER = 1;
+    private static final int INDEX_OF_CODE_BLOCK = 2;
     private int myParameter;
     private ICommand myCodeBlock;
 
     public Repeat (List<ICommand> parameters) {
         super(parameters);
     }
+
     @Override
     /**
      * overridden because execute is a funny command
@@ -28,19 +31,27 @@ public class Repeat extends CommandList implements ICommand {
      * @return the return value of the last command executed. 
      * This is enforced by the return value of <code>CommandList<code>
      */
-    public int execute(){
+    public int execute () throws VariableNotFoundException {
         resolveParameters();
         int returnValue = 0;
-        for( int i =0 ; i < myParameter; i++){
+        for (int i = 0; i < myParameter; i++) {
             returnValue = myCodeBlock.execute();
         }
         return returnValue;
-        
+
     }
+
     private void resolveParameters () {
-       List<ICommand> commands = getCommands();
-       myParameter = commands.get(INDEX_OF_PARAMETER).execute();
-       myCodeBlock = commands.get(INDEX_OF_CODE_BLOCK);
+        List<ICommand> commands = getCommands();
+
+        try {
+            myParameter = commands.get(INDEX_OF_PARAMETER).execute();
+        }
+        catch (VariableNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        myCodeBlock = commands.get(INDEX_OF_CODE_BLOCK);
     }
 
 }

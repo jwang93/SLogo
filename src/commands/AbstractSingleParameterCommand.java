@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import exceptions.VariableNotFoundException;
 import model.Turtle;
 
 /**
@@ -12,7 +13,7 @@ import model.Turtle;
  *
  */
 public abstract class AbstractSingleParameterCommand extends CommandList implements ICommand {
-    private static final int PARAMETER_INDEX =0;
+    private static final int PARAMETER_INDEX =1;
     private Turtle myTurtle;
     private int myOnlyParameter;
     
@@ -20,7 +21,7 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
 
     public AbstractSingleParameterCommand (List<ICommand> parameters, Turtle turtle) {
        super(parameters);
-       myTurtle = turtle;
+        myTurtle = turtle;
     }
 
     protected Turtle getTurtle () {
@@ -31,7 +32,7 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
      * parameter(s) until it can be resolved to an integer.
      * @param parameters
      */
-    protected void resolveParameters(){
+    protected void resolveParameters() throws VariableNotFoundException{
         List<ICommand> myChildren = getCommands();
         setOnlyParameter(myChildren.get(PARAMETER_INDEX).execute());
     }
@@ -44,5 +45,6 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
     protected void setOnlyParameter (int myOnlyParameter) {
         this.myOnlyParameter = myOnlyParameter;
     }
+    
 
 }

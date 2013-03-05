@@ -12,7 +12,7 @@ import exceptions.FormattingException;
 
 public abstract class AbstractInitializer {
     private static final String VARIABLE_PREFIX = ":";
-    private static final String BEGIN_LIST = "[";
+    private static final String BEGIN_CODE_BLOCK = "[";
     private static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
     private Parser myParser;
     private Model myModel;
@@ -41,15 +41,15 @@ public abstract class AbstractInitializer {
     }
 
     /**
-     * This will process the appropriate number of parameter given
+     * This will process the appropriate number of parameters given
      * the specific subclasses number of arguments, <code>NUM_ARGS<code>.
      * This uses a helper method <code>processParameter<code>which 
      * handles the different forms
      * which parameters may take.
      * 
      * @param commandStream a list, the head of which is the parameter to be parsed next
-     * @return a list of parameters to be bassed into an object at construction
-     * @throws FormattingException if the user is stupid (or there are bugs)
+     * @return a list of parameters to be passed into an object at construction
+     * @throws FormattingException if the user can't code (or there are bugs)
      */
     protected List<ICommand> processParameters (LinkedList<String> commandStream)
                                                                                  throws FormattingException {
@@ -62,13 +62,20 @@ public abstract class AbstractInitializer {
     }
 
     /**
+     * <p>
      * Helper method for <code>processParameters<code> which 
      * takes the LinkList of command strings and resolves the 
      * parameter to either a <code>Constant<code>, <code>Variable<code>, 
      * <code>List<code> or a nested <code>ICommand<code>
+     * </p>
      * 
+     * <p>
      * This code is supposed to be comprehensive enough that it can process 
-     * any kind of SLogo parameter.
+     * most kinds  of SLogo parameters (meaning something that will eventually 
+     * become a number at execution,) but if a new command requires other 
+     * syntax parsing, one can override this function and test out any 
+     * other command specific cases before (or after) calling this (super) method.
+     * </p>  
      * 
      * @param commandStream a list, the head of which is the parameter to be parsed next
      * @returns a parameter for a function
@@ -77,8 +84,8 @@ public abstract class AbstractInitializer {
     protected ICommand processParameter (LinkedList<String> commandStream)
                                                                           throws FormattingException {
         String next = commandStream.peek();
-        // is the parameter a list of commands for if or repeat?
-        if (next.equals(BEGIN_LIST))
+        // is the parameter a list of commands 
+        if (next.equals(BEGIN_CODE_BLOCK))
             return parseList(commandStream);
         // are we using a variable reference as a parameter?
         if (next.startsWith(VARIABLE_PREFIX))

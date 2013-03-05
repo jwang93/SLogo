@@ -2,6 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import exceptions.VariableNotFoundException;
 import model.Turtle;
 
 
@@ -9,7 +10,6 @@ public class Forward extends AbstractSingleParameterCommand {
     public static final int NUM_ARGS = 1;
 
     List<ICommand> myParameters = new ArrayList<ICommand>();
-
 
     public Forward (List<ICommand> commands, Turtle turtle) {
         super(commands, turtle);
@@ -22,12 +22,12 @@ public class Forward extends AbstractSingleParameterCommand {
      * call the turtle's move method to make it go
      * @return the amount of pixels moved
      */
-    public int execute () {
+    public int execute () throws VariableNotFoundException {
         resolveParameters();
         Turtle turtle = getTurtle();
         turtle.move(getOnlyParameter());
         return getOnlyParameter();
 
     }
-    
+
 }

@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.VariableNotFoundException;
 import model.Model;
 
 public class Variable implements ICommand {
@@ -12,9 +13,14 @@ public class Variable implements ICommand {
     }
 
     @Override
-    public int execute () {
-        // TODO Auto-generated method stub
-        return 0;
+    public int execute () throws VariableNotFoundException {
+        try {
+            return myModel.getScope().get(myName);
+        }
+        catch (VariableNotFoundException e) {
+            throw new VariableNotFoundException();
+        }
+        
     }
 
 }

@@ -8,6 +8,7 @@ import util.DataSource;
 import util.Paintable;
 import commands.ICommand;
 import exceptions.FormattingException;
+import exceptions.VariableNotFoundException;
 import factory.Parser;
 
 
@@ -32,11 +33,16 @@ public class Model implements IModel {
         ICommand executable;
         try {
             executable = myParser.parse(command);
-            System.out.println("Return value of command: // " + command + " // = " + executable.execute());
+            int returnValue = executable.execute();
         }
         catch (FormattingException e) {
             // TODO Make Duvall Happy
             // TODO change return message in datasource, notify, then change back to nothing
+        }catch (VariableNotFoundException e){
+            //TODO do roughly the same thing here
+        }finally{
+            //TODO anything else that should be done in both cases
+            
         }
 
     }
