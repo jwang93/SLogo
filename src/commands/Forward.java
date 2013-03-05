@@ -20,6 +20,7 @@ public class Forward extends AbstractSingleParameterCommand {
     /**
      * Resolve the amount to move forward and then 
      * call the turtle's move method to make it go
+     * @return the amount of pixels moved
      */
     public int execute () {
         resolveParameters();
