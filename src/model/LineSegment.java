@@ -5,6 +5,13 @@ import java.awt.Graphics2D;
 import util.Location;
 import util.Paintable;
 
+/**
+ * Represents a line segment on a canvas. Can be painted.
+ * @author David Winegar
+ * @author Zhen Gou
+ *
+ */
+
 public class LineSegment implements Paintable {
 
     private Location myStartLocation;

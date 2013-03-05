@@ -7,8 +7,9 @@ import util.Location;
 import util.Paintable;
 
 /**
- * Represents a line on a canvas. Can be painted.
+ * Represents all the line segments on a canvas. Can be painted.
  * @author David Winegar
+ * @author Zhen Gou
  *
  */
 public class Line implements Paintable {
