@@ -41,13 +41,16 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
         myHeading = DEFAULT_HEADING;
+        myLine = new Line();
     }
-    public Turtle( Location center , Dimension canvasBounds){
+    
+    public Turtle(Location center , Dimension canvasBounds){
         super(DEFAULT_IMAGE, center, DEFAULT_DIMENSION);
         myCanvasBounds = canvasBounds;
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
         myHeading = DEFAULT_HEADING;
+        myLine = new Line();
     }
     
 
@@ -89,9 +92,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         }
 
         pixels -= (int) Vector.distanceBetween(currentLocation, nextLocation) * Math.signum(pixels);
-
         myLine.addLineSegment(currentLocation, nextLocation);
-
         moveRecursiveHelper(pixels);
     }
 

@@ -10,12 +10,18 @@ public class ParserTest {
     private static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
 
     public static void main (String[] args) {
-
-        Parser parser = new Parser(new Model(new Dimension(600, 400)));
+        Model model = new Model(new Dimension(600, 400));
+        Parser parser = new Parser(model);
         try {
-            String command = "sum 10 quotient 10 2 ]";
+            String command = "fd 100 rt 90";
             ICommand main = parser.parse(command);
             System.out.println(main);
+            
+            //TEST CASES 
+            System.out.println("TEST CASES: ");
+            model.executeCommand("repeat 4 [ fd sum 30 random 10 ]");
+            model.executeCommand("back 100 rt 90");
+
         }
         catch (FormattingException e) {
             e.printStackTrace();
