@@ -14,9 +14,11 @@ public abstract class AbstractInitializer {
     private static final String VARIABLE_PREFIX = ":";
     private static final String BEGIN_CODE_BLOCK = "[";
     private static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
+    private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private Parser myParser;
     private Model myModel;
     private int numArgs;
+    private List<ICommand> myParameters = new ArrayList<ICommand>();
 
     public AbstractInitializer (Model model, Parser parser) {
         myModel = model;
@@ -41,11 +43,17 @@ public abstract class AbstractInitializer {
     }
 
     /**
-     * This will process the appropriate number of parameters given
-     * the specific subclasses number of arguments, <code>NUM_ARGS<code>.
+     * <p>
+     * This will process the appropriate number of parameters given the specific subclasses number
+     * of arguments, <code>NUM_ARGS<code>.
      * This uses a helper method <code>processParameter<code>which 
      * handles the different forms
      * which parameters may take.
+     * </p>
+     * <p>
+     * This Function is written to guarantee that a parameter is either successfully parsed or it
+     * will throw an exception, as
+     * </p>
      * 
      * @param commandStream a list, the head of which is the parameter to be parsed next
      * @return a list of parameters to be passed into an object at construction
@@ -53,11 +61,13 @@ public abstract class AbstractInitializer {
      */
     protected List<ICommand> processParameters (LinkedList<String> commandStream)
                                                                                  throws FormattingException {
-        List<ICommand> parameters = new ArrayList<ICommand>();
         for (int i = 0; i < numArgs; i++) {
-            parameters.add(processParameter(commandStream));
+            int startLength = myParameters.size();
+            processParameter(commandStream);
+            if (!(myParameters.size() > startLength))
+                throw new FormattingException();
         }
-        return parameters;
+        return myParameters;
 
     }
 
@@ -67,42 +77,55 @@ public abstract class AbstractInitializer {
      * takes the LinkList of command strings and resolves the 
      * parameter to either a <code>Constant<code>, <code>Variable<code>, 
      * <code>List<code> or a nested <code>ICommand<code>
+     * 
+     * 
      * </p>
      * 
      * <p>
-     * This code is supposed to be comprehensive enough that it can process 
-     * most kinds  of SLogo parameters (meaning something that will eventually 
-     * become a number at execution,) but if a new command requires other 
-     * syntax parsing, one can override this function and test out any 
-     * other command specific cases before (or after) calling this (super) method.
-     * </p>  
+     * This code is supposed to be comprehensive enough that it can process most kinds of SLogo
+     * parameters (meaning something that will eventually become a number at execution,) but for
+     * more complex commands (repeat , if , to) , one can override this function and cherry pick
+     * from the helper methods to parse what they need
+     * </p>
      * 
      * @param commandStream a list, the head of which is the parameter to be parsed next
-     * @returns a parameter for a function
-     * @throws FormattingException
+     * @throws FormattingException if the commands were improperly formatted
      */
-    protected ICommand processParameter (LinkedList<String> commandStream)
-                                                                          throws FormattingException {
+    protected void processParameter (LinkedList<String> commandStream)
+                                                                      throws FormattingException {
+        if (parseList(commandStream)) return;
+        if (parseVariable(commandStream)) return;
+        if (parseNestedFunction(commandStream)) return;
+        if (parseConstant(commandStream)) return;
+
+    }
+
+    protected boolean parseConstant (LinkedList<String> commandStream) {
         String next = commandStream.peek();
-        // is the parameter a list of commands 
-        if (next.equals(BEGIN_CODE_BLOCK))
-            return parseList(commandStream);
-        // are we using a variable reference as a parameter?
-        if (next.startsWith(VARIABLE_PREFIX))
-            return parseVariable(commandStream.remove());
-        // is the parameter a nested function?
-        if (next.matches(COMMAND_REGEX)) { return myParser.parse(commandStream); }
-        // base case, next must be a constant number
-        next = commandStream.remove();
-        try {
-            return new Constant(Integer.parseInt(next));
+        if (next.matches(CONSTANT_REGEX)) {
+            next = commandStream.remove();
+            try {
+                myParameters.add(new Constant(Integer.parseInt(next)));
+                return true;
+            }
+            catch (java.lang.NumberFormatException e) {
+                return false;
+                // This was supposed to be a constant and it wasn't
+                // This shouldn't happen due to regex check, but processParameters() will
+                // do a check and will notice if a parameter wasn't added and throw an exception;
+            }
         }
-        catch (java.lang.NumberFormatException e) {
-            // This was supposed t be a number and it wasn't so throw an exception
-            throw new FormattingException();
+        return false;
+    }
 
+    protected boolean parseNestedFunction (LinkedList<String> commandStream)
+                                                                            throws FormattingException {
+        String next = commandStream.peek();
+        if (next.matches(COMMAND_REGEX)) {
+            myParameters.add(myParser.parse(commandStream));
+            return true;
         }
-
+        return false;
     }
 
     /**
@@ -114,10 +137,15 @@ public abstract class AbstractInitializer {
      */
     protected abstract ICommand instantiate (List<ICommand> parameters);
 
-    protected ICommand parseList (LinkedList<String> commands) throws FormattingException {
-        // first element is a bracket, remove it
-        commands.remove();
-        return myParser.parse(commands);
+    protected boolean parseList (LinkedList<String> commandStream) throws FormattingException {
+        String next = commandStream.peek();
+        if (next.equals(BEGIN_CODE_BLOCK)) {
+            // first element is a bracket, remove it
+            commandStream.remove();
+            myParameters.add(myParser.parse(commandStream));
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -127,9 +155,15 @@ public abstract class AbstractInitializer {
      * @param commandStream
      * @return
      */
-    protected ICommand parseVariable (String varName) {
-        String variableName = varName.substring(VARIABLE_PREFIX.length());
-        return new Variable(variableName, myModel);
+    protected boolean parseVariable (LinkedList<String> commandStream) {
+        String next = commandStream.peek();
+        if (next.startsWith(VARIABLE_PREFIX)) {
+            String varName = commandStream.remove();
+            String variableName = varName.substring(VARIABLE_PREFIX.length());
+            myParameters.add(new Variable(variableName, myModel));
+            return true;
+        }
+        return false;
     }
 
     protected void setNumArgs (int numArgs) {
