@@ -39,7 +39,7 @@ import exceptions.FormattingException;
 public abstract class AbstractInitializer {
     protected static final String VARIABLE_PREFIX = ":";
     private static final String BEGIN_CODE_BLOCK = "[";
-    private static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
+    protected static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private Parser myParser;
     private Model myModel;

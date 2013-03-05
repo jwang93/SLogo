@@ -3,7 +3,6 @@ package model;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
@@ -24,7 +23,8 @@ public class Turtle extends Sprite implements DataSource, Paintable {
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
     private double myHeading;
-
+    public static final Pixmap DEFAULT_IMAGE = new Pixmap("images.turtle.gif"); 
+    public static final Dimension DEFAULT_DIMENSION = new Dimension(30,30);
     private final double DEFAULT_HEADING = 270;
     private final int CENTER_X_VALUE;
     private final int CENTER_Y_VALUE;
@@ -40,8 +40,15 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         myCanvasBounds = canvasBounds;
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
-        myHeading=DEFAULT_HEADING;
+        myHeading = DEFAULT_HEADING;
     }
+    public Turtle( Location center , Dimension canvasBounds){
+        super(DEFAULT_IMAGE, center, DEFAULT_DIMENSION);
+        CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
+        CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
+        myHeading = DEFAULT_HEADING;
+    }
+    
 
     public int move (int pixels) {
         moveRecursiveHelper(pixels);
@@ -50,13 +57,17 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
     private void moveRecursiveHelper (int pixels) {
         if (pixels == 0) return;
-        Location currentLocation = getLocation();  // might be buggy here, does getLocation gives a new object or just a pointer to myCenter, if just pointer then this location is changed when it translates
+        Location currentLocation = getLocation();  // might be buggy here, does getLocation gives a
+                                                  // new object or just a pointer to myCenter, if
+                                                  // just pointer then this location is changed when
+                                                  // it translates
         Location nextLocation = getLocation();
         nextLocation.translate(new Vector(getVelocity().getDirection(), pixels));
         // top
         if (nextLocation.getY() < 0) {
             nextLocation = new Location(getX() + getY() / Math.tan(myHeading), 0);
-            setCenter(new Location(getX() + getY() / Math.tan(myHeading), myCanvasBounds.getHeight()));
+            setCenter(new Location(getX() + getY() / Math.tan(myHeading),
+                                   myCanvasBounds.getHeight()));
             // bottom
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
@@ -82,7 +93,6 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
         moveRecursiveHelper(pixels);
     }
-
 
     public double turn (double degrees) {
         setVelocity(getVelocity().getDirection() + degrees, 0);

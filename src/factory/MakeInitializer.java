@@ -30,7 +30,7 @@ public class MakeInitializer extends AbstractInitializer {
         return instantiate(parameters);
     }
 
-    private String processVarName (LinkedList<String> commandStream) throws FormattingException {
+    protected String processVarName (LinkedList<String> commandStream) throws FormattingException {
         String next = commandStream.peek();
         if (!next.matches(VARIABLE_REGEX))
             throw new FormattingException();

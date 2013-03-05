@@ -37,6 +37,11 @@ public class ParserInitializer {
         map.put("make", new MakeInitializer(myModel, myParser));
         map.put("sum", new SumInitializer(myModel, myParser));
         map.put("difference", new DifferenceInitializer(myModel, myParser));
+        map.put("quotient", new QuotientInitializer(myModel, myParser));
+        map.put("product", new ProductInitializer(myModel, myParser));
+        map.put("remainder", new RemainderInitializer(myModel, myParser));
+        map.put("minus", new MinusInitializer(myModel, myParser));
+        map.put("random", new RandomInitializer(myModel, myParser));
         return map;
     }
 

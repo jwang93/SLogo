@@ -13,7 +13,8 @@ public class ParserTest {
 
         Parser parser = new Parser(new Model(new Dimension()));
         try {
-            ICommand main = parser.parse("make :variable 10 repeat 2 [ fd 10 sum 10 sum 10 10 ]");
+            String command = "sum 10 quotient 10 2 ]";
+            ICommand main = parser.parse(command);
             System.out.println(main);
         }
         catch (FormattingException e) {

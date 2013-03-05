@@ -2,10 +2,10 @@ package model;
 
 import java.awt.Dimension;
 import java.io.File;
-import java.util.Iterator;
 import java.util.Observer;
 import util.DataSource;
-import util.Paintable;
+import util.Location;
+import util.Pixmap;
 import commands.ICommand;
 import exceptions.FormattingException;
 import exceptions.VariableNotFoundException;
@@ -15,7 +15,7 @@ import factory.Parser;
 public class Model implements IModel {
 
     private Parser myParser;
-    private Turtle myTurtle; // TODO instantiate, pass canvasbounds
+    private Turtle myTurtle;
     private Scope myScope;
 
     public Scope getScope () {
@@ -23,8 +23,13 @@ public class Model implements IModel {
     }
 
     public Model (Dimension canvasBounds) {
+        myTurtle = new Turtle(calculateCenter(canvasBounds), canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
+    }
+
+    private Location calculateCenter (Dimension canvasBounds) {
+        return new Location((int) canvasBounds.getWidth() / 2, (int) canvasBounds.getHeight() / 2);
     }
 
     @Override
@@ -33,16 +38,18 @@ public class Model implements IModel {
         ICommand executable;
         try {
             executable = myParser.parse(command);
-            int returnValue = executable.execute();
+            executable.execute();
         }
         catch (FormattingException e) {
             // TODO Make Duvall Happy
             // TODO change return message in datasource, notify, then change back to nothing
-        }catch (VariableNotFoundException e){
-            //TODO do roughly the same thing here
-        }finally{
-            //TODO anything else that should be done in both cases
-            
+        }
+        catch (VariableNotFoundException e) {
+            // TODO do roughly the same thing here
+        }
+        finally {
+            // TODO anything else that should be done in both cases
+
         }
 
     }
@@ -69,6 +76,7 @@ public class Model implements IModel {
         return myTurtle;
     }
 
+    @Override
     public void addObserver (Observer observer) {
         myTurtle.addObserver(observer);
     }
