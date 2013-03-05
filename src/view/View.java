@@ -65,7 +65,7 @@ public class View extends JFrame implements Observer {
      * @param title title of window
      * @param language localization language for configuration file
      */
-    public View (String title, String language, Model model, Dimension canvasBounds) {
+    public View (String title, String language, IModel model, Dimension canvasBounds) {
         setTitle(title);
         myModel = model;
         myDataSource = model.getDataSource();
@@ -278,5 +278,5 @@ public class View extends JFrame implements Observer {
         showMessage(myDataSource.showMessage());
 
     }
-
+   
 }

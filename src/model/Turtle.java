@@ -18,7 +18,7 @@ import util.Vector;
  * @author David Winegar
  * @author Zhen Gou
  */
-public class Turtle extends Sprite implements DataSource, Paintable {
+public class Turtle extends Sprite implements Paintable {
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
@@ -173,7 +173,6 @@ public class Turtle extends Sprite implements DataSource, Paintable {
 
     // implementing DataSource methods
 
-    @Override
     public Iterator<Paintable> getPaintableIterator () {
         ArrayList<Paintable> paintList = new ArrayList<Paintable>();
         paintList.add(this);
@@ -181,24 +180,11 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         return paintList.iterator();
     }
 
-    @Override
-    public int getReturnValue () {
-        return myReturnValue;
-    }
-
-    @Override
     public Location getTurtlePosition () {
         return convertFromViewCoordinates(getLocation());
-
     }
 
-    @Override
     public int getTurtleHeading () {
         return (int) myHeading;
-    }
-
-    @Override
-    public String showMessage () {
-        return myMessage;
     }
 }

@@ -2,10 +2,12 @@ package model;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import util.DataSource;
 import util.Location;
+import util.Paintable;
 import util.Pixmap;
 import commands.ICommand;
 import exceptions.FormattingException;
@@ -13,7 +15,7 @@ import exceptions.VariableNotFoundException;
 import factory.Parser;
 
 
-public class Model extends Observable implements IModel {
+public class Model extends Observable implements IModel, DataSource {
 
     private Parser myParser;
     private Turtle myTurtle;
@@ -58,7 +60,7 @@ public class Model extends Observable implements IModel {
     
     private void notifyView () {
         setChanged();
-        notify();
+        notifyObservers();
     }
 
     @Override
@@ -80,11 +82,38 @@ public class Model extends Observable implements IModel {
 
     @Override
     public DataSource getDataSource () {
-        return myTurtle;
+        return this;
     }
     
     public void initializeObserver (Observer observer) {
         addObserver(observer);
         notifyView();
+    }
+
+    @Override
+    public Iterator<Paintable> getPaintableIterator () {
+        return myTurtle.getPaintableIterator();
+    }
+
+    @Override
+    public int getReturnValue () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public Location getTurtlePosition () {
+        return myTurtle.getTurtlePosition();
+    }
+
+    @Override
+    public int getTurtleHeading () {
+        return myTurtle.getTurtleHeading();
+    }
+
+    @Override
+    public String showMessage () {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
