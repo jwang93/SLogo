@@ -15,13 +15,12 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
     private static final int PARAMETER_INDEX =1;
     private Turtle myTurtle;
     private int myOnlyParameter;
-    private List<ICommand> myChildren;
     
     
 
     public AbstractSingleParameterCommand (List<ICommand> parameters, Turtle turtle) {
+       super(parameters);
         myTurtle = turtle;
-        myChildren=parameters;
     }
 
     protected Turtle getTurtle () {
@@ -33,12 +32,11 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
      * @param parameters
      */
     protected void resolveParameters(){
+        List<ICommand> myChildren = getCommands();
         setOnlyParameter(myChildren.get(PARAMETER_INDEX).execute());
     }
 
-    protected List<ICommand> getChildren () {
-        return myChildren;
-    }
+    
     protected int getOnlyParameter () {
         return myOnlyParameter;
     }

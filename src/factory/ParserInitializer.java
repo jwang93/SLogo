@@ -34,6 +34,7 @@ public class ParserInitializer {
         map.put("rt", new RightInitializer(myModel, myParser));
         map.put("right", new RightInitializer(myModel, myParser));
         map.put("repeat", new RepeatInitializer(myModel, myParser));
+        map.put("make", new MakeInitializer(myModel, myParser));
         return map;
     }
 

@@ -13,6 +13,7 @@ import exceptions.FormattingException;
 public abstract class AbstractInitializer {
     private static final String VARIABLE_PREFIX = ":";
     private static final String BEGIN_LIST = "[";
+    private static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
     private Parser myParser;
     private Model myModel;
     private int numArgs;
@@ -63,26 +64,34 @@ public abstract class AbstractInitializer {
     /**
      * Helper method for <code>processParameters<code> which 
      * takes the LinkList of command strings and resolves the 
-     * parameter to either a <code>Constant<code>, <code>Variable<code>, <code>List<code>
-     * or a nested <code>ICommand<code>
+     * parameter to either a <code>Constant<code>, <code>Variable<code>, 
+     * <code>List<code> or a nested <code>ICommand<code>
+     * 
+     * This code is supposed to be comprehensive enough that it can process 
+     * any kind of SLogo parameter.
      * 
      * @param commandStream a list, the head of which is the parameter to be parsed next
-     * @return
+     * @returns a parameter for a function
      * @throws FormattingException
      */
     protected ICommand processParameter (LinkedList<String> commandStream)
                                                                           throws FormattingException {
         String next = commandStream.peek();
-        if (next.equals(BEGIN_LIST)) return parseList(commandStream);
-        if (next.startsWith(VARIABLE_PREFIX)) return parseVariable(commandStream.remove());
-        // TODO handle nested functions
-
-        // next is a constant number
+        // is the parameter a list of commands for if or repeat?
+        if (next.equals(BEGIN_LIST))
+            return parseList(commandStream);
+        // are we using a variable reference as a parameter?
+        if (next.startsWith(VARIABLE_PREFIX))
+            return parseVariable(commandStream.remove());
+        // is the parameter a nested function?
+        if (next.matches(COMMAND_REGEX)) { return myParser.parse(commandStream); }
+        // base case, next must be a constant number
         next = commandStream.remove();
         try {
             return new Constant(Integer.parseInt(next));
         }
         catch (java.lang.NumberFormatException e) {
+            // This was supposed t be a number and it wasn't so throw an exception
             throw new FormattingException();
 
         }

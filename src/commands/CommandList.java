@@ -21,21 +21,22 @@ public class CommandList implements ICommand {
 
     private static final int DEFAULT_RETURN = 0;
 
-    private List<ICommand> myCommands = new ArrayList<ICommand>();
+    private List<ICommand> myCommands;
     protected List<ICommand> getCommands () {
         return myCommands;
     }
-
+    
+    
     protected void setCommands (List<ICommand> Commands) {
         this.myCommands =Commands;
     }
 
     private int myReturn = DEFAULT_RETURN;
 
+    
     public CommandList () {
-        // TODO Auto-generated constructor stub
+        myCommands = new ArrayList<ICommand>();
     }
-
     public CommandList (List<ICommand> parameters) {
         myCommands = parameters;
     }
