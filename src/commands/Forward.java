@@ -10,7 +10,6 @@ public class Forward extends AbstractSingleParameterTurtleCommand {
 
     public Forward (List<ICommand> commands, Turtle turtle) {
         super(commands, turtle);
-
     }
 
     @Override
@@ -24,7 +23,6 @@ public class Forward extends AbstractSingleParameterTurtleCommand {
         Turtle turtle = getTurtle();
         turtle.move(getOnlyParameter());
         return getOnlyParameter();
-
     }
 
     @Override

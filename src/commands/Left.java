@@ -1,26 +1,23 @@
 package commands;
 
 import java.util.List;
+import exceptions.VariableNotFoundException;
 import model.Turtle;
-
 
 public class Left extends AbstractSingleParameterTurtleCommand {
 
-    private double myAngle;
+    public static final int NUM_ARGS = 1;
 
     public Left (List<ICommand> commands, Turtle turtle) {
         super(commands, turtle);
     }
 
     @Override
-    public int execute () {
+    public int execute () throws VariableNotFoundException {
+        resolveParameters();
         Turtle turtle = getTurtle();
-
-        /* NOTE ***depending on how angle calculation works, this may not work *** */
-        double newHeading = turtle.getHeading() - myAngle;
-
-        turtle.setHeading(newHeading);
-        return (int) newHeading;  // returns the new direction turtle is pointing it
+        turtle.turn((double) ((-1) * getOnlyParameter()));
+        return getOnlyParameter();
     }
 
     @Override

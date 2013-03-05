@@ -23,7 +23,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
     private double myHeading;
-    public static final Pixmap DEFAULT_IMAGE = new Pixmap("images.turtle.gif"); 
+    public static final Pixmap DEFAULT_IMAGE = new Pixmap("../images/turtle.gif"); 
     public static final Dimension DEFAULT_DIMENSION = new Dimension(30,30);
     private final double DEFAULT_HEADING = 270;
     private final int CENTER_X_VALUE;
@@ -41,12 +41,16 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
         myHeading = DEFAULT_HEADING;
+        myLine = new Line();
     }
-    public Turtle( Location center , Dimension canvasBounds){
+    
+    public Turtle(Location center , Dimension canvasBounds){
         super(DEFAULT_IMAGE, center, DEFAULT_DIMENSION);
+        myCanvasBounds = canvasBounds;
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
         myHeading = DEFAULT_HEADING;
+        myLine = new Line();
     }
     
 
@@ -88,9 +92,7 @@ public class Turtle extends Sprite implements DataSource, Paintable {
         }
 
         pixels -= (int) Vector.distanceBetween(currentLocation, nextLocation) * Math.signum(pixels);
-
         myLine.addLineSegment(currentLocation, nextLocation);
-
         moveRecursiveHelper(pixels);
     }
 
