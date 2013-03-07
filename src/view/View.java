@@ -24,7 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import model.IModel;
-import model.Model;
 import util.DataSource;
 import util.Location;
 
@@ -43,8 +42,8 @@ public class View extends JFrame implements Observer {
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
     private static final int FIELD_SIZE = 20;
-    private static final JFileChooser FILE_CHOOSER = new JFileChooser(System.getProperties()
-            .getProperty(USER_DIR));
+    private static final JFileChooser FILE_CHOOSER = 
+            new JFileChooser(System.getProperties().getProperty(USER_DIR));
 
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
@@ -62,6 +61,8 @@ public class View extends JFrame implements Observer {
      * 
      * @param title title of window
      * @param language localization language for configuration file
+     * @param model IModel used to communicate with model
+     * @param canvasBounds bounds of the canvas
      */
     public View (String title, String language, IModel model, Dimension canvasBounds) {
         setTitle(title);
@@ -79,7 +80,7 @@ public class View extends JFrame implements Observer {
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         myCanvas.update(myDataSource.getPaintableIterator());
     }
 
@@ -161,9 +162,8 @@ public class View extends JFrame implements Observer {
                 String givenCommand = myCommandLineTextField.getText();
                 showMessage(myResources.getString("TextBoxCommand")
                             + givenCommand);
-                // TODO connect with Model
-                // myModel.executeCommand(givenCommand);
-                //myCommandLineTextField.setText("");
+                myModel.executeCommand(givenCommand);
+                myCommandLineTextField.setText("");
 
             }
         });
@@ -186,8 +186,8 @@ public class View extends JFrame implements Observer {
      * Creates a menu with 3 options: Save, Load, and Exit.
      * 
      * @return JMenu representing the menu.
-     *         TODO so much repeated code here
      */
+    @SuppressWarnings("serial")
     protected JMenu makeFileMenu () {
         JMenu result = new JMenu(myResources.getString("File"));
         result.add(new AbstractAction(myResources.getString("LoadCommand")) {
@@ -243,30 +243,47 @@ public class View extends JFrame implements Observer {
         return myClearButton;
     }
 
+    /**
+     * Writes the message to the command window.
+     * 
+     * @param message
+     */
     private void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
     }
 
+    /**
+     * Clears the command window.
+     */
     private void clearCommandWindow () {
         myCommandHistoryTextArea.setText("");
     }
 
+    /**
+     * Updates the position label with the new location.
+     * 
+     * @param location
+     */
     private void updatePositionLabel (Location location) {
         myTurtlePositionLabel.setText(myResources.getString("Position") + " " + location.getX() +
                                       ", " + location.getY());
     }
 
+    /**
+     * updates the heading label with the new heading.
+     * 
+     * @param heading
+     */
     private void updateHeadingLabel (int heading) {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " " + heading);
 
     }
 
     /**
-     * Implements the Observer update function by getting the current sprites and then calling
-     * repaint() to paint them.
-     * TODO rewrite comment
+     * Overrides the default Obeserver method. When called it updates canvas with the new paintable
+     * iterator and then updates all labels and shows the return value.
      * 
-     * @param arg0 Obeservable object, in this case a DataSource object
+     * @param arg0 Object passed in to observer, unused in this class
      * @param arg1 Object passed in to observer, unused in this class
      */
     @Override
@@ -278,5 +295,5 @@ public class View extends JFrame implements Observer {
         showMessage(myDataSource.showMessage());
 
     }
-   
+
 }

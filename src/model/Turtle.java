@@ -3,7 +3,6 @@ package model;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Iterator;
-import util.DataSource;
 import util.Location;
 import util.Paintable;
 import util.Pixmap;
@@ -20,11 +19,11 @@ import util.Vector;
  */
 public class Turtle extends Sprite implements Paintable {
 
-    private static final Pixmap DEFAULT_IMAGE = new Pixmap("../images/turtle.gif"); 
+    private static final Pixmap DEFAULT_IMAGE = new Pixmap("triangle.gif"); 
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
-    private final double DEFAULT_HEADING = 270;
-    private final int CENTER_X_VALUE;
-    private final int CENTER_Y_VALUE;
+    private static final double DEFAULT_HEADING = 270;
+    private final int myCenterXValue;
+    private final int myCenterYValue;
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
@@ -36,8 +35,8 @@ public class Turtle extends Sprite implements Paintable {
     public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
         myCanvasBounds = canvasBounds;
-        CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
-        CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
+        myCenterXValue = (int) myCanvasBounds.getWidth() / 2;
+        myCenterYValue = (int) myCanvasBounds.getHeight() / 2;
     }
     
     public Turtle(Dimension canvasBounds){
@@ -131,7 +130,7 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     public int home () {
-        Location center = new Location(CENTER_X_VALUE, CENTER_Y_VALUE);
+        Location center = new Location(myCenterXValue, myCenterYValue);
         int distance = (int) Vector.distanceBetween(getLocation(), center);
         setLocation(center);
         setHeading(UP_DIRECTION);
@@ -164,7 +163,7 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     private Location convertFromViewCoordinates (Location location) {
-        return new Location(location.getX() - CENTER_X_VALUE, location.getY() - CENTER_Y_VALUE);
+        return new Location(location.getX() - myCenterXValue, location.getY() - myCenterYValue);
     }
 
     public Iterator<Paintable> getPaintableIterator () {
