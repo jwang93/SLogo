@@ -44,7 +44,7 @@ how our project is actually supposed to work.
 ** replicates updatePositionLabel from iView.
 * __getTurtleHeading ()__ return int
 ** replicates UpdateHeadingLabel from iView.
-*__showMessage ()__ return String
+* __showMessage ()__ return String
 ** Returns any additional message, such as an error message. 
 
 Interface IModel
