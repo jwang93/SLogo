@@ -39,8 +39,6 @@ import util.Location;
  * 
  */
 public class View extends JFrame implements Observer {
-    private static final Location DEFAULT_POSITION = new Location(0, 0);
-    private static final int DEFAULT_HEADING = 270;
     private static final long serialVersionUID = 401L;
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
@@ -67,12 +65,11 @@ public class View extends JFrame implements Observer {
      */
     public View (String title, String language, IModel model, Dimension canvasBounds) {
         setTitle(title);
-        myModel = model;
-        myDataSource = model.getDataSource();
-        model.initializeObserver(this);
-
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(canvasBounds);
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
+        myModel = model;
+        model.initializeObserver(this);
+        myDataSource = model.getDataSource();
 
         getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
         getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
@@ -82,6 +79,8 @@ public class View extends JFrame implements Observer {
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        myCanvas.update(myDataSource.getPaintableIterator());
     }
 
     /**
@@ -126,8 +125,8 @@ public class View extends JFrame implements Observer {
         myTurtleHeadingLabel = new JLabel();
         state.add(myTurtlePositionLabel);
         state.add(myTurtleHeadingLabel);
-        updateHeadingLabel(DEFAULT_HEADING);
-        updatePositionLabel(DEFAULT_POSITION);
+        updateHeadingLabel(myDataSource.getTurtleHeading());
+        updatePositionLabel(myDataSource.getTurtlePosition());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
 
         return turtleInfoPanel;
@@ -164,7 +163,7 @@ public class View extends JFrame implements Observer {
                             + givenCommand);
                 // TODO connect with Model
                 // myModel.executeCommand(givenCommand);
-                myCommandLineTextField.setText("");
+                //myCommandLineTextField.setText("");
 
             }
         });

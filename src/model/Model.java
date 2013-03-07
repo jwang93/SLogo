@@ -26,13 +26,9 @@ public class Model extends Observable implements IModel, DataSource {
     }
 
     public Model (Dimension canvasBounds) {
-        myTurtle = new Turtle(calculateCenter(canvasBounds), canvasBounds);
+        myTurtle = new Turtle(canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
-    }
-
-    private Location calculateCenter (Dimension canvasBounds) {
-        return new Location((int) canvasBounds.getWidth() / 2, (int) canvasBounds.getHeight() / 2);
     }
 
     @Override
@@ -87,7 +83,6 @@ public class Model extends Observable implements IModel, DataSource {
     
     public void initializeObserver (Observer observer) {
         addObserver(observer);
-        notifyView();
     }
 
     @Override

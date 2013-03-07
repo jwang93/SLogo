@@ -20,32 +20,28 @@ import util.Vector;
  */
 public class Turtle extends Sprite implements Paintable {
 
-    private boolean myPenDown = true;
-    private boolean myTurtleShowing = true;
-    private double myHeading;
     private static final Pixmap DEFAULT_IMAGE = new Pixmap("../images/turtle.gif"); 
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
     private final double DEFAULT_HEADING = 270;
     private final int CENTER_X_VALUE;
     private final int CENTER_Y_VALUE;
 
-    private Line myLine;
+    private boolean myPenDown = true;
+    private boolean myTurtleShowing = true;
+    private Line myLine = new Line();
     private Dimension myCanvasBounds;
-
-    private int myReturnValue;
-    private String myMessage;
+    private double myHeading = DEFAULT_HEADING;
+    
 
     public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
         myCanvasBounds = canvasBounds;
         CENTER_X_VALUE = (int) myCanvasBounds.getWidth() / 2;
         CENTER_Y_VALUE = (int) myCanvasBounds.getHeight() / 2;
-        myHeading = DEFAULT_HEADING;
-        myLine = new Line();
     }
     
-    public Turtle(Location center , Dimension canvasBounds){
-        this(DEFAULT_IMAGE, center, DEFAULT_DIMENSION, canvasBounds);
+    public Turtle(Dimension canvasBounds){
+        this(DEFAULT_IMAGE, new Location(canvasBounds.getWidth() / 2, canvasBounds.getHeight() / 2), DEFAULT_DIMENSION, canvasBounds);
     }
     
 
@@ -170,8 +166,6 @@ public class Turtle extends Sprite implements Paintable {
     private Location convertFromViewCoordinates (Location location) {
         return new Location(location.getX() - CENTER_X_VALUE, location.getY() - CENTER_Y_VALUE);
     }
-
-    // implementing DataSource methods
 
     public Iterator<Paintable> getPaintableIterator () {
         ArrayList<Paintable> paintList = new ArrayList<Paintable>();
