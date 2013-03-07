@@ -6,24 +6,24 @@
 ##### Model Interfaces
 
 Interface Observable
-*Normal Observable interface, to tell when the model has been updated
+* Normal Observable interface, to tell when the model has been updated
 
 Interface DataSource
-*getPaintableIterator() returns Iterator<Paintable>
+* getPaintableIterator() returns Iterator<Paintable>
 
 Interface iModel
-*executeCommand(String command) return int
-*saveFunctionsAndVariables(File fileToSave) return void
-*loadFunctionsAndVariables(File fileToLoad) return void
+* executeCommand(String command) return int
+* saveFunctionsAndVariables(File fileToSave) return void
+* loadFunctionsAndVariables(File fileToLoad) return void
 
 ##### View Interface
 
 Interface iView
-*returnMessage(String message) return void
-*clearCommandWindow() return void
-*updatePositionLabel(Location location) return void
-*updateHeadingLabel(int heading) return void
-*setModel(iModel model) return void
+* returnMessage(String message) return void
+* clearCommandWindow() return void
+* updatePositionLabel(Location location) return void
+* updateHeadingLabel(int heading) return void
+* setModel(iModel model) return void
 
 ### New API
 
@@ -32,29 +32,29 @@ Changed/added methods are bolded and explained, removed methods are explained.
 ##### Model Interface
 
 Interface Observable
-*Normal Observable interface, to tell when the model has been updated
+* Normal Observable interface, to tell when the model has been updated
 
 Interface DataSource
-*getPaintableIterator() return Iterator<Paintable>
-*__getReturnValue ()__ return int
+* getPaintableIterator() return Iterator<Paintable>
+* __getReturnValue ()__ return int
 ** Replicates part of the returnMessage() in the original view. Decided to break out the 
 return value from any additional message for testing purposes and because it better reflects
 how our project is actually supposed to work.
-*__getTurtlePosition ()__ return Location
+* __getTurtlePosition ()__ return Location
 ** replicates updatePositionLabel from iView.
-*__getTurtleHeading ()__ return int
-**replicates UpdateHeadingLabel from iView.
+* __getTurtleHeading ()__ return int
+** replicates UpdateHeadingLabel from iView.
 *__showMessage ()__ return String
 ** Returns any additional message, such as an error message. 
 
 Interface IModel
-*executeCommand(String command) return int
-*saveFunctionsAndVariables(File fileToSave) return void
-*loadFunctionsAndVariables(File fileToLoad) return void
-*__getDataSource()__ returns DataSource
+* executeCommand(String command) return int
+* saveFunctionsAndVariables(File fileToSave) return void
+* loadFunctionsAndVariables(File fileToLoad) return void
+* __getDataSource()__ returns DataSource
 ** Added because now any View only has to take in a single IModel, reducing the co-dependence of
 view and model.
-*__initializeObserver(Observer observer)__ return void 
+* __initializeObserver(Observer observer)__ return void 
 ** adds the observer and then notifies it an initial time. Added so that View only has to take in 
 the single IModel.
 
