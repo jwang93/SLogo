@@ -69,6 +69,7 @@ public class View extends JFrame implements Observer {
         setTitle(title);
         myModel = model;
         myDataSource = model.getDataSource();
+        model.initializeObserver(this);
 
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         myCanvas = new Canvas(canvasBounds);

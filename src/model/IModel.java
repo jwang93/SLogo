@@ -13,7 +13,6 @@ public interface IModel {
     public void loadFunctionsAndVariables (File fileToLoad);
     
     public DataSource getDataSource();
-    
-    public void addObserver (Observer observer);
 
+    public void initializeObserver(Observer observer);
 }
