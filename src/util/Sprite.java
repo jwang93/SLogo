@@ -15,19 +15,22 @@ import java.awt.geom.Point2D;
  */
 public abstract class Sprite implements Paintable {
     // canonical directions for a collision
-    public static final int RIGHT_DIRECTION = 0;
-    public static final int DOWN_DIRECTION = 90;
-    public static final int LEFT_DIRECTION = 180;
-    public static final int UP_DIRECTION = 270;
+    //public static final int RIGHT_DIRECTION = 0;
+    //public static final int DOWN_DIRECTION = 90;
+    //public static final int LEFT_DIRECTION = 180;
+    private static final double DEFAULT_HEADING = 270;
 
     // state
     private Location myCenter;
     private Vector myVelocity;
+    
+    private double myHeading;
+    
     private Dimension mySize;
     private Pixmap myView;
     // keep copies of the original state so shape can be reset as needed
     private Location myOriginalCenter;
-    private Vector myOriginalVelocity;
+    //private Vector myOriginalVelocity;
     private Dimension myOriginalSize;
     private Pixmap myOriginalView;
     // cached for efficiency
@@ -37,18 +40,18 @@ public abstract class Sprite implements Paintable {
      * Create a shape at the given position, with the given size.
      */
     public Sprite (Pixmap image, Location center, Dimension size) {
-        this(image, center, size, new Vector());
+        this(image, center, size, DEFAULT_HEADING);
     }
 
     /**
      * Create a shape at the given position, with the given size, velocity, and color.
      */
-    public Sprite (Pixmap image, Location center, Dimension size, Vector velocity) {
+    public Sprite (Pixmap image, Location center, Dimension size, double heading) {
         // make copies just to be sure no one else has access
         myOriginalCenter = new Location(center);
         myOriginalSize = new Dimension(size);
-        myOriginalVelocity = new Vector(velocity);
         myOriginalView = new Pixmap(image);
+        myHeading=heading;
         reset();
         resetBounds();
     }
@@ -58,12 +61,13 @@ public abstract class Sprite implements Paintable {
      * 
      * Currently, moves by the current velocity.
      */
+    /*
     public void update (double elapsedTime, Dimension bounds) {
         // do not change original velocity
         Vector v = new Vector(myVelocity);
         v.scale(elapsedTime);
         translate(v);
-    }
+    }*/
 
     /**
      * Moves shape's center by given vector.
@@ -169,10 +173,10 @@ public abstract class Sprite implements Paintable {
 
     /**
      * Returns shape's velocity.
-     */
+     *//*
     public Vector getVelocity () {
         return myVelocity;
-    }
+    }*/
 
     /**
      * Resets shape's velocity.
@@ -224,7 +228,7 @@ public abstract class Sprite implements Paintable {
     public void reset () {
         myCenter = new Location(myOriginalCenter);
         mySize = new Dimension(myOriginalSize);
-        myVelocity = new Vector(myOriginalVelocity);
+        myHeading=DEFAULT_HEADING;
         myView = new Pixmap(myOriginalView);
     }
 
@@ -233,7 +237,7 @@ public abstract class Sprite implements Paintable {
      */
     public void paint (Graphics2D pen)
     {
-        myView.paint(pen, myCenter, mySize, myVelocity.getDirection());
+        myView.paint(pen, myCenter, mySize, myHeading);
     }
 
     /**
@@ -247,6 +251,7 @@ public abstract class Sprite implements Paintable {
      * Returns approximate direction from center of rectangle to side which was hit or
      * NaN if no hit took place.
      */
+    /*
     protected double getHitDirection (Rectangle bounds) {
         // double angle = Vector.angleBetween(myCenter, new Location(bounds.getCenterX(),
         // bounds.getCenterY()));
@@ -260,10 +265,25 @@ public abstract class Sprite implements Paintable {
         else if (bounds.contains(new Location(getX(), getTop()))) return DOWN_DIRECTION;
         return 0;
         // return Double.NaN;
-    }
+    }*/
     
     protected Location getLocation () {
         // return a copy so this can't be changed using this method
         return new Location(myCenter.getX(), myCenter.getY());
     }
+    
+    
+    public double getHeading(){
+    	return myHeading;
+    }
+    
+    public void setMyHeading(double heading){
+    	myHeading=heading;
+    	
+    }
+    
+    public void resetHeading(){
+    	myHeading=DEFAULT_HEADING;
+    }
+    
 }

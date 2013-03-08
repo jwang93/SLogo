@@ -19,9 +19,8 @@ import util.Vector;
  */
 public class Turtle extends Sprite implements Paintable {
 
-    private static final Pixmap DEFAULT_IMAGE = new Pixmap("triangle.gif"); 
+    private static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif"); 
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
-    private static final double DEFAULT_HEADING = 270;
     private final int myCenterXValue;
     private final int myCenterYValue;
 
@@ -29,8 +28,6 @@ public class Turtle extends Sprite implements Paintable {
     private boolean myTurtleShowing = true;
     private Line myLine = new Line();
     private Dimension myCanvasBounds;
-    private double myHeading = DEFAULT_HEADING;
-    
 
     public Turtle (Pixmap image, Location center, Dimension size, Dimension canvasBounds) {
         super(image, center, size);
@@ -53,43 +50,44 @@ public class Turtle extends Sprite implements Paintable {
         if (pixels == 0) return;
         Location currentLocation = getLocation();
         Location nextLocation = getLocation();
-        nextLocation.translate(new Vector(getVelocity().getDirection(), pixels));
+        nextLocation.translate(new Vector(getHeading(), pixels));
         // top
         if (nextLocation.getY() < 0) {
-            nextLocation = new Location(getX() + getY() / Math.tan(myHeading), 0);
-            setCenter(new Location(getX() + getY() / Math.tan(myHeading),
+            nextLocation = new Location(getX() + getY() / Math.tan(getHeading()), 0);
+            setCenter(new Location(getX() + getY() / Math.tan(getHeading()),
                                    myCanvasBounds.getHeight()));
             // bottom
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
             nextLocation =
-                    new Location(getX() + getY() / Math.tan(myHeading), myCanvasBounds.getHeight());
-            setCenter(new Location(getX() + getY() / Math.tan(myHeading), 0));
+                    new Location(getX() + getY() / Math.tan(getHeading()), myCanvasBounds.getHeight());
+            setCenter(new Location(getX() + getY() / Math.tan(getHeading()), 0));
             // right
         }
         else if (nextLocation.getX() > myCanvasBounds.getWidth()) {
             nextLocation =
-                    new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(myHeading));
-            setCenter(new Location(0, getY() + getX() / Math.tan(myHeading)));
+                    new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(getHeading()));
+            setCenter(new Location(0, getY() + getX() / Math.tan(getHeading())));
             // left
         }
         else if (nextLocation.getX() < 0) {
-            nextLocation = new Location(0, getY() + getX() / Math.tan(myHeading));
-            setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(myHeading)));
+            nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
+            setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() / Math.tan(getHeading())));
         }
-
+        
+        setCenter(nextLocation);  //fixed why turtle not moving bug
         pixels -= (int) Vector.distanceBetween(currentLocation, nextLocation) * Math.signum(pixels);
         myLine.addLineSegment(currentLocation, nextLocation);
         moveRecursiveHelper(pixels);
     }
 
     public double turn (double degrees) {
-        setVelocity(getVelocity().getDirection() + degrees, 0);
+        setVelocity(getHeading() + degrees, 0);
         return degrees;
     }
-
+    
     public double setHeading (double heading) {
-        setVelocity(heading, 0);
+    	setMyHeading(heading);
         return heading;
     }
 
@@ -133,7 +131,7 @@ public class Turtle extends Sprite implements Paintable {
         Location center = new Location(myCenterXValue, myCenterYValue);
         int distance = (int) Vector.distanceBetween(getLocation(), center);
         setLocation(center);
-        setHeading(UP_DIRECTION);
+        resetHeading();
         return distance;
     }
 
@@ -153,14 +151,6 @@ public class Turtle extends Sprite implements Paintable {
         return 0;
     }
 
-    public double getHeading () {
-        return getVelocity().getDirection();
-    }
-
-    @Override
-    public void update (double elapsedTime, Dimension bounds) {
-
-    }
 
     private Location convertFromViewCoordinates (Location location) {
         return new Location(location.getX() - myCenterXValue, location.getY() - myCenterYValue);
@@ -178,6 +168,6 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     public int getTurtleHeading () {
-        return (int) myHeading;
+        return (int) getHeading();
     }
 }

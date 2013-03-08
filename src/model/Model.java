@@ -37,7 +37,7 @@ public class Model extends Observable implements IModel, DataSource {
         ICommand executable;
         try {
             executable = myParser.parse(command);
-            //executable.execute();
+            executable.execute();
             System.out.println("Command return value: " + executable.execute());
         }
         catch (FormattingException e) {
