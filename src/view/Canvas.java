@@ -52,6 +52,7 @@ public class Canvas extends JComponent {
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getSize().width, getSize().height);
         while (myPaintableIterator.hasNext()) {
+        	pen.setColor(Color.BLACK);
             Paintable paintable = myPaintableIterator.next();
             paintable.paint((Graphics2D) pen);
         }

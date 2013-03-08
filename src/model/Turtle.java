@@ -82,7 +82,7 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     public double turn (double degrees) {
-        setVelocity(getHeading() + degrees, 0);
+        setHeading(getHeading()+degrees);
         return degrees;
     }
     
