@@ -17,9 +17,13 @@ import factory.Parser;
 
 public class Model extends Observable implements IModel, DataSource {
 
+    public static final int ERROR_RETURN_VALUE = -1;
+    
     private Parser myParser;
     private Turtle myTurtle;
     private Scope myScope;
+    private int myReturnValue;
+    private String myReturnMessage;
 
     public Scope getScope () {
         return myScope;
@@ -29,6 +33,15 @@ public class Model extends Observable implements IModel, DataSource {
         myTurtle = new Turtle(canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
+    }
+    
+    /**
+     * returns the current turtle
+     * @return turtle to return
+     */
+    public Turtle getTurtle () {
+        return myTurtle;
+
     }
 
     @Override
@@ -61,26 +74,22 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public void saveFunctionsAndVariables (File fileToSave) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void loadFunctionsAndVariables (File fileToLoad) {
-        // TODO Auto-generated method stub
 
     }
 
-    public Turtle getTurtle () {
-        return myTurtle;
-
-    }
+    
 
     @Override
     public DataSource getDataSource () {
         return this;
     }
     
+    @Override
     public void initializeObserver (Observer observer) {
         addObserver(observer);
     }
@@ -92,8 +101,7 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public int getReturnValue () {
-        // TODO Auto-generated method stub
-        return 0;
+        return myReturnValue;
     }
 
     @Override
@@ -108,7 +116,22 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public String showMessage () {
-        // TODO Auto-generated method stub
-        return null;
+        return myReturnMessage;
+    }
+    
+    /**
+     * Sets current return value
+     * @param value to set
+     */
+    public void setReturnValue (int value) {
+        myReturnValue = value;
+    }
+    
+    /**
+     * Sets the return message
+     * @param message to set
+     */
+    public void setReturnMessage (String message) {
+        myReturnMessage = message;
     }
 }
