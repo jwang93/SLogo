@@ -35,6 +35,7 @@ requires a .properties file with the proper language for View to function correc
 ##### any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs)
 
 ##### any known bugs, crashes, or problems with the project's functionality
+     turtle wrap around screen feature still buggy
 
 ##### any extra features included in the project
 
