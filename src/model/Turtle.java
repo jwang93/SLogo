@@ -104,7 +104,9 @@ public class Turtle extends Sprite implements Paintable {
                 pixels -
                         (int) (Vector.distanceBetween(currentLocation, nextLocation) * Math
                                 .signum(pixels));
-        myLine.addLineSegment(currentLocation, nextLocation);
+        if (myPenDown) {
+            myLine.addLineSegment(currentLocation, nextLocation);
+        }
         moveRecursiveHelper(newPixels);
     }
 
