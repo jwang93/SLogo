@@ -295,7 +295,7 @@ public abstract class Sprite implements Paintable {
      */
     public void setMyHeading (double heading) {
         myHeading = heading;
-
+        myVelocity = new Vector(heading, 0);
     }
 
     /**
@@ -303,6 +303,7 @@ public abstract class Sprite implements Paintable {
      */
     public void resetHeading () {
         myHeading = DEFAULT_HEADING;
+        myVelocity = new Vector(DEFAULT_HEADING, 0);
     }
 
 }
