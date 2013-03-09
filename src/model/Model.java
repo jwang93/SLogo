@@ -70,20 +70,21 @@ public class Model extends Observable implements IModel, DataSource {
     public void executeCommand (String command) {
 
         ICommand executable;
+        int returnValue = ERROR_RETURN_VALUE;
         try {
             executable = myParser.parse(command);
-            executable.execute();
-            System.out.println("Command return value: " + executable.execute());
+            returnValue = executable.execute();
+            myReturnMessage = "";
         }
         catch (FormattingException e) {
-            // TODO Make Duvall Happy
-            // TODO change return message in datasource, notify, then change back to nothing
+            myReturnMessage = "Formatting error";
+            
         }
         catch (VariableNotFoundException e) {
-            // TODO do roughly the same thing here
+            myReturnMessage = "Variable not found";
         }
         finally {
-            // TODO anything else that should be done in both cases
+            myReturnValue = returnValue;
             notifyView();
         }
 
