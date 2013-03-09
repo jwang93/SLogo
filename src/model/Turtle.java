@@ -22,6 +22,10 @@ public class Turtle extends Sprite implements Paintable {
     private static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif");
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
     private static final int HALF_TURN_DEGREES = 180;
+    private static final int FULL_TURN_DEGREES = 360;
+    private static final int THREE_QUARTER_TURN_DEGREES = 270;
+    private static final int ONE_QUARTER_TURN_DEGREES = 90;
+    private static final int NO_TURN_DEGREES = 0;
     
 
     private boolean myPenDown = true;
@@ -78,24 +82,39 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     private void moveRecursiveHelper (int pixels) {
-        if (pixels == 0) return;
+        if (pixels <= 0) return;
         Location currentLocation = getLocation();
         Location nextLocation = getLocation();
         nextLocation.translate(new Vector(getHeading(), pixels));
+        
         // top
         if (nextLocation.getY() < 0) {
-            nextLocation = new Location(getX() + getY() / Math.tan(getHeading()), 0);
-            setCenter(new Location(getX() + getY() / Math.tan(getHeading()),
+            double angle = FULL_TURN_DEGREES - getHeading();
+            if(getHeading() < THREE_QUARTER_TURN_DEGREES){
+                angle = getHeading() - HALF_TURN_DEGREES;
+            } 
+            nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
+            setCenter(new Location(getX() + getY() / Math.tan(angle),
                                    myCanvasBounds.getHeight()));
-            //System.out.println("top");
+            if(getHeading() == THREE_QUARTER_TURN_DEGREES){
+                nextLocation = new Location(getX(), 0);
+                setCenter(new Location(getX(), myCanvasBounds.getHeight()));
+            }
+            
             // bottom
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
-            nextLocation =
-                    new Location(getX() + getY() / Math.tan(getHeading()),
-                                 myCanvasBounds.getHeight());
-            setCenter(new Location(getX() + getY() / Math.tan(getHeading()), 0));
-            //System.out.println("bottom");
+            double angle = getHeading();
+            if(getHeading() > ONE_QUARTER_TURN_DEGREES){
+                angle = HALF_TURN_DEGREES - getHeading();
+            } 
+            nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
+            setCenter(new Location(getX() + getY() / Math.tan(angle),
+                                   0));
+            if(getHeading() == ONE_QUARTER_TURN_DEGREES){
+                nextLocation = new Location(getX(), myCanvasBounds.getHeight());
+                setCenter(new Location(getX(), 0));
+            }
             // right
         }
         else if (nextLocation.getX() > myCanvasBounds.getWidth()) {
@@ -103,22 +122,31 @@ public class Turtle extends Sprite implements Paintable {
                     new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                             Math.tan(getHeading()));
             setCenter(new Location(0, getY() + getX() / Math.tan(getHeading())));
-            //System.out.println("right");
+            
+            double angle = getHeading();
+            if(getHeading() > HALF_TURN_DEGREES){
+                angle = HALF_TURN_DEGREES - getHeading();
+            } 
+            nextLocation =
+                    new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                                                            Math.tan(angle));
+            setCenter(new Location(0, getY() + getX() / Math.tan(angle)));
+            if(getHeading() == ONE_QUARTER_TURN_DEGREES){
+                nextLocation = new Location(myCanvasBounds.getWidth(), getY());
+                setCenter(new Location(0, getY()));
+            }
+            
             // left
         }
         else if (nextLocation.getX() < 0) {
             nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
             setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                               Math.tan(getHeading())));
-            //System.out.println("left");
-        }
-
-        // fixed why turtle not moving bug
-        setCenter(nextLocation);
-        int newPixels =
-                pixels -
-                        (int) (Vector.distanceBetween(currentLocation, nextLocation) * Math
-                                .signum(pixels));
+        } else {
+            setCenter(nextLocation);
+        }        
+        
+        int newPixels = pixels - (int) (Vector.distanceBetween(currentLocation, nextLocation));
         if (myPenDown) {
             myLine.addLineSegment(currentLocation, nextLocation);
         }
