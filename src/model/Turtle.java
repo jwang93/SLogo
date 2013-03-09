@@ -21,13 +21,15 @@ public class Turtle extends Sprite implements Paintable {
 
     private static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif");
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
-    private final int myCenterXValue;
-    private final int myCenterYValue;
+    private static final int HALF_TURN_DEGREES = 180;
+    
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
     private Line myLine = new Line();
     private Dimension myCanvasBounds;
+    private int myCenterXValue;
+    private int myCenterYValue;
 
     /**
      * Creates a turtle sprite.
@@ -62,8 +64,17 @@ public class Turtle extends Sprite implements Paintable {
      * @return command return value
      */
     public int move (int pixels) {
-        moveRecursiveHelper(pixels);
-        return pixels;
+        int pixelsToMove = pixels;
+        // ensure that moveRecursiveHelper doesn't take a negative argument
+        if (Math.abs(pixels) != pixels){
+            pixelsToMove = -pixelsToMove;
+            turn(HALF_TURN_DEGREES);
+        }
+        moveRecursiveHelper(pixelsToMove);
+        if (Math.abs(pixels) != pixels){
+            turn(HALF_TURN_DEGREES);
+        }
+        return Math.abs(pixels);
     }
 
     private void moveRecursiveHelper (int pixels) {
@@ -76,6 +87,7 @@ public class Turtle extends Sprite implements Paintable {
             nextLocation = new Location(getX() + getY() / Math.tan(getHeading()), 0);
             setCenter(new Location(getX() + getY() / Math.tan(getHeading()),
                                    myCanvasBounds.getHeight()));
+            //System.out.println("top");
             // bottom
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
@@ -83,6 +95,7 @@ public class Turtle extends Sprite implements Paintable {
                     new Location(getX() + getY() / Math.tan(getHeading()),
                                  myCanvasBounds.getHeight());
             setCenter(new Location(getX() + getY() / Math.tan(getHeading()), 0));
+            //System.out.println("bottom");
             // right
         }
         else if (nextLocation.getX() > myCanvasBounds.getWidth()) {
@@ -90,12 +103,14 @@ public class Turtle extends Sprite implements Paintable {
                     new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                             Math.tan(getHeading()));
             setCenter(new Location(0, getY() + getX() / Math.tan(getHeading())));
+            //System.out.println("right");
             // left
         }
         else if (nextLocation.getX() < 0) {
             nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
             setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                               Math.tan(getHeading())));
+            //System.out.println("left");
         }
 
         // fixed why turtle not moving bug
@@ -246,7 +261,7 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     private Location convertFromViewCoordinates (Location location) {
-        return new Location(location.getX() - myCenterXValue, location.getY() - myCenterYValue);
+        return new Location(location.getX() - myCenterXValue, myCenterYValue - location.getY());
     }
 
     /**
