@@ -24,7 +24,8 @@ public class Parser {
 
     public ICommand parse (String command) throws FormattingException {
         LinkedList<String> params = new LinkedList<String>();
-        for (String str : command.split("\\s+")) {
+        String commandString = command.trim();
+        for (String str : commandString.split("\\s+")) {
             params.add(str);
         }
         return parse(params);
