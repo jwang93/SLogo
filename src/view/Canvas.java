@@ -52,19 +52,15 @@ public class Canvas extends JComponent {
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getSize().width, getSize().height);
         while (myPaintableIterator.hasNext()) {
-        	pen.setColor(Color.BLACK);
+            pen.setColor(Color.BLACK);
             Paintable paintable = myPaintableIterator.next();
             paintable.paint((Graphics2D) pen);
         }
     }
 
     /**
-     * Implements the Observer update function by getting the current sprites and then calling
-     * repaint() to paint them.
-     * 
-     * @param arg0 Obeservable object, in this case a DataSource object
-     * @param arg1 Object passed in to observer, unused in this class
-     *        TODO recomment
+     * Updates the iterator and repaints.
+     * @param iterator iterator to update
      */
     public void update (Iterator<Paintable> iterator) {
         myPaintableIterator = iterator;
