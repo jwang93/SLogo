@@ -145,39 +145,65 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     /**
+     * Moves turtle to location
      * 
-     * @param location
-     * @return
+     * @param location to move to
+     * @return distance of move
      */
     public int setLocation (Location location) {
-        location = convertFromViewCoordinates(location);
+        Location locationToMove = convertFromViewCoordinates(location);
         double heading = getHeading();
-        towards(location);
+        towards(locationToMove);
         int distance = (int) Vector.distanceBetween(location, getLocation());
         setHeading(heading);
         return distance;
     }
 
+    /**
+     * Sets turtle to showing.
+     * 
+     * @return command value
+     */
     public int showTurtle () {
         myTurtleShowing = true;
         return 1;
     }
 
+    /**
+     * Sets turtle to hiding.
+     * 
+     * @return command value
+     */
     public int hideTurtle () {
         myTurtleShowing = false;
         return 0;
     }
 
+    /**
+     * Sets lines to show up on new moves.
+     * 
+     * @return command value
+     */
     public int showPen () {
         myPenDown = true;
         return 1;
     }
 
+    /**
+     * Sets lines to not show up on new moves.
+     * 
+     * @return command value
+     */
     public int hidePen () {
         myPenDown = false;
         return 0;
     }
 
+    /**
+     * Moves turtle to center and original heading.
+     * 
+     * @return
+     */
     public int home () {
         Location center = new Location(myCenterXValue, myCenterYValue);
         int distance = (int) Vector.distanceBetween(getLocation(), center);
@@ -186,17 +212,32 @@ public class Turtle extends Sprite implements Paintable {
         return distance;
     }
 
+    /**
+     * Clears all lines and moves turtle home.
+     * 
+     * @return
+     */
     public int clearScreen () {
         int distance = home();
         myLine.clear();
         return distance;
     }
 
+    /**
+     * Gets if turtle is showing or not.
+     * 
+     * @return 1 if turtle is showing, 0 if not
+     */
     public int isTurtleShowing () {
         if (myTurtleShowing) return 1;
         return 0;
     }
 
+    /**
+     * Gets if pen is down or not.
+     * 
+     * @return 1 if pen is down, 0 if not
+     */
     public int isPenDown () {
         if (myPenDown) return 1;
         return 0;
@@ -206,6 +247,10 @@ public class Turtle extends Sprite implements Paintable {
         return new Location(location.getX() - myCenterXValue, location.getY() - myCenterYValue);
     }
 
+    /**
+     * Gets all paintable objects currently showing and returns them in an iterator.
+     * @return iterator of paintables
+     */
     public Iterator<Paintable> getPaintableIterator () {
         ArrayList<Paintable> paintList = new ArrayList<Paintable>();
         if (myTurtleShowing) {
@@ -215,12 +260,12 @@ public class Turtle extends Sprite implements Paintable {
         return paintList.iterator();
     }
 
+    /**
+     * 
+     * @return current turtle position.
+     */
     public Location getTurtlePosition () {
         return convertFromViewCoordinates(getLocation());
-    }
-
-    public int getTurtleHeading () {
-        return (int) getHeading();
     }
 
 }

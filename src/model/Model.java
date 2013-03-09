@@ -8,40 +8,62 @@ import java.util.Observer;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
-import util.Pixmap;
 import commands.ICommand;
 import exceptions.FormattingException;
 import exceptions.VariableNotFoundException;
 import factory.Parser;
 
 
+/**
+ * The main Model class.
+ * 
+ * @author Zhen Gou
+ * @author David Winegar
+ * @author Will Nance
+ * @author Jay Wang
+ * 
+ */
 public class Model extends Observable implements IModel, DataSource {
 
+    /**
+     * return value in the event of an error.
+     */
     public static final int ERROR_RETURN_VALUE = -1;
-    
+
     private Parser myParser;
     private Turtle myTurtle;
     private Scope myScope;
     private int myReturnValue;
     private String myReturnMessage;
 
-    public Scope getScope () {
-        return myScope;
-    }
-
+    /**
+     * Instantiates parser, scope, and turtle and passes the canvasBounds.
+     * 
+     * @param canvasBounds to pass to turtle
+     */
     public Model (Dimension canvasBounds) {
         myTurtle = new Turtle(canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
     }
-    
+
     /**
      * returns the current turtle
+     * 
      * @return turtle to return
      */
     public Turtle getTurtle () {
         return myTurtle;
 
+    }
+
+    /**
+     * returns the current scope
+     * 
+     * @return myScope
+     */
+    public Scope getScope () {
+        return myScope;
     }
 
     @Override
@@ -66,7 +88,10 @@ public class Model extends Observable implements IModel, DataSource {
         }
 
     }
-    
+
+    /**
+     * sets observable as changed and notifies observers.
+     */
     private void notifyView () {
         setChanged();
         notifyObservers();
@@ -82,13 +107,11 @@ public class Model extends Observable implements IModel, DataSource {
 
     }
 
-    
-
     @Override
     public DataSource getDataSource () {
         return this;
     }
-    
+
     @Override
     public void initializeObserver (Observer observer) {
         addObserver(observer);
@@ -111,24 +134,26 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public int getTurtleHeading () {
-        return myTurtle.getTurtleHeading();
+        return (int) myTurtle.getHeading();
     }
 
     @Override
     public String showMessage () {
         return myReturnMessage;
     }
-    
+
     /**
      * Sets current return value
+     * 
      * @param value to set
      */
     public void setReturnValue (int value) {
         myReturnValue = value;
     }
-    
+
     /**
      * Sets the return message
+     * 
      * @param message to set
      */
     public void setReturnMessage (String message) {
