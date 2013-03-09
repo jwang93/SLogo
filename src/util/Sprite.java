@@ -13,6 +13,8 @@ import java.awt.geom.Point2D;
  * http://en.wikipedia.org/wiki/Sprite_(computer_graphics)
  * 
  * @author Robert C. Duvall
+ * @author David Winegar
+ * @author Zhen Gou
  */
 public abstract class Sprite implements Paintable {
     // canonical directions for a collision
