@@ -103,10 +103,17 @@ public abstract class AbstractInitializer {
         }
         
         // **BUG FIX** completed processing parameters - set it clean 
-        List <ICommand> returnParameters = myParameters;
+        return resetParameters();
+    }
+    
+    /**
+     * Return the processed parameters and reset the value of myParameters
+     * @return the processed parameters
+     */
+    private List<ICommand> resetParameters() {
+        List<ICommand> returnParameters = myParameters;
         myParameters = new ArrayList<ICommand>();
         return returnParameters;
-
     }
 
     /**
