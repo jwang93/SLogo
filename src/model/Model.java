@@ -100,12 +100,12 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public void saveFunctionsAndVariables (File fileToSave) {
-
+        // not implemented :(
     }
 
     @Override
     public void loadFunctionsAndVariables (File fileToLoad) {
-
+        // not implemented :(
     }
 
     @Override

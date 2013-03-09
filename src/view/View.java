@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import model.IModel;
 import util.DataSource;
 import util.Location;
@@ -109,6 +110,7 @@ public class View extends JFrame implements Observer {
         myCommandHistoryTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
         myCommandHistoryTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(myCommandHistoryTextArea);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         commandHistoryPanel.add(scrollPane, BorderLayout.CENTER);
         commandHistoryPanel.add(makeClearButton(), BorderLayout.SOUTH);
 

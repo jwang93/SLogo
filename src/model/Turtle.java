@@ -85,6 +85,7 @@ public class Turtle extends Sprite implements Paintable {
         if (pixels <= 0) return;
         Location currentLocation = getLocation();
         Location nextLocation = getLocation();
+        Location nextCenter = nextLocation;
         nextLocation.translate(new Vector(getHeading(), pixels));
         
         // top
@@ -94,13 +95,13 @@ public class Turtle extends Sprite implements Paintable {
                 angle = getHeading() - HALF_TURN_DEGREES;
             } 
             nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
-            setCenter(new Location(getX() + getY() / Math.tan(angle),
-                                   myCanvasBounds.getHeight()));
+            nextCenter = new Location(getX() + getY() / Math.tan(angle),
+                                   myCanvasBounds.getHeight());
+            
             if(getHeading() == THREE_QUARTER_TURN_DEGREES){
                 nextLocation = new Location(getX(), 0);
-                setCenter(new Location(getX(), myCanvasBounds.getHeight()));
+                nextCenter = new Location(getX(), myCanvasBounds.getHeight());
             }
-            
             // bottom
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
@@ -109,11 +110,11 @@ public class Turtle extends Sprite implements Paintable {
                 angle = HALF_TURN_DEGREES - getHeading();
             } 
             nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
-            setCenter(new Location(getX() + getY() / Math.tan(angle),
-                                   0));
+            nextCenter = new Location(getX() + getY() / Math.tan(angle),
+                                   0);
             if(getHeading() == ONE_QUARTER_TURN_DEGREES){
                 nextLocation = new Location(getX(), myCanvasBounds.getHeight());
-                setCenter(new Location(getX(), 0));
+                nextCenter = new Location(getX(), 0);
             }
             // right
         }
@@ -121,7 +122,7 @@ public class Turtle extends Sprite implements Paintable {
             nextLocation =
                     new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                             Math.tan(getHeading()));
-            setCenter(new Location(0, getY() + getX() / Math.tan(getHeading())));
+            nextCenter = new Location(0, getY() + getX() / Math.tan(getHeading()));
             
             double angle = getHeading();
             if(getHeading() > HALF_TURN_DEGREES){
@@ -130,22 +131,25 @@ public class Turtle extends Sprite implements Paintable {
             nextLocation =
                     new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                             Math.tan(angle));
-            setCenter(new Location(0, getY() + getX() / Math.tan(angle)));
+            nextCenter = new Location(0, getY() + getX() / Math.tan(angle));
             if(getHeading() == ONE_QUARTER_TURN_DEGREES){
                 nextLocation = new Location(myCanvasBounds.getWidth(), getY());
-                setCenter(new Location(0, getY()));
+                nextCenter = new Location(0, getY());
             }
-            
             // left
         }
         else if (nextLocation.getX() < 0) {
             nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
-            setCenter(new Location(myCanvasBounds.getWidth(), getY() + getX() /
-                                                              Math.tan(getHeading())));
-        } else {
-            setCenter(nextLocation);
-        }        
+            nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                                                              Math.tan(getHeading()));
+            
+            if(getHeading() == THREE_QUARTER_TURN_DEGREES){
+                nextLocation = new Location(0, getY());
+                nextCenter = new Location(myCanvasBounds.getWidth(), getY());
+            }
+        }
         
+        setCenter(nextCenter);
         int newPixels = pixels - (int) (Vector.distanceBetween(currentLocation, nextLocation));
         if (myPenDown) {
             myLine.addLineSegment(currentLocation, nextLocation);
