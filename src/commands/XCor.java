@@ -15,7 +15,7 @@ public class XCor extends AbstractZeroParameterTurtleCommand {
     @Override    
     public int execute () throws VariableNotFoundException {
         Turtle turtle = getTurtle();
-        int position = (int) turtle.getX();
+        int position = (int) turtle.getTurtlePosition().x;
         return position;
     }
     
