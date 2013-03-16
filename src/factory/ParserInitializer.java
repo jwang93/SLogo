@@ -58,6 +58,7 @@ public class ParserInitializer {
         
         //TURTLE QUERIES
         map.put("xcor", new XCorInitializer(myModel, myParser));
+        map.put("ycor", new YCorInitializer(myModel, myParser));
 
         
         
