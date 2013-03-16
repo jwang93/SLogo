@@ -55,6 +55,12 @@ public class ParserInitializer {
         map.put("remainder", new RemainderInitializer(myModel, myParser));
         map.put("minus", new MinusInitializer(myModel, myParser));
         map.put("random", new RandomInitializer(myModel, myParser));
+        
+        //TURTLE QUERIES
+        map.put("xcor", new XCorInitializer(myModel, myParser));
+
+        
+        
         return map;
     }
 

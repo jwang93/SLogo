@@ -70,7 +70,6 @@ public abstract class AbstractInitializer {
      * @throws FormattingException if the user is stupid (or if there are bugs)
      */
     protected ICommand build (LinkedList<String> commandStream) throws FormattingException {
-        System.out.println("Add'l Info: " + commandStream.get(0).toString());
         List<ICommand> parameters = processParameters(commandStream);
         return instantiate(parameters);
     }
@@ -94,7 +93,6 @@ public abstract class AbstractInitializer {
      */
     protected List<ICommand> processParameters (LinkedList<String> commandStream)
                                                                                  throws FormattingException {
-        System.out.println("size: " + myParameters.size());
         for (int i = 0; i < numArgs; i++) {
             int startLength = myParameters.size();
             processParameter(commandStream);
