@@ -21,11 +21,6 @@ public class Turtle extends Sprite implements Paintable {
 
     private static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif");
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
-    private static final int HALF_TURN_DEGREES = 180;
-    private static final int FULL_TURN_DEGREES = 360;
-    private static final int THREE_QUARTER_TURN_DEGREES = 270;
-    private static final int ONE_QUARTER_TURN_DEGREES = 90;
-    private static final int NO_TURN_DEGREES = 0;
     private static final double PRECISION_LEVEL = 0.0000001;
 
     private boolean myPenDown = true;

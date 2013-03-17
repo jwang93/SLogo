@@ -17,6 +17,11 @@ import java.awt.geom.Point2D;
  * @author Zhen Gou
  */
 public abstract class Sprite implements Paintable {
+    // degree values
+    public static final int FULL_TURN_DEGREES = 360;
+    public static final int THREE_QUARTER_TURN_DEGREES = 270;
+    public static final int HALF_TURN_DEGREES = 180;
+    public static final int ONE_QUARTER_TURN_DEGREES = 90;
     // canonical directions for a collision
     public static final int RIGHT_DIRECTION = 0;
     public static final int DOWN_DIRECTION = 90;
@@ -294,7 +299,7 @@ public abstract class Sprite implements Paintable {
      * @param heading to set
      */
     public void setMyHeading (double heading) {
-        myHeading = heading;
+        myHeading = (heading % FULL_TURN_DEGREES);
         myVelocity = new Vector(heading, 0);
     }
 
