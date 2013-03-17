@@ -14,7 +14,7 @@ public class ParserTest {
         Parser parser = new Parser(model);
         try {
 
-            String command = "sum 10 quotient 10 2 ";
+            String command = "sum 10 sum 10 10 ";
 
             ICommand main = parser.parse(command);
             System.out.println(main);

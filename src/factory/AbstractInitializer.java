@@ -69,7 +69,7 @@ public abstract class AbstractInitializer {
      * @return an ICommand object to be added to the program while compiling
      * @throws FormattingException if the user is stupid (or if there are bugs)
      */
-    protected ICommand build (LinkedList<String> commandStream) throws FormattingException {
+    protected ICommand build (CommandStream commandStream) throws FormattingException {
         List<ICommand> parameters = processParameters(commandStream);
         return instantiate(parameters);
     }
@@ -91,7 +91,7 @@ public abstract class AbstractInitializer {
      * @return a list of parameters to be passed into an object at construction
      * @throws FormattingException if the user can't code (or there are bugs)
      */
-    protected List<ICommand> processParameters (LinkedList<String> commandStream)
+    protected List<ICommand> processParameters (CommandStream commandStream)
                                                                                  throws FormattingException {
         for (int i = 0; i < numArgs; i++) {
             int startLength = myParameters.size();
@@ -101,7 +101,7 @@ public abstract class AbstractInitializer {
         }
         
         // **BUG FIX** completed processing parameters - set it clean 
-        return resetParameters();
+        return myParameters;
     }
     
     /**
@@ -134,7 +134,7 @@ public abstract class AbstractInitializer {
      * @param commandStream a list, the head of which is the parameter to be parsed next
      * @throws FormattingException if the commands were improperly formatted
      */
-    protected void processParameter (LinkedList<String> commandStream)
+    protected void processParameter (CommandStream commandStream)
                                                                       throws FormattingException {
         if (parseList(commandStream)) return;
         if (parseVariable(commandStream)) return;
@@ -143,7 +143,7 @@ public abstract class AbstractInitializer {
 
     }
 
-    protected boolean parseConstant (LinkedList<String> commandStream) {
+    protected boolean parseConstant (CommandStream commandStream) {
         String next = commandStream.peek();
         if (next.matches(CONSTANT_REGEX)) {
             next = commandStream.remove();
@@ -161,7 +161,7 @@ public abstract class AbstractInitializer {
         return false;
     }
 
-    protected boolean parseNestedFunction (LinkedList<String> commandStream)
+    protected boolean parseNestedFunction (CommandStream commandStream)
                                                                             throws FormattingException {
         String next = commandStream.peek();
         if (next.matches(COMMAND_REGEX)) {
@@ -180,7 +180,7 @@ public abstract class AbstractInitializer {
      */
     protected abstract ICommand instantiate (List<ICommand> parameters);
 
-    protected boolean parseList (LinkedList<String> commandStream) throws FormattingException {
+    protected boolean parseList (CommandStream commandStream) throws FormattingException {
         String next = commandStream.peek();
         if (next.equals(BEGIN_CODE_BLOCK)) {
             // first element is a bracket, remove it
@@ -198,7 +198,7 @@ public abstract class AbstractInitializer {
      * @param commandStream
      * @return
      */
-    protected boolean parseVariable (LinkedList<String> commandStream) {
+    protected boolean parseVariable (CommandStream commandStream) {
         String next = commandStream.peek();
         if (next.matches(VARIABLE_REGEX)) {
             String varName = commandStream.remove();

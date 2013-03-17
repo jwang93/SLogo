@@ -23,7 +23,7 @@ public class Parser {
     }
 
     public ICommand parse (String command) throws FormattingException {
-        LinkedList<String> params = new LinkedList<String>();
+        CommandStream params = new CommandStream(new LinkedList<String>());
         String commandString = command.trim();
         for (String str : commandString.split("\\s+")) {
             params.add(str);
@@ -31,7 +31,7 @@ public class Parser {
         return parse(params);
     }
 
-    protected ICommand parse (LinkedList<String> commandStream) throws FormattingException {
+    protected ICommand parse (CommandStream commandStream) throws FormattingException {
         CommandList main = new CommandList();
         while (!commandStream.isEmpty()) {
             String keyword = commandStream.remove();

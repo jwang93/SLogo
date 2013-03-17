@@ -27,7 +27,7 @@ public class ToInitializer extends AbstractInitializer {
         return new To(parameters, myFunctionName, getModel().getScope(), getParser() ,array);
     }
 
-    protected ICommand build (LinkedList<String> commandStream) throws FormattingException {
+    protected ICommand build (CommandStream commandStream) throws FormattingException {
         myFunctionName = processFunctionName(commandStream);
         myVariableNames = processVariableNames(commandStream);
         List<ICommand> parameters = processParameters(commandStream);
@@ -45,7 +45,7 @@ public class ToInitializer extends AbstractInitializer {
 
    
 
-    protected String processFunctionName (LinkedList<String> commandStream)
+    protected String processFunctionName (CommandStream commandStream)
                                                                            throws FormattingException {
         String next = commandStream.remove();
         if (!next.matches(COMMAND_REGEX)) { throw new FormattingException(); }
@@ -53,7 +53,7 @@ public class ToInitializer extends AbstractInitializer {
 
     }
 
-    protected List<String> processVariableNames (LinkedList<String> commandStream)
+    protected List<String> processVariableNames (CommandStream commandStream)
                                                                                   throws FormattingException {
         List<String> variableNames = new ArrayList<String>();
         String next = commandStream.remove();

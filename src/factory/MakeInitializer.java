@@ -24,13 +24,13 @@ public class MakeInitializer extends AbstractInitializer {
     }
 
     @Override
-    protected ICommand build (LinkedList<String> commandStream) throws FormattingException {
+    protected ICommand build (CommandStream commandStream) throws FormattingException {
         myName = processVarName(commandStream);
         List<ICommand> parameters = processParameters(commandStream);
         return instantiate(parameters);
     }
 
-    protected String processVarName (LinkedList<String> commandStream) throws FormattingException {
+    protected String processVarName (CommandStream commandStream) throws FormattingException {
         String next = commandStream.peek();
         if (!next.matches(VARIABLE_REGEX))
             throw new FormattingException();
@@ -41,7 +41,7 @@ public class MakeInitializer extends AbstractInitializer {
     /**
      * same as super except make shouldn't accept a list as an argument so leave that out.
      */
-    protected void processParameter (LinkedList<String> commandStream) throws FormattingException {
+    protected void processParameter (CommandStream commandStream) throws FormattingException {
         if (parseVariable(commandStream)) return;
         if (parseNestedFunction(commandStream)) return;
         if (parseConstant(commandStream)) return;
