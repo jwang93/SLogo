@@ -26,6 +26,7 @@ public class Turtle extends Sprite implements Paintable {
     private static final int THREE_QUARTER_TURN_DEGREES = 270;
     private static final int ONE_QUARTER_TURN_DEGREES = 90;
     private static final int NO_TURN_DEGREES = 0;
+    private static final double PRECISION_LEVEL=0.0000001;
     
 
     private boolean myPenDown = true;
@@ -81,8 +82,10 @@ public class Turtle extends Sprite implements Paintable {
         return Math.abs(pixels);
     }
 
-    private void moveRecursiveHelper (int pixels) {
-        if (pixels <= 0) return;
+    private void moveRecursiveHelper (double pixels) {
+    
+        
+        if (pixels <= 0+PRECISION_LEVEL) return;
         Location currentLocation = getLocation();
         Location nextLocation = getLocation();
         Location nextCenter = nextLocation;
@@ -94,6 +97,7 @@ public class Turtle extends Sprite implements Paintable {
             if(getHeading() < THREE_QUARTER_TURN_DEGREES){
                 angle = getHeading() - HALF_TURN_DEGREES;
             } 
+            angle=Math.toRadians(angle);
             nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
             nextCenter = new Location(getX() + getY() / Math.tan(angle),
                                    myCanvasBounds.getHeight());
@@ -109,6 +113,7 @@ public class Turtle extends Sprite implements Paintable {
             if(getHeading() > ONE_QUARTER_TURN_DEGREES){
                 angle = HALF_TURN_DEGREES - getHeading();
             } 
+            angle=Math.toRadians(angle);
             nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
             nextCenter = new Location(getX() + getY() / Math.tan(angle),
                                    0);
@@ -128,6 +133,7 @@ public class Turtle extends Sprite implements Paintable {
             if(getHeading() > HALF_TURN_DEGREES){
                 angle = HALF_TURN_DEGREES - getHeading();
             } 
+            angle=Math.toRadians(angle);
             nextLocation =
                     new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                             Math.tan(angle));
@@ -139,9 +145,10 @@ public class Turtle extends Sprite implements Paintable {
             // left
         }
         else if (nextLocation.getX() < 0) {
-            nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
+        	double angle=Math.toRadians(getHeading());
+            nextLocation = new Location(0, getY() + getX() / Math.tan(angle));
             nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
-                                                              Math.tan(getHeading()));
+                                                              Math.tan(angle));
             
             if(getHeading() == THREE_QUARTER_TURN_DEGREES){
                 nextLocation = new Location(0, getY());
@@ -150,11 +157,13 @@ public class Turtle extends Sprite implements Paintable {
         }
         
         setCenter(nextCenter);
-        int newPixels = pixels - (int) (Vector.distanceBetween(currentLocation, nextLocation));
+        double newPixels = pixels -  (Vector.distanceBetween(currentLocation, nextLocation));
         if (myPenDown) {
             myLine.addLineSegment(currentLocation, nextLocation);
         }
         moveRecursiveHelper(newPixels);
+        
+        
     }
 
     /**
