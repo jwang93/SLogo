@@ -134,14 +134,18 @@ public class Turtle extends Sprite implements Paintable {
     private Location[] overrunLeft () {
         Location nextLocation;
         Location nextCenter;
+        // exact calculation for exact 90 degree heading directions (don't want trig functions
+        // handling this)
+        if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(0, getY());
+            nextCenter = new Location(myCanvasBounds.getWidth(), getY());
+            return new Location[] { nextLocation, nextCenter };
+        }
         nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
         nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                              Math.tan(getHeading()));
 
-        if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
-            nextLocation = new Location(0, getY());
-            nextCenter = new Location(myCanvasBounds.getWidth(), getY());
-        }
+        
         return new Location[] { nextLocation, nextCenter };
     }
 
@@ -152,6 +156,14 @@ public class Turtle extends Sprite implements Paintable {
     private Location[] overrunRight () {
         Location nextLocation;
         Location nextCenter;
+        // exact calculation for exact 90 degree heading directions (don't want trig functions
+        // handling this)
+        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(myCanvasBounds.getWidth(), getY());
+            nextCenter = new Location(0, getY());
+            return new Location[] { nextLocation, nextCenter };
+        }
+        
         nextLocation =
                 new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                         Math.tan(getHeading()));
@@ -166,10 +178,7 @@ public class Turtle extends Sprite implements Paintable {
                 new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                         Math.tan(angle));
         nextCenter = new Location(0, getY() + getX() / Math.tan(angle));
-        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
-            nextLocation = new Location(myCanvasBounds.getWidth(), getY());
-            nextCenter = new Location(0, getY());
-        }
+        
         return new Location[] { nextLocation, nextCenter };
     }
 
@@ -180,6 +189,15 @@ public class Turtle extends Sprite implements Paintable {
     private Location[] overrunBottom () {
         Location nextLocation;
         Location nextCenter;
+        
+        // exact calculation for exact 90 degree heading directions (don't want trig functions
+        // handling this)
+        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(getX(), myCanvasBounds.getHeight());
+            nextCenter = new Location(getX(), 0);
+            return new Location[] { nextLocation, nextCenter };
+        }
+        
         double angle = getHeading();
         if (getHeading() > ONE_QUARTER_TURN_DEGREES) {
             angle = HALF_TURN_DEGREES - getHeading();
@@ -188,10 +206,7 @@ public class Turtle extends Sprite implements Paintable {
         nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
         nextCenter = new Location(getX() + getY() / Math.tan(angle),
                                   0);
-        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
-            nextLocation = new Location(getX(), myCanvasBounds.getHeight());
-            nextCenter = new Location(getX(), 0);
-        }
+     
 
         // eliminates race condition - if next location overruns left/right AND top/bottom it checks
         // to see which is overrun first and corrects
