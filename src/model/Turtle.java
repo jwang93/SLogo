@@ -221,13 +221,13 @@ public class Turtle extends Sprite implements Paintable {
 
         double angle = getHeading();
         if (getHeading() > HALF_TURN_DEGREES) {
-            angle = HALF_TURN_DEGREES - getHeading();
+            angle = -(getHeading() - THREE_QUARTER_TURN_DEGREES);
         }
         angle = Math.toRadians(angle);
         nextLocation =
-                new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                new Location(myCanvasBounds.getWidth(), getY() + (myCanvasBounds.getWidth() - getX()) /
                                                         Math.tan(angle));
-        nextCenter = new Location(0, getY() + getX() / Math.tan(angle));
+        nextCenter = new Location(0, getY() + (myCanvasBounds.getWidth() - getX()) / Math.tan(angle));
 
         return new Location[] { nextLocation, nextCenter };
     }
@@ -247,9 +247,9 @@ public class Turtle extends Sprite implements Paintable {
             return new Location[] { nextLocation, nextCenter };
         }
 
-        double angle = getHeading();
+        double angle = getHeading() - ONE_QUARTER_TURN_DEGREES;
         if (getHeading() > HALF_TURN_DEGREES) {
-            angle = HALF_TURN_DEGREES - getHeading();
+            angle = -(THREE_QUARTER_TURN_DEGREES - getHeading());
         }
         angle = Math.toRadians(angle);
         nextLocation = new Location(0, getY() + getX() / Math.tan(angle));
