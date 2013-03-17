@@ -85,7 +85,7 @@ public abstract class Sprite implements Paintable {
      */
     public void setCenter (double x, double y) {
         myCenter.setLocation(x, y);
-        resetBounds();
+       // resetBounds();
     }
 
     /**
