@@ -2,8 +2,9 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.ICommand;
 import commands.Heading;
+import commands.ICommand;
+
 
 public class HeadingInitializer extends AbstractInitializer {
 

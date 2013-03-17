@@ -5,6 +5,7 @@ import model.Model;
 import commands.ICommand;
 import commands.XCor;
 
+
 public class XCorInitializer extends AbstractInitializer {
 
     public XCorInitializer (Model model, Parser parser) {

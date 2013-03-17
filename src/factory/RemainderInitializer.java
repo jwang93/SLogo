@@ -2,8 +2,9 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.Remainder;
 import commands.ICommand;
+import commands.Remainder;
+
 
 public class RemainderInitializer extends AbstractInitializer {
 
@@ -16,6 +17,5 @@ public class RemainderInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
         return new Remainder(parameters);
     }
-    
 
 }

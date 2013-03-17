@@ -31,6 +31,7 @@ public class LineSegment implements Paintable {
 
     /**
      * Paints the line to the screen. Implements paintable.
+     * 
      * @param pen to paint with
      */
     @Override

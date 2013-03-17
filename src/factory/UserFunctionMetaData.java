@@ -24,7 +24,7 @@ public class UserFunctionMetaData {
     }
 
     protected void setFunctionName (String myFuntionName) {
-        this.myFunctionName = myFuntionName;
+        myFunctionName = myFuntionName;
     }
 
     protected ICommand getMyCodeBlock () {

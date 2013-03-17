@@ -1,7 +1,6 @@
 package factory;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import model.Model;
 import commands.Constant;
@@ -9,32 +8,32 @@ import commands.ICommand;
 import commands.Variable;
 import exceptions.FormattingException;
 
+
 /**
  * <p>
- * This class contains a lot of utility parsing functions for initializers in general
- * as well as a framework for creating simple commands, as well as overriding 
- * abilities to construct more complex objects
+ * This class contains a lot of utility parsing functions for initializers in general as well as a
+ * framework for creating simple commands, as well as overriding abilities to construct more complex
+ * objects
  * </p>
  * <p>
- * The main method called from the parser is build which takes a stream of 
- * slogo token strings. THe primary function of an initializer class is to 
- * resolve all necessary arguments to construct a  function. Arguments are 
- * grouped in two ways, either in the parameters for the actual SLogo command,
- * which may be a constant, a list of commands, a nested function, or a variable, 
- * or command specific (implicit) arguments, such as a turtle for commands that 
- * affect the turtle, or a scope for variables that deal with variables.  
+ * The main method called from the parser is build which takes a stream of slogo token strings. THe
+ * primary function of an initializer class is to resolve all necessary arguments to construct a
+ * function. Arguments are grouped in two ways, either in the parameters for the actual SLogo
+ * command, which may be a constant, a list of commands, a nested function, or a variable, or
+ * command specific (implicit) arguments, such as a turtle for commands that affect the turtle, or a
+ * scope for variables that deal with variables.
  * </p>
  * <p>
- * The framework in this abstract class provides a system for processing
- * the first kind, the explicit slogo parameters, through a recursive algorithm
- * that can handle arbitrarily complex nested syntax. Build calls processParameters
- * which loops a number of times equal to the number of explicit slogo arguments a
- * command takes (defined as a constant in the subclass). process parameters returns
- * a list of ICommands which are to be passed into instantiate, an abstract function
- * responsible for returning a constructed command. 
+ * The framework in this abstract class provides a system for processing the first kind, the
+ * explicit slogo parameters, through a recursive algorithm that can handle arbitrarily complex
+ * nested syntax. Build calls processParameters which loops a number of times equal to the number of
+ * explicit slogo arguments a command takes (defined as a constant in the subclass). process
+ * parameters returns a list of ICommands which are to be passed into instantiate, an abstract
+ * function responsible for returning a constructed command.
  * </p>
+ * 
  * @author Will Nance
- *
+ * 
  */
 public abstract class AbstractInitializer {
     protected static final String VARIABLE_REGEX = ":[a-zA-z]+";
@@ -42,7 +41,6 @@ public abstract class AbstractInitializer {
     protected static final String COMMAND_REGEX = "[a-zA-z_]+(\\?)?";
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private Parser myParser;
-    
 
     private Model myModel;
     private int numArgs;
@@ -92,23 +90,24 @@ public abstract class AbstractInitializer {
      * @throws FormattingException if the user can't code (or there are bugs)
      */
     protected List<ICommand> processParameters (CommandStream commandStream)
-                                                                                 throws FormattingException {
+                                                                            throws FormattingException {
         for (int i = 0; i < numArgs; i++) {
             int startLength = myParameters.size();
             processParameter(commandStream);
             if (!(myParameters.size() > startLength))
                 throw new FormattingException();
         }
-        
-        // **BUG FIX** completed processing parameters - set it clean 
+
+        // **BUG FIX** completed processing parameters - set it clean
         return myParameters;
     }
-    
+
     /**
      * Return the processed parameters and reset the value of myParameters
+     * 
      * @return the processed parameters
      */
-    private List<ICommand> resetParameters() {
+    private List<ICommand> resetParameters () {
         List<ICommand> returnParameters = myParameters;
         myParameters = new ArrayList<ICommand>();
         return returnParameters;
@@ -135,7 +134,7 @@ public abstract class AbstractInitializer {
      * @throws FormattingException if the commands were improperly formatted
      */
     protected void processParameter (CommandStream commandStream)
-                                                                      throws FormattingException {
+                                                                 throws FormattingException {
         if (parseList(commandStream)) return;
         if (parseVariable(commandStream)) return;
         if (parseNestedFunction(commandStream)) return;
@@ -162,10 +161,10 @@ public abstract class AbstractInitializer {
     }
 
     protected boolean parseNestedFunction (CommandStream commandStream)
-                                                                            throws FormattingException {
+                                                                       throws FormattingException {
         String next = commandStream.peek();
         if (next.matches(COMMAND_REGEX)) {
-            myParameters.add(myParser.parse(commandStream));
+            myParameters.add(myParser.parseOnce(commandStream));
             return true;
         }
         return false;
@@ -220,6 +219,7 @@ public abstract class AbstractInitializer {
     protected Model getModel () {
         return myModel;
     }
+
     protected Parser getParser () {
         return myParser;
     }

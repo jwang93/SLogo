@@ -78,7 +78,7 @@ public class Model extends Observable implements IModel, DataSource {
         }
         catch (FormattingException e) {
             myReturnMessage = "Formatting error";
-            
+
         }
         catch (VariableNotFoundException e) {
             myReturnMessage = "Variable not found";

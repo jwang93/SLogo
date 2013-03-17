@@ -1,8 +1,7 @@
 package commands;
 
-
 /**
- * This class is the base class for commands that take no Slogo parameter - commands such 
+ * This class is the base class for commands that take no Slogo parameter - commands such
  * as Turtle queries.
  * 
  * @author Jay Wang

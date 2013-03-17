@@ -60,6 +60,7 @@ public class Canvas extends JComponent {
 
     /**
      * Updates the iterator and repaints.
+     * 
      * @param iterator iterator to update
      */
     public void update (Iterator<Paintable> iterator) {

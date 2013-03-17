@@ -5,6 +5,7 @@ import model.Model;
 import commands.ICommand;
 import commands.YCor;
 
+
 public class YCorInitializer extends AbstractInitializer {
 
     public YCorInitializer (Model model, Parser parser) {

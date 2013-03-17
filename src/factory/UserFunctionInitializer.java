@@ -4,6 +4,7 @@ import java.util.List;
 import model.Model;
 import commands.ICommand;
 
+
 public class UserFunctionInitializer extends AbstractInitializer {
 
     public UserFunctionInitializer (Model model, Parser parser) {

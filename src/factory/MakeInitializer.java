@@ -1,6 +1,5 @@
 package factory;
 
-import java.util.LinkedList;
 import java.util.List;
 import model.Model;
 import commands.ICommand;
@@ -10,7 +9,6 @@ import exceptions.FormattingException;
 
 public class MakeInitializer extends AbstractInitializer {
 
-    
     private String myName;
 
     public MakeInitializer (Model model, Parser parser) {

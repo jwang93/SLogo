@@ -2,8 +2,9 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.Minus;
 import commands.ICommand;
+import commands.Minus;
+
 
 public class MinusInitializer extends AbstractInitializer {
 
@@ -16,6 +17,5 @@ public class MinusInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
         return new Minus(parameters);
     }
-    
 
 }

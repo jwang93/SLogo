@@ -42,6 +42,7 @@ public class Line implements Paintable {
 
     /**
      * paints all line segments.
+     * 
      * @param pen to paint with
      */
     @Override

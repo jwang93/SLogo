@@ -2,8 +2,9 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.RandomCommand;
 import commands.ICommand;
+import commands.RandomCommand;
+
 
 public class RandomInitializer extends AbstractInitializer {
 
@@ -16,6 +17,5 @@ public class RandomInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
         return new RandomCommand(parameters);
     }
-    
 
 }

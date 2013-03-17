@@ -21,6 +21,7 @@ public class Parser {
     private static final String BUNDLE_NAME = "Initializers";
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private ResourceBundle myResourceBundle;
+
     public Parser (Model model) {
         myUserFunctions = new HashMap<String, UserFunctionMetaData>();
         myModel = model;
@@ -38,16 +39,19 @@ public class Parser {
         return parse(params);
     }
 
+    protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
+        String keyword = commandStream.remove();
+        if (keyword.equals(END_OF_CODE_BLOCK))
+            return new CommandList();
+        if (!myInitializers.containsKey(keyword)) throw new FormattingException();
+        AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
+        return init.build(commandStream);
+    }
+
     protected ICommand parse (CommandStream commandStream) throws FormattingException {
         CommandList main = new CommandList();
         while (!commandStream.isEmpty()) {
-            String keyword = commandStream.remove();
-            if (keyword.equals(END_OF_CODE_BLOCK))
-                return main;
-            if (!myInitializers.containsKey(keyword)) { throw new FormattingException(); }
-            // AbstractInitializer init = myInitializers.get(keyword);
-            AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
-            main.add(init.build(commandStream));
+            main.add(parseOnce(commandStream));
         }
         return main;
     }

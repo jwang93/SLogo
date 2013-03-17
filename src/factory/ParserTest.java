@@ -18,8 +18,8 @@ public class ParserTest {
 
             ICommand main = parser.parse(command);
             System.out.println(main);
-            
-            //TEST CASES 
+
+            // TEST CASES
             System.out.println("TEST CASES: ");
             model.executeCommand("repeat 4 [ fd sum 30 random 10 ]");
             model.executeCommand("back 100 rt 90");
