@@ -145,7 +145,7 @@ public class Turtle extends Sprite implements Paintable {
 
         double angle = FULL_TURN_DEGREES - getHeading();
         if (getHeading() < THREE_QUARTER_TURN_DEGREES) {
-            angle = getHeading() - HALF_TURN_DEGREES;
+            angle = -(getHeading() - HALF_TURN_DEGREES);
         }
         angle = Math.toRadians(angle);
         nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
@@ -184,11 +184,11 @@ public class Turtle extends Sprite implements Paintable {
 
         double angle = getHeading();
         if (getHeading() > ONE_QUARTER_TURN_DEGREES) {
-            angle = HALF_TURN_DEGREES - getHeading();
+            angle = -(HALF_TURN_DEGREES - getHeading());
         }
         angle = Math.toRadians(angle);
-        nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
-        nextCenter = new Location(getX() + getY() / Math.tan(angle),
+        nextLocation = new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle), myCanvasBounds.getHeight());
+        nextCenter = new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle),
                                   0);
 
         // eliminates race condition - if next location overruns left/right AND top/bottom it checks
