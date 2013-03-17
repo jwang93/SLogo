@@ -26,8 +26,7 @@ public class Turtle extends Sprite implements Paintable {
     private static final int THREE_QUARTER_TURN_DEGREES = 270;
     private static final int ONE_QUARTER_TURN_DEGREES = 90;
     private static final int NO_TURN_DEGREES = 0;
-    private static final double PRECISION_LEVEL=0.0000001;
-    
+    private static final double PRECISION_LEVEL = 0.0000001;
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
@@ -71,99 +70,179 @@ public class Turtle extends Sprite implements Paintable {
     public int move (int pixels) {
         int pixelsToMove = pixels;
         // ensure that moveRecursiveHelper doesn't take a negative argument
-        if (Math.abs(pixels) != pixels){
+        if (Math.abs(pixels) != pixels) {
             pixelsToMove = -pixelsToMove;
             turn(HALF_TURN_DEGREES);
         }
         moveRecursiveHelper(pixelsToMove);
-        if (Math.abs(pixels) != pixels){
+        if (Math.abs(pixels) != pixels) {
             turn(HALF_TURN_DEGREES);
         }
         return Math.abs(pixels);
     }
 
+    /**
+     * Recursive helper for move. Uses its own helper methods, overrunsTop, Bottom, Right, and Left
+     * to calculate next move. Calls itself recursively when turtle hits the edge of the screen
+     * (overruns).
+     * 
+     * @param pixels changes every time with recursive call until it is less than 0 (because of
+     *        possible rounding errors with trig functions)
+     */
     private void moveRecursiveHelper (double pixels) {
-    
-        
-        if (pixels <= 0+PRECISION_LEVEL) return;
+        if (pixels <= 0 + PRECISION_LEVEL) return;
+
         Location currentLocation = getLocation();
         Location nextLocation = getLocation();
         Location nextCenter = nextLocation;
         nextLocation.translate(new Vector(getHeading(), pixels));
-        
-        // top
+        Location[] replacements = { nextLocation, nextCenter };
+
         if (nextLocation.getY() < 0) {
-            double angle = FULL_TURN_DEGREES - getHeading();
-            if(getHeading() < THREE_QUARTER_TURN_DEGREES){
-                angle = getHeading() - HALF_TURN_DEGREES;
-            } 
-            angle=Math.toRadians(angle);
-            nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
-            nextCenter = new Location(getX() + getY() / Math.tan(angle),
-                                   myCanvasBounds.getHeight());
-            
-            if(getHeading() == THREE_QUARTER_TURN_DEGREES){
-                nextLocation = new Location(getX(), 0);
-                nextCenter = new Location(getX(), myCanvasBounds.getHeight());
-            }
-            // bottom
+            // top
+            replacements = overrunsTop();
         }
         else if (nextLocation.getY() > myCanvasBounds.getHeight()) {
-            double angle = getHeading();
-            if(getHeading() > ONE_QUARTER_TURN_DEGREES){
-                angle = HALF_TURN_DEGREES - getHeading();
-            } 
-            angle=Math.toRadians(angle);
-            nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
-            nextCenter = new Location(getX() + getY() / Math.tan(angle),
-                                   0);
-            if(getHeading() == ONE_QUARTER_TURN_DEGREES){
-                nextLocation = new Location(getX(), myCanvasBounds.getHeight());
-                nextCenter = new Location(getX(), 0);
-            }
-            // right
+            // bottom
+            replacements = overrunBottom();
         }
         else if (nextLocation.getX() > myCanvasBounds.getWidth()) {
-            nextLocation =
-                    new Location(myCanvasBounds.getWidth(), getY() + getX() /
-                                                            Math.tan(getHeading()));
-            nextCenter = new Location(0, getY() + getX() / Math.tan(getHeading()));
-            
-            double angle = getHeading();
-            if(getHeading() > HALF_TURN_DEGREES){
-                angle = HALF_TURN_DEGREES - getHeading();
-            } 
-            angle=Math.toRadians(angle);
-            nextLocation =
-                    new Location(myCanvasBounds.getWidth(), getY() + getX() /
-                                                            Math.tan(angle));
-            nextCenter = new Location(0, getY() + getX() / Math.tan(angle));
-            if(getHeading() == ONE_QUARTER_TURN_DEGREES){
-                nextLocation = new Location(myCanvasBounds.getWidth(), getY());
-                nextCenter = new Location(0, getY());
-            }
-            // left
+            // right
+            replacements = overrunRight();
         }
         else if (nextLocation.getX() < 0) {
-        	double angle=Math.toRadians(getHeading());
-            nextLocation = new Location(0, getY() + getX() / Math.tan(angle));
-            nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
-                                                              Math.tan(angle));
-            
-            if(getHeading() == THREE_QUARTER_TURN_DEGREES){
-                nextLocation = new Location(0, getY());
-                nextCenter = new Location(myCanvasBounds.getWidth(), getY());
-            }
+            // left
+            replacements = overrunLeft();
         }
-        
+
+        nextLocation = replacements[0];
+        nextCenter = replacements[1];
+
         setCenter(nextCenter);
-        double newPixels = pixels -  (Vector.distanceBetween(currentLocation, nextLocation));
+        double newPixels = pixels - (Vector.distanceBetween(currentLocation, nextLocation));
         if (myPenDown) {
             myLine.addLineSegment(currentLocation, nextLocation);
         }
         moveRecursiveHelper(newPixels);
-        
-        
+
+    }
+
+    /**
+     * Calculates next Center for turtle and next Location for line ending/pixel calculations if
+     * Turtle overruns to left on move.
+     */
+    private Location[] overrunLeft () {
+        Location nextLocation;
+        Location nextCenter;
+        nextLocation = new Location(0, getY() + getX() / Math.tan(getHeading()));
+        nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                                                             Math.tan(getHeading()));
+
+        if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(0, getY());
+            nextCenter = new Location(myCanvasBounds.getWidth(), getY());
+        }
+        return new Location[] { nextLocation, nextCenter };
+    }
+
+    /**
+     * Calculates next Center for turtle and next Location for line ending/pixel calculations if
+     * Turtle overruns to right on move.
+     */
+    private Location[] overrunRight () {
+        Location nextLocation;
+        Location nextCenter;
+        nextLocation =
+                new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                                                        Math.tan(getHeading()));
+        nextCenter = new Location(0, getY() + getX() / Math.tan(getHeading()));
+
+        double angle = getHeading();
+        if (getHeading() > HALF_TURN_DEGREES) {
+            angle = HALF_TURN_DEGREES - getHeading();
+        }
+        angle = Math.toRadians(angle);
+        nextLocation =
+                new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                                                        Math.tan(angle));
+        nextCenter = new Location(0, getY() + getX() / Math.tan(angle));
+        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(myCanvasBounds.getWidth(), getY());
+            nextCenter = new Location(0, getY());
+        }
+        return new Location[] { nextLocation, nextCenter };
+    }
+
+    /**
+     * Calculates next Center for turtle and next Location for line ending/pixel calculations if
+     * Turtle overruns to bottom on move.
+     */
+    private Location[] overrunBottom () {
+        Location nextLocation;
+        Location nextCenter;
+        double angle = getHeading();
+        if (getHeading() > ONE_QUARTER_TURN_DEGREES) {
+            angle = HALF_TURN_DEGREES - getHeading();
+        }
+        angle = Math.toRadians(angle);
+        nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
+        nextCenter = new Location(getX() + getY() / Math.tan(angle),
+                                  0);
+        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(getX(), myCanvasBounds.getHeight());
+            nextCenter = new Location(getX(), 0);
+        }
+
+        // eliminates race condition - if next location overruns left/right AND top/bottom it checks
+        // to see which is overrun first and corrects
+        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
+            // right
+            return overrunRight();
+        }
+        else if (nextLocation.getX() < 0) {
+            // left
+            return overrunLeft();
+        }
+        return new Location[] { nextLocation, nextCenter };
+    }
+
+    /**
+     * Calculates next Center for turtle and next Location for line ending/pixel calculations if
+     * Turtle overruns to top on move.
+     */
+    private Location[] overrunsTop () {
+        Location nextLocation;
+        Location nextCenter;
+
+        // exact calculation for exact 90 degree heading directions (don't want trig functions
+        // handling this)
+        if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(getX(), 0);
+            nextCenter = new Location(getX(), myCanvasBounds.getHeight());
+            return new Location[] { nextLocation, nextCenter };
+        }
+
+        double angle = FULL_TURN_DEGREES - getHeading();
+        if (getHeading() < THREE_QUARTER_TURN_DEGREES) {
+            angle = getHeading() - HALF_TURN_DEGREES;
+        }
+        angle = Math.toRadians(angle);
+        nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
+        nextCenter = new Location(getX() + getY() / Math.tan(angle),
+                                  myCanvasBounds.getHeight());
+
+        // eliminates race condition - if next location overruns left/right AND top/bottom it checks
+        // to see which is overrun first and corrects
+        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
+            // right
+            return overrunRight();
+        }
+        else if (nextLocation.getX() < 0) {
+            // left
+            return overrunLeft();
+        }
+
+        return new Location[] { nextLocation, nextCenter };
     }
 
     /**
@@ -307,6 +386,7 @@ public class Turtle extends Sprite implements Paintable {
 
     /**
      * Gets all paintable objects currently showing and returns them in an iterator.
+     * 
      * @return iterator of paintables
      */
     public Iterator<Paintable> getPaintableIterator () {
