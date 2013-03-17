@@ -129,29 +129,78 @@ public class Turtle extends Sprite implements Paintable {
 
     /**
      * Calculates next Center for turtle and next Location for line ending/pixel calculations if
-     * Turtle overruns to left on move.
+     * Turtle overruns to top on move.
      */
-    private Location[] overrunLeft () {
+    private Location[] overrunsTop () {
         Location nextLocation;
         Location nextCenter;
+
         // exact calculation for exact 90 degree heading directions (don't want trig functions
         // handling this)
         if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
-            nextLocation = new Location(0, getY());
-            nextCenter = new Location(myCanvasBounds.getWidth(), getY());
+            nextLocation = new Location(getX(), 0);
+            nextCenter = new Location(getX(), myCanvasBounds.getHeight());
             return new Location[] { nextLocation, nextCenter };
         }
-        
-        double angle = getHeading();
-        if (getHeading() > HALF_TURN_DEGREES) {
-            angle = HALF_TURN_DEGREES - getHeading();
+
+        double angle = FULL_TURN_DEGREES - getHeading();
+        if (getHeading() < THREE_QUARTER_TURN_DEGREES) {
+            angle = -(getHeading() - HALF_TURN_DEGREES);
         }
         angle = Math.toRadians(angle);
-        nextLocation = new Location(0, getY() + getX() / Math.tan(angle));
-        nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
-                                                             Math.tan(angle));
+        nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
+        nextCenter = new Location(getX() + getY() / Math.tan(angle),
+                                  myCanvasBounds.getHeight());
 
-        
+        // eliminates race condition - if next location overruns left/right AND top/bottom it checks
+        // to see which is overrun first and corrects
+        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
+            // right
+            return overrunRight();
+        }
+        else if (nextLocation.getX() < 0) {
+            // left
+            return overrunLeft();
+        }
+
+        return new Location[] { nextLocation, nextCenter };
+    }
+
+    /**
+     * Calculates next Center for turtle and next Location for line ending/pixel calculations if
+     * Turtle overruns to bottom on move.
+     */
+    private Location[] overrunBottom () {
+        Location nextLocation;
+        Location nextCenter;
+
+        // exact calculation for exact 90 degree heading directions (don't want trig functions
+        // handling this)
+        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
+            nextLocation = new Location(getX(), myCanvasBounds.getHeight());
+            nextCenter = new Location(getX(), 0);
+            return new Location[] { nextLocation, nextCenter };
+        }
+
+        double angle = getHeading();
+        if (getHeading() > ONE_QUARTER_TURN_DEGREES) {
+            angle = -(HALF_TURN_DEGREES - getHeading());
+        }
+        angle = Math.toRadians(angle);
+        nextLocation = new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle), myCanvasBounds.getHeight());
+        nextCenter = new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle),
+                                  0);
+
+        // eliminates race condition - if next location overruns left/right AND top/bottom it checks
+        // to see which is overrun first and corrects
+        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
+            // right
+            return overrunRight();
+        }
+        else if (nextLocation.getX() < 0) {
+            // left
+            return overrunLeft();
+        }
         return new Location[] { nextLocation, nextCenter };
     }
 
@@ -179,84 +228,33 @@ public class Turtle extends Sprite implements Paintable {
                 new Location(myCanvasBounds.getWidth(), getY() + getX() /
                                                         Math.tan(angle));
         nextCenter = new Location(0, getY() + getX() / Math.tan(angle));
-        
+
         return new Location[] { nextLocation, nextCenter };
     }
 
     /**
      * Calculates next Center for turtle and next Location for line ending/pixel calculations if
-     * Turtle overruns to bottom on move.
+     * Turtle overruns to left on move.
      */
-    private Location[] overrunBottom () {
+    private Location[] overrunLeft () {
         Location nextLocation;
         Location nextCenter;
-        
-        // exact calculation for exact 90 degree heading directions (don't want trig functions
-        // handling this)
-        if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
-            nextLocation = new Location(getX(), myCanvasBounds.getHeight());
-            nextCenter = new Location(getX(), 0);
-            return new Location[] { nextLocation, nextCenter };
-        }
-        
-        double angle = getHeading();
-        if (getHeading() > ONE_QUARTER_TURN_DEGREES) {
-            angle = HALF_TURN_DEGREES - getHeading();
-        }
-        angle = Math.toRadians(angle);
-        nextLocation = new Location(getX() + getY() / Math.tan(angle), myCanvasBounds.getHeight());
-        nextCenter = new Location(getX() + getY() / Math.tan(angle),
-                                  0);
-     
-
-        // eliminates race condition - if next location overruns left/right AND top/bottom it checks
-        // to see which is overrun first and corrects
-        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
-            // right
-            return overrunRight();
-        }
-        else if (nextLocation.getX() < 0) {
-            // left
-            return overrunLeft();
-        }
-        return new Location[] { nextLocation, nextCenter };
-    }
-
-    /**
-     * Calculates next Center for turtle and next Location for line ending/pixel calculations if
-     * Turtle overruns to top on move.
-     */
-    private Location[] overrunsTop () {
-        Location nextLocation;
-        Location nextCenter;
-
         // exact calculation for exact 90 degree heading directions (don't want trig functions
         // handling this)
         if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
-            nextLocation = new Location(getX(), 0);
-            nextCenter = new Location(getX(), myCanvasBounds.getHeight());
+            nextLocation = new Location(0, getY());
+            nextCenter = new Location(myCanvasBounds.getWidth(), getY());
             return new Location[] { nextLocation, nextCenter };
         }
 
-        double angle = FULL_TURN_DEGREES - getHeading();
-        if (getHeading() < THREE_QUARTER_TURN_DEGREES) {
-            angle = getHeading() - HALF_TURN_DEGREES;
+        double angle = getHeading();
+        if (getHeading() > HALF_TURN_DEGREES) {
+            angle = HALF_TURN_DEGREES - getHeading();
         }
         angle = Math.toRadians(angle);
-        nextLocation = new Location(getX() + getY() / Math.tan(angle), 0);
-        nextCenter = new Location(getX() + getY() / Math.tan(angle),
-                                  myCanvasBounds.getHeight());
-
-        // eliminates race condition - if next location overruns left/right AND top/bottom it checks
-        // to see which is overrun first and corrects
-        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
-            // right
-            return overrunRight();
-        }
-        else if (nextLocation.getX() < 0) {
-            // left
-            return overrunLeft();
-        }
+        nextLocation = new Location(0, getY() + getX() / Math.tan(angle));
+        nextCenter = new Location(myCanvasBounds.getWidth(), getY() + getX() /
+                                                             Math.tan(angle));
 
         return new Location[] { nextLocation, nextCenter };
     }
