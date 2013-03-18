@@ -278,30 +278,31 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     /**
-     * Sets heading to go towards location
+     * Sets heading to go towards location **AS IN VIEW'S COORDINATES**
      * 
      * @param location location to set heading towards
      * @return distance of turn
      */
     public double towards (Location location) {
         Location convertedLocation = convertFromViewCoordinates(location);
-        double turnDistance = Vector.angleBetween(new Location(getX(), getY()), convertedLocation);
+        double turnDistance =180-(-1)* Vector.angleBetween(convertFromViewCoordinates(new Location(getX(), getY())), convertedLocation);
         turn(turnDistance);
         return turnDistance;
     }
 
     /**
-     * Moves turtle to location
+     * Moves turtle to location **AS IN VIEW'S COORDINATES**
      * 
      * @param location to move to
      * @return distance of move
      */
     public int setLocation (Location location) {
-        Location locationToMove = convertFromViewCoordinates(location);
-        double heading = getHeading();
+        Location locationToMove = location;
+        //double heading = getHeading();
         towards(locationToMove);
         int distance = (int) Vector.distanceBetween(location, getLocation());
-        setHeading(heading);
+        //setHeading(heading);
+        move(distance);
         return distance;
     }
 
