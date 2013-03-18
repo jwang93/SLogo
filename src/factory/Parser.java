@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import model.Model;
 import commands.CommandList;
-import commands.ICommand;
+import commands.*;
 import exceptions.FormattingException;
 
 
@@ -54,7 +54,10 @@ public class Parser {
     }
 
     protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
+        
         String keyword = commandStream.remove();
+        if(keyword.matches("[-]?[0-9]+"))
+                return new Constant(Integer.parseInt(keyword));
         if (myUserFunctions.containsKey(keyword)) {
             AbstractInitializer init = new UserFunctionInitializer(myModel, this, myUserFunctions.get(keyword));
             return init.build(commandStream);
