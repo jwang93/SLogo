@@ -58,6 +58,11 @@ public class ParserInitializer {
         map.put("xcor", new XCorInitializer(myModel, myParser));
         map.put("ycor", new YCorInitializer(myModel, myParser));
         map.put("heading", new HeadingInitializer(myModel, myParser));
+        map.put("pendown?", new PenDownInitializer(myModel, myParser));
+        map.put("pendownp", new PenDownInitializer(myModel, myParser));
+        map.put("showing?", new ShowingInitializer(myModel, myParser));
+        map.put("showingp", new ShowingInitializer(myModel, myParser));
+
 
         return map;
     }

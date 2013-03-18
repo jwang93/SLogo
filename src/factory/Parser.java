@@ -69,7 +69,7 @@ public class Parser {
 
     private AbstractInitializer getInitializer (String string) throws FormattingException {
         try {
-            Class<?> theClass = Class.forName(string);
+            Class<?> theClass = Class.forName(string.trim());
             try {
                 Constructor<?> constructor = theClass.getConstructor(INITIALIZER_PARAMETER_TYPES);
                 try {
