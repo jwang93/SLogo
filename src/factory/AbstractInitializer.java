@@ -104,17 +104,6 @@ public abstract class AbstractInitializer {
     }
 
     /**
-     * Return the processed parameters and reset the value of myParameters
-     * 
-     * @return the processed parameters
-     */
-    private List<ICommand> resetParameters () {
-        List<ICommand> returnParameters = myParameters;
-        myParameters = new ArrayList<ICommand>();
-        return returnParameters;
-    }
-
-    /**
      * <p>
      * Helper method for <code>processParameters<code> which 
      * takes the LinkList of command strings and resolves the 
@@ -193,8 +182,8 @@ public abstract class AbstractInitializer {
 
     /**
      * Create a <code>Variable<code> object according to the name passed
-     * in. The name must have the prefix removed.
-     * 
+     * in. This method should remove the prefix.
+     *  
      * @param commandStream
      * @return
      */

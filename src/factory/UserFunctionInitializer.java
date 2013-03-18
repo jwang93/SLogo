@@ -33,22 +33,17 @@ public class UserFunctionInitializer extends AbstractInitializer {
 
     /**
      * Running User Defined Functions requires that you add the method parameters to the scope.
-     * This function appends to the beginning of the function's code block some <code>Make<code> commands which will create
-     * the variables at runtime. When a user function is run, it will first run the make commands
-     * to set the UserFunction's parameters, then it will run the code associated with the user
-     * function. This function creates the make commands and then adds them to the parameter list. 
+     * This function appends to the beginning of the function's code block some ICommands which will be
+     * assigned to variables at runtime. When a user function is run. This function creates the 
+     * parameters that will serve as method arguments. It also adds the CodeBlock that will actually get run.
      * @param commandStream
      * @throws FormattingException
      */
     protected void addVariables (CommandStream commandStream) throws FormattingException {
-        StringBuilder makeCommands = new  StringBuilder();
+        
         for(String varName : myVariableNames){
             processParameter(commandStream);
-            //makeCommands.append(String.format("make :%s %s", varName, getParser().parseOnce(commandStream).toString() + " "));
         }
-        if(myVariableNames.size()>0)
-            //myCommands.add(super.getParser().parse(makeCommands.toString()));
-       // add(myCommands);
         add(myCodeBlock);
     }
 

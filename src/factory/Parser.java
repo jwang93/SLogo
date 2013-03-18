@@ -3,7 +3,6 @@ package factory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.ResourceBundle;
 import model.Model;
@@ -15,10 +14,9 @@ public class Parser {
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private static final String END_OF_CODE_BLOCK = "]";
     private static final String TOKEN_SEPARATOR_REGEX = "\\s+";
-    private Map<String, AbstractInitializer> myInitializers;
     private Map<String, UserFunctionMetaData> myUserFunctions;
     private Model myModel;
-    private static final Class[] INITIALIZER_PARAMETER_TYPES = { Model.class, Parser.class };
+    private static final Class<?>[] INITIALIZER_PARAMETER_TYPES = { Model.class, Parser.class };
     private static final String BUNDLE_NAME = "Initializers";
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String VARIABLE_REGEX = AbstractInitializer.VARIABLE_REGEX;
@@ -27,8 +25,6 @@ public class Parser {
     public Parser (Model model) {
         myUserFunctions = new HashMap<String, UserFunctionMetaData>();
         myModel = model;
-        ParserInitializer init = new ParserInitializer(myModel, this);
-        myInitializers = init.initializeMap();
         myResourceBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + BUNDLE_NAME);
     }
 
@@ -60,7 +56,7 @@ public class Parser {
         if (keyword.matches(CONSTANT_REGEX))
             return new Constant(Integer.parseInt(keyword));
         if (keyword.matches(VARIABLE_REGEX))
-            return new Variable(keyword.substring(0), myModel);
+            return new Variable(keyword.substring(1), myModel);
         if (myUserFunctions.containsKey(keyword)) {
             AbstractInitializer init =
                     new UserFunctionInitializer(myModel, this, myUserFunctions.get(keyword));

@@ -34,12 +34,12 @@ public class UserFunction extends CommandList implements ICommand {
     }
 
     public int execute () throws VariableNotFoundException {
-
         setVariables();
         return super.execute();
     }
 
     private void setVariables () throws VariableNotFoundException {
+      //TODO BUGBUG Remove makes the command unuseable after it executes once. rewrite to preserve command
         List<String> varNames = myData.getVarNames();
         List<ICommand> commands = getCommands();
         for (int i = 0; i < myData.getNumArgs(); i++) {

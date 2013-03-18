@@ -16,13 +16,7 @@ public class Variable implements ICommand {
 
     @Override
     public int execute () throws VariableNotFoundException {
-        try {
             return myModel.getScope().get(myName);
-        }
-        catch (VariableNotFoundException e) {
-            throw new VariableNotFoundException();
-        }
-
     }
 
     @Override
