@@ -14,6 +14,7 @@ import exceptions.FormattingException;
 
 public class Parser {
     private static final String END_OF_CODE_BLOCK = "]";
+    private static final String TOKEN_SEPARATOR_REGEX = "\\s+";
     private Map<String, AbstractInitializer> myInitializers;
     private Map<String, UserFunctionMetaData> myUserFunctions;
     private Model myModel;
@@ -31,34 +32,40 @@ public class Parser {
     }
 
     public ICommand parse (String command) throws FormattingException {
-        CommandStream params = new CommandStream(new LinkedList<String>());
+        CommandStream params = new CommandStream();
         String commandString = command.trim();
-        for (String str : commandString.split("\\s+")) {
+        for (String str : commandString.split(TOKEN_SEPARATOR_REGEX)) {
             params.add(str);
         }
         return parse(params);
     }
 
-    protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
-        String keyword = commandStream.remove();
-        if (keyword.equals(END_OF_CODE_BLOCK))
-            return new CommandList();
-        if (!myInitializers.containsKey(keyword)) throw new FormattingException();
-        AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
-        return init.build(commandStream);
-    }
-
     protected ICommand parse (CommandStream commandStream) throws FormattingException {
         CommandList main = new CommandList();
         while (!commandStream.isEmpty()) {
+            if (commandStream.peek().equals(END_OF_CODE_BLOCK)) {
+                commandStream.remove();
+                continue;
+            }
             main.add(parseOnce(commandStream));
+
         }
         return main;
     }
 
+    protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
+        String keyword = commandStream.remove();
+        if (myUserFunctions.containsKey(keyword)) {
+            AbstractInitializer init = new UserFunctionInitializer(myModel, this, myUserFunctions.get(keyword));
+            return init.build(commandStream);
+        }
+        if (! myResourceBundle.containsKey(keyword)) throw new FormattingException();
+        AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
+        return init.build(commandStream);
+    }
+
     private AbstractInitializer getInitializer (String string) throws FormattingException {
         try {
-            System.out.println(string);
             Class<?> theClass = Class.forName(string);
             try {
                 Constructor<?> constructor = theClass.getConstructor(INITIALIZER_PARAMETER_TYPES);
@@ -66,36 +73,29 @@ public class Parser {
                     return (AbstractInitializer) constructor.newInstance(myModel, this);
                 }
                 catch (IllegalArgumentException e) {
-                    System.out.println(1);
                     throw new FormattingException();
                 }
                 catch (InstantiationException e) {
-                    System.out.println(2);
                     throw new FormattingException();
                 }
                 catch (IllegalAccessException e) {
-                    System.out.println(3);
                     throw new FormattingException();
                 }
                 catch (InvocationTargetException e) {
-                    System.out.println(4);
                     throw new FormattingException();
                 }
             }
 
             catch (SecurityException e) {
-                System.out.println(5);
                 throw new FormattingException();
             }
 
             catch (NoSuchMethodException e) {
-                System.out.println(6);
                 throw new FormattingException();
             }
 
         }
         catch (ClassNotFoundException e) {
-            System.out.println(7);
             throw new FormattingException();
         }
     }

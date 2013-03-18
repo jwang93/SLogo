@@ -2,28 +2,40 @@ package commands;
 
 import java.util.Arrays;
 import java.util.List;
+import model.MethodScope;
 import model.Scope;
 import factory.Parser;
+import exceptions.FormattingException;
 
 
 public class To extends AbstractSingleParameterCommand implements ICommand {
     public static final int NUM_ARGS = 1;
     private List<String> myVariableNames;
     private String myName;
+    private MethodScope myMethods;
 
     public To (List<ICommand> parameters,
                String methodName,
                Scope scope,
+               MethodScope methods,
                Parser parser,
-               String ... variableNames) {
+               List<String> variableNames) {
+
         super(parameters);
-        myVariableNames = Arrays.asList(variableNames);
+        myVariableNames = variableNames;
         myName = methodName;
+        myMethods = methods;
     }
 
     @Override
     public int execute () {
-        return 0;
+        CommandList codeBlock = new CommandList();
+        for (ICommand command : getCommands()) {
+            codeBlock.add(command);
+        }
+        myMethods.setVariable(myName, codeBlock);
+        return 1;
+
     }
 
 }

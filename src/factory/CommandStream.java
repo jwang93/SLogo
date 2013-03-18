@@ -5,26 +5,31 @@ import java.util.LinkedList;
 
 public class CommandStream {
 
-    private LinkedList<String> commandStream = new LinkedList<String>();
+    private LinkedList<String> myCommandStream;
+
+    public CommandStream () {
+        myCommandStream = new LinkedList<String>();
+    }
 
     public CommandStream (LinkedList<String> commands) {
-        commandStream = commands;
+        myCommandStream = commands;
     }
 
     public String peek () {
-        return commandStream.peek();
+        return myCommandStream.peek();
     }
 
     public String remove () {
-        return commandStream.remove();
+        return myCommandStream.remove();
     }
 
     public boolean isEmpty () {
-        return commandStream.isEmpty();
+
+        return myCommandStream.isEmpty();
     }
 
     public void add (String param) {
-        commandStream.add(param);
+        myCommandStream.add(param);
     }
 
 }

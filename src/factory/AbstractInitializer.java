@@ -55,6 +55,9 @@ public abstract class AbstractInitializer {
         myParser = parser;
 
     }
+    protected void add(ICommand command){
+        myParameters.add(command);
+    }
 
     /**
      * This is the class's central method. Creating commands is a two step process.
@@ -97,8 +100,6 @@ public abstract class AbstractInitializer {
             if (!(myParameters.size() > startLength))
                 throw new FormattingException();
         }
-
-        // **BUG FIX** completed processing parameters - set it clean
         return myParameters;
     }
 

@@ -33,6 +33,7 @@ public class Model extends Observable implements IModel, DataSource {
     private Parser myParser;
     private Turtle myTurtle;
     private Scope myScope;
+    private MethodScope myMethods;
     private int myReturnValue;
     private String myReturnMessage;
 
@@ -45,6 +46,7 @@ public class Model extends Observable implements IModel, DataSource {
         myTurtle = new Turtle(canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
+        myMethods = new MethodScope();
     }
 
     /**
@@ -159,5 +161,9 @@ public class Model extends Observable implements IModel, DataSource {
      */
     public void setReturnMessage (String message) {
         myReturnMessage = message;
+    }
+
+    public MethodScope getMethods () {
+        return myMethods;
     }
 }

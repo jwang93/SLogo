@@ -5,10 +5,10 @@ import commands.ICommand;
 
 
 public class UserFunctionMetaData {
-    String myFunctionName;
-    ICommand myCodeBlock;
-    int myNumArgs;
-    List<String> myVarNames;
+    private String myFunctionName;
+    private ICommand myCodeBlock;
+    private int myNumArgs;
+    private List<String> myVarNames;
 
     public UserFunctionMetaData (String functionName,
                                  List<String> variableNames,
@@ -19,7 +19,7 @@ public class UserFunctionMetaData {
         myNumArgs = myVarNames.size();
     }
 
-    protected String getFunctionName () {
+    public String getFunctionName () {
         return myFunctionName;
     }
 
@@ -35,7 +35,7 @@ public class UserFunctionMetaData {
         this.myCodeBlock = myCodeBlock;
     }
 
-    protected int getNumArgs () {
+    public int getNumArgs () {
         return myNumArgs;
     }
 
