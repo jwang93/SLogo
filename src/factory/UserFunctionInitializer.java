@@ -43,11 +43,12 @@ public class UserFunctionInitializer extends AbstractInitializer {
     protected void addVariables (CommandStream commandStream) throws FormattingException {
         StringBuilder makeCommands = new  StringBuilder();
         for(String varName : myVariableNames){
-            makeCommands.append(String.format("make :%s %s", varName, getParser().parseOnce(commandStream).toString()));
+            processParameter(commandStream);
+            //makeCommands.append(String.format("make :%s %s", varName, getParser().parseOnce(commandStream).toString() + " "));
         }
         if(myVariableNames.size()>0)
-            myCommands.add(super.getParser().parse(makeCommands.toString()));
-        add(myCommands);
+            //myCommands.add(super.getParser().parse(makeCommands.toString()));
+       // add(myCommands);
         add(myCodeBlock);
     }
 

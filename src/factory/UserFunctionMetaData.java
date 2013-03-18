@@ -43,7 +43,7 @@ public class UserFunctionMetaData {
         this.myNumArgs = myNumArgs;
     }
 
-    protected List<String> getVarNames () {
+    public List<String> getVarNames () {
         return myVarNames;
     }
 

@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.ResourceBundle;
 import model.Model;
-import commands.CommandList;
 import commands.*;
 import exceptions.FormattingException;
 
 
 public class Parser {
+    private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private static final String END_OF_CODE_BLOCK = "]";
     private static final String TOKEN_SEPARATOR_REGEX = "\\s+";
     private Map<String, AbstractInitializer> myInitializers;
@@ -21,6 +21,7 @@ public class Parser {
     private static final Class[] INITIALIZER_PARAMETER_TYPES = { Model.class, Parser.class };
     private static final String BUNDLE_NAME = "Initializers";
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
+    private static final String VARIABLE_REGEX = AbstractInitializer.VARIABLE_REGEX;
     private ResourceBundle myResourceBundle;
 
     public Parser (Model model) {
@@ -54,15 +55,18 @@ public class Parser {
     }
 
     protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
-        
+
         String keyword = commandStream.remove();
-        if(keyword.matches("[-]?[0-9]+"))
-                return new Constant(Integer.parseInt(keyword));
+        if (keyword.matches(CONSTANT_REGEX))
+            return new Constant(Integer.parseInt(keyword));
+        if (keyword.matches(VARIABLE_REGEX))
+            return new Variable(keyword.substring(0), myModel);
         if (myUserFunctions.containsKey(keyword)) {
-            AbstractInitializer init = new UserFunctionInitializer(myModel, this, myUserFunctions.get(keyword));
+            AbstractInitializer init =
+                    new UserFunctionInitializer(myModel, this, myUserFunctions.get(keyword));
             return init.build(commandStream);
         }
-        if (! myResourceBundle.containsKey(keyword)) throw new FormattingException();
+        if (!myResourceBundle.containsKey(keyword)) throw new FormattingException();
         AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
         return init.build(commandStream);
     }
@@ -105,9 +109,6 @@ public class Parser {
 
     public void add (UserFunctionMetaData metadata) {
         myUserFunctions.put(metadata.getFunctionName(), metadata);
-        // myInitializers.put( metadata.getFunctionName(), new UserFunctionInitializer( myModel,
-        // this , metadata));
-
     }
 
 }
