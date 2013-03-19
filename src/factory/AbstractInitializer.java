@@ -3,6 +3,7 @@ package factory;
 import java.util.ArrayList;
 import java.util.List;
 import model.Model;
+import commands.CommandList;
 import commands.Constant;
 import commands.ICommand;
 import commands.Variable;
@@ -55,7 +56,8 @@ public abstract class AbstractInitializer {
         myParser = parser;
 
     }
-    protected void add(ICommand command){
+
+    protected void add (ICommand command) {
         myParameters.add(command);
     }
 
@@ -77,26 +79,23 @@ public abstract class AbstractInitializer {
 
     /**
      * <p>
-     * This will process the appropriate number of parameters given the specific subclasses number
-     * of arguments, <code>NUM_ARGS<code>.
-     * This uses a helper method <code>processParameter<code>which 
-     * handles the different forms
-     * which parameters may take.
+     * This will process the appropriate number of parameters given the specific subclass's number
+     * of arguments, <code>NUM_ARGS</code>. This uses a helper method <code>processParameter</code>
+     * which handles the different forms which parameters may take.
      * </p>
      * <p>
      * This Function is written to guarantee that a parameter is either successfully parsed or it
-     * will throw an exception, as
+     * will throw an exception.
      * </p>
      * 
-     * @param commandStream a list, the head of which is the parameter to be parsed next
+     * @param commands a list, the head of which is the parameter to be parsed next
      * @return a list of parameters to be passed into an object at construction
      * @throws FormattingException if the user can't code (or there are bugs)
      */
-    protected List<ICommand> processParameters (CommandStream commandStream)
-                                                                            throws FormattingException {
+    protected List<ICommand> processParameters (CommandStream commands) throws FormattingException {
         for (int i = 0; i < numArgs; i++) {
             int startLength = myParameters.size();
-            processParameter(commandStream);
+            processParameter(commands);
             if (!(myParameters.size() > startLength))
                 throw new FormattingException();
         }
@@ -105,14 +104,10 @@ public abstract class AbstractInitializer {
 
     /**
      * <p>
-     * Helper method for <code>processParameters<code> which 
-     * takes the LinkList of command strings and resolves the 
-     * parameter to either a <code>Constant<code>, <code>Variable<code>, 
-     * <code>List<code> or a nested <code>ICommand<code>
-     * 
-     * 
+     * Helper method for <code>processParameters</code> which takes the LinkList of command strings
+     * and resolves the parameter to either a <code>Constant</code>, <code>Variable</code>,
+     * <code>List</code> or a nested <code>ICommand</code>
      * </p>
-     * 
      * <p>
      * This code is supposed to be comprehensive enough that it can process most kinds of SLogo
      * parameters (meaning something that will eventually become a number at execution,) but for
@@ -167,14 +162,19 @@ public abstract class AbstractInitializer {
      * @param parameters a list of parameters to be passed into the constructor
      * @return the created <code>ICommand<code>
      */
-    protected abstract ICommand instantiate (List<ICommand> parameters);
 
     protected boolean parseList (CommandStream commandStream) throws FormattingException {
         String next = commandStream.peek();
         if (next.equals(BEGIN_CODE_BLOCK)) {
             // first element is a bracket, remove it
             commandStream.remove();
-            myParameters.add(myParser.parse(commandStream));
+            CommandList codeBlock = new CommandList();
+            while (!commandStream.peek().equals("]")) {
+                codeBlock.add(myParser.parseOnce(commandStream));
+            }
+            myParameters.add(codeBlock);
+            // remove the last bracket
+            commandStream.remove();
             return true;
         }
         return false;
@@ -183,7 +183,7 @@ public abstract class AbstractInitializer {
     /**
      * Create a <code>Variable<code> object according to the name passed
      * in. This method should remove the prefix.
-     *  
+     * 
      * @param commandStream
      * @return
      */
@@ -197,6 +197,8 @@ public abstract class AbstractInitializer {
         }
         return false;
     }
+
+    protected abstract ICommand instantiate (List<ICommand> parameters);
 
     protected void setNumArgs (int numArgs) {
         this.numArgs = numArgs;

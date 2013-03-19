@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.Scope;
 import factory.UserFunctionMetaData;
@@ -25,6 +26,7 @@ import factory.UserFunctionMetaData;
 public class UserFunction extends CommandList implements ICommand {
     private UserFunctionMetaData myData;
     private Scope myScope;
+    private List<ICommand> myVariables = new ArrayList<ICommand>();
 
     public UserFunction (List<ICommand> parameters, UserFunctionMetaData data, Scope scope) {
         myData = data;
@@ -33,19 +35,33 @@ public class UserFunction extends CommandList implements ICommand {
         setVariables();
     }
 
+    /*
+     * The special execute function here is necessary.
+     * there are times when you may need to run the same command more than
+     * once (such as in a repeat command). Often times one of the parameters
+     * that the user function takes in may change. The update variables function will
+     * maintain the state of the method instance variables each time it is called.
+     */
     @Override
     public int execute () {
+        updateVariables();
         return super.execute();
     }
 
-    private void setVariables () {
-        // TODO BUGBUG Remove makes the command unuseable after it executes once. rewrite to
-        // preserve command
-        List<String> varNames = myData.getVarNames();
-        List<ICommand> commands = getCommands();
-        for (String key : varNames) {
-            ICommand value = commands.remove(0);
+    private void updateVariables () {
+        for (int i = 0; i < myVariables.size(); i++) {
+            String key = myData.getVarNames().get(i);
+            ICommand value = myVariables.get(i);
             myScope.setVariable(key, value.execute());
+        }
+
+    }
+
+    private void setVariables () {
+        myData.getVarNames();
+        List<ICommand> commands = getCommands();
+        for (int i = 0; i < myData.getNumArgs(); i++) {
+            myVariables.add(commands.remove(0));
         }
     }
 

@@ -15,7 +15,7 @@ public class Repeat extends CommandList implements ICommand {
      */
     private static final int INDEX_OF_PARAMETER = 0;
     private static final int INDEX_OF_CODE_BLOCK = 1;
-    private int myParameter;
+    private int myNumTimes;
     private ICommand myCodeBlock;
 
     public Repeat (List<ICommand> parameters) {
@@ -33,7 +33,7 @@ public class Repeat extends CommandList implements ICommand {
     public int execute () {
         resolveParameters();
         int returnValue = 0;
-        for (int i = 0; i < myParameter; i++) {
+        for (int i = 0; i < myNumTimes; i++) {
             returnValue = myCodeBlock.execute();
         }
         return returnValue;
@@ -48,7 +48,7 @@ public class Repeat extends CommandList implements ICommand {
 
     private void resolveParameters () {
         List<ICommand> commands = getCommands();
-        myParameter = commands.get(INDEX_OF_PARAMETER).execute();
+        myNumTimes = commands.get(INDEX_OF_PARAMETER).execute();
         myCodeBlock = commands.get(INDEX_OF_CODE_BLOCK);
     }
 

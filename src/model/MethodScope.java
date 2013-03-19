@@ -6,6 +6,7 @@ import java.util.Stack;
 import commands.ICommand;
 import exceptions.VariableNotFoundException;
 
+
 public class MethodScope {
     private Stack<Map<String, ICommand>> myScope = new Stack<Map<String, ICommand>>();
     private Map<String, ICommand> myCurrentScope;

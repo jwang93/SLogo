@@ -20,15 +20,16 @@ public class ToInitializer extends AbstractInitializer {
 
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {
-        
-        return new To(parameters, myFunctionName, getModel().getScope(), getModel().getMethods() , getParser(), myVariableNames);
+
+        return new To(parameters, myFunctionName, getModel().getScope(), getModel().getMethods(),
+                      getParser(), myVariableNames);
     }
 
     @Override
     protected ICommand build (CommandStream commandStream) throws FormattingException {
         myFunctionName = processFunctionName(commandStream);
         myVariableNames = processVariableNames(commandStream);
-        if(parseList(commandStream) == false) throw new FormattingException();
+        if (parseList(commandStream) == false) throw new FormattingException();
         changeParserState();
         return instantiate(getParameters());
     }

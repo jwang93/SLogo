@@ -10,7 +10,6 @@ import util.Location;
 import util.Paintable;
 import commands.ICommand;
 import exceptions.FormattingException;
-import exceptions.VariableNotFoundException;
 import factory.Parser;
 
 
@@ -82,7 +81,7 @@ public class Model extends Observable implements IModel, DataSource {
             myReturnMessage = "Formatting error";
 
         }
-        
+
         finally {
             myReturnValue = returnValue;
             notifyView();

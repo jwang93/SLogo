@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import model.Model;
-import commands.*;
+import commands.CommandList;
+import commands.Constant;
+import commands.ICommand;
+import commands.Variable;
 import exceptions.FormattingException;
 
 
@@ -27,9 +30,11 @@ public class Parser {
         myModel = model;
         myResourceBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + BUNDLE_NAME);
     }
+
     /**
      * pre-method which takes a string of logo commands and calls the main parse
      * methodd with the newly created CommandStream
+     * 
      * @param command a string of Logo commands to be parsed
      * @return an ICommand representing the commands that were passed in
      * @throws FormattingException if the parser breaks whie parsing
@@ -42,10 +47,11 @@ public class Parser {
         }
         return parse(params);
     }
-    
+
     /**
      * This function takes a command stream prses the entire stream of commands, and returns
      * an executable ICommand whose head is the start of a program parsed.
+     * 
      * @param commandStream
      * @return an ICommand representing the commands that were passed in
      * @throws FormattingException
@@ -53,25 +59,20 @@ public class Parser {
     protected ICommand parse (CommandStream commandStream) throws FormattingException {
         CommandList main = new CommandList();
         while (!commandStream.isEmpty()) {
-            //used for repeat and if, if then commands. Obnoxious hack. 
-            if (commandStream.peek().equals(END_OF_CODE_BLOCK)) {
-                commandStream.remove();
-                continue;
-            }
             main.add(parseOnce(commandStream));
-
         }
         return main;
     }
+
     /**
      * this takes input from a stream of commands and parses a single command or expression
      * and returns the command representing that expression
+     * 
      * @param commandStream
      * @return
      * @throws FormattingException
      */
     protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
-
         String keyword = commandStream.remove();
         if (keyword.matches(CONSTANT_REGEX))
             return new Constant(Integer.parseInt(keyword));
@@ -86,9 +87,13 @@ public class Parser {
         AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
         return init.build(commandStream);
     }
+
     /**
-     * This is actually only 3 lines of code but apparently reflection throws millions of exceptions.
-     * This method takes the name of an abstract initializer class and returns an instance of that class. 
+     * This is actually only 3 lines of code but apparently reflection throws millions of
+     * exceptions.
+     * This method takes the name of an abstract initializer class and returns an instance of that
+     * class.
+     * 
      * @param string the name of an abstract initializer
      * @return an instance of the passed in <code>AbstractInitializer</code>
      * @throws FormattingException
@@ -128,11 +133,13 @@ public class Parser {
             throw new FormattingException();
         }
     }
+
     /**
-     * Called by the initializer for userfunctions. This function takes a 
-     * UserFunctionMetaData object containing information about the most recently 
+     * Called by the initializer for userfunctions. This function takes a
+     * UserFunctionMetaData object containing information about the most recently
      * created user function and adds it to the parser's map of known user functions
      * to aid it in parsing calls to those userfunctons later.
+     * 
      * @param metadata
      */
     public void add (UserFunctionMetaData metadata) {

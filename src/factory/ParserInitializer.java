@@ -63,7 +63,6 @@ public class ParserInitializer {
         map.put("showing?", new ShowingInitializer(myModel, myParser));
         map.put("showingp", new ShowingInitializer(myModel, myParser));
 
-
         return map;
     }
 

@@ -90,7 +90,7 @@ public abstract class Sprite implements Paintable {
      */
     public void setCenter (double x, double y) {
         myCenter.setLocation(x, y);
-       // resetBounds();
+        // resetBounds();
     }
 
     /**
@@ -296,6 +296,7 @@ public abstract class Sprite implements Paintable {
 
     /**
      * Sets the current heading to the passed in value.
+     * 
      * @param heading to set
      */
     public void setMyHeading (double heading) {

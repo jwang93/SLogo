@@ -149,14 +149,11 @@ public class Turtle extends Sprite implements Paintable {
 
         // eliminates race condition - if next location overruns left/right AND top/bottom it checks
         // to see which is overrun first and corrects
-        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
+        if (nextLocation.getX() > myCanvasBounds.getWidth())
             // right
             return overrunRight();
-        }
-        else if (nextLocation.getX() < 0) {
-            // left
+        else if (nextLocation.getX() < 0) // left
             return overrunLeft();
-        }
 
         return new Location[] { nextLocation, nextCenter };
     }
@@ -182,20 +179,19 @@ public class Turtle extends Sprite implements Paintable {
             angle = -(HALF_TURN_DEGREES - getHeading());
         }
         angle = Math.toRadians(angle);
-        nextLocation = new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle), myCanvasBounds.getHeight());
+        nextLocation =
+                new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle),
+                             myCanvasBounds.getHeight());
         nextCenter = new Location(getX() + (myCanvasBounds.getHeight() - getY()) / Math.tan(angle),
                                   0);
 
         // eliminates race condition - if next location overruns left/right AND top/bottom it checks
         // to see which is overrun first and corrects
-        if (nextLocation.getX() > myCanvasBounds.getWidth()) {
+        if (nextLocation.getX() > myCanvasBounds.getWidth())
             // right
             return overrunRight();
-        }
-        else if (nextLocation.getX() < 0) {
-            // left
+        else if (nextLocation.getX() < 0) // left
             return overrunLeft();
-        }
         return new Location[] { nextLocation, nextCenter };
     }
 
@@ -220,9 +216,11 @@ public class Turtle extends Sprite implements Paintable {
         }
         angle = Math.toRadians(angle);
         nextLocation =
-                new Location(myCanvasBounds.getWidth(), getY() + (myCanvasBounds.getWidth() - getX()) /
+                new Location(myCanvasBounds.getWidth(), getY() +
+                                                        (myCanvasBounds.getWidth() - getX()) /
                                                         Math.tan(angle));
-        nextCenter = new Location(0, getY() + (myCanvasBounds.getWidth() - getX()) / Math.tan(angle));
+        nextCenter =
+                new Location(0, getY() + (myCanvasBounds.getWidth() - getX()) / Math.tan(angle));
 
         return new Location[] { nextLocation, nextCenter };
     }
@@ -285,7 +283,11 @@ public class Turtle extends Sprite implements Paintable {
      */
     public double towards (Location location) {
         Location convertedLocation = convertFromViewCoordinates(location);
-        double turnDistance =180-(-1)* Vector.angleBetween(convertFromViewCoordinates(new Location(getX(), getY())), convertedLocation);
+        double turnDistance =
+                180 -
+                        (-1) *
+                        Vector.angleBetween(convertFromViewCoordinates(new Location(getX(), getY())),
+                                            convertedLocation);
         turn(turnDistance);
         return turnDistance;
     }
@@ -298,10 +300,10 @@ public class Turtle extends Sprite implements Paintable {
      */
     public int setLocation (Location location) {
         Location locationToMove = location;
-        //double heading = getHeading();
+        // double heading = getHeading();
         towards(locationToMove);
         int distance = (int) Vector.distanceBetween(location, getLocation());
-        //setHeading(heading);
+        // setHeading(heading);
         move(distance);
         return distance;
     }
