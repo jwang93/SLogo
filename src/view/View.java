@@ -61,8 +61,10 @@ public class View extends JFrame implements Observer {
     private IModel myModel;
     private Canvas myCanvas;
     private DataSource myDataSource;
-    private int currentWorkspace=0;
-    private int numberOfWorkspace=1;
+    private int currentWorkspace=1;
+    private int numberOfWorkspace=2;
+    private String myLanguage;
+    private Dimension myCanvasBounds;
 
     /**
      * Creates the view window.
@@ -79,16 +81,18 @@ public class View extends JFrame implements Observer {
     public View (String title, String language, IModel model,
                  Dimension canvasBounds) {
         setTitle(title);
-        myCanvas = new Canvas(canvasBounds);
+        myCanvasBounds=canvasBounds;
+        myCanvas = new Canvas(myCanvasBounds);
+        myLanguage=language;
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-                                               + language);
+                                               + myLanguage);
         myModel = model;
         model.initializeObserver(this);
         myDataSource = model.getDataSource();
         makeTabbedPane();
         getContentPane().add(myTabbedPane);
-        myTabbedPane.addTab("Workspace 1", createNewWorkspace());
-        myTabbedPane.addTab("Workspace 2", createNewWorkspace());
+        myTabbedPane.addTab("Workspace 1", createNewWorkspace(1));
+        myTabbedPane.addTab("Workspace 2", createNewWorkspace(2));
 
         //getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
        // getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
@@ -111,12 +115,10 @@ public class View extends JFrame implements Observer {
      * 
      * @return JComponent representing the command history
      */
-    public JComponent createNewWorkspace(){
-    	JPanel panel=new JPanel();
-    	panel.add(makeCommandLinePanel(), BorderLayout.SOUTH);
-    	panel.add(makeCommandHistory(), BorderLayout.WEST);
-    	panel.add(makeTurtleDisplay(), BorderLayout.CENTER);
-    	return panel;
+    public JComponent createNewWorkspace(int id){
+    	WorkspaceInView workspace=new WorkspaceInView(myModel, myCanvasBounds,myLanguage, id);
+    	return workspace;
+    	
     	
     }
     
