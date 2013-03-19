@@ -11,9 +11,7 @@ public class ClearScreen extends AbstractZeroParameterTurtleCommand implements I
         super(turtle);
     }
     public int execute(){
-        int ret = getTurtle().setLocation(new Location(0,0));
-        getTurtle().clearScreen();
-        return ret;
+        return getTurtle().clearScreen();
     }
 
 }
