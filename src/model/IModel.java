@@ -51,4 +51,5 @@ public interface IModel {
     
     public void addImage (Image image);
     
+    public void changeToWorkspace(int workspaceNumber);
 }
