@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.Image;
 import java.util.Iterator;
 
 
@@ -46,4 +47,5 @@ public interface DataSource {
      */
     public String showMessage ();
 
+    public Image getBackgroundImage();
 }

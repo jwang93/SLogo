@@ -62,6 +62,7 @@ public class ParserInitializer {
         map.put("pendownp", new PenDownPInitializer(myModel, myParser));
         map.put("showing?", new ShowingInitializer(myModel, myParser));
         map.put("showingp", new ShowingInitializer(myModel, myParser));
+        map.put("setheading", new SetHeadingInitializer(myModel, myParser));
 
         return map;
     }

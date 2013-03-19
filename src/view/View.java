@@ -91,7 +91,7 @@ public class View extends JFrame implements Observer {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        myCanvas.update(myDataSource.getPaintableIterator());
+        myCanvas.update(myDataSource.getPaintableIterator(), null);
     }
 
     /**
@@ -309,7 +309,7 @@ public class View extends JFrame implements Observer {
      */
     @Override
     public void update (Observable arg0, Object arg1) {
-        myCanvas.update(myDataSource.getPaintableIterator());
+        myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
         updateHeadingLabel(myDataSource.getTurtleHeading());
         updatePositionLabel(myDataSource.getTurtlePosition());
         showMessage("" + myDataSource.getReturnValue());
@@ -326,7 +326,7 @@ public class View extends JFrame implements Observer {
         addComponentListener(new ComponentListener() {
             @Override
             public void componentResized (ComponentEvent evt) {
-                myCanvas.update(myDataSource.getPaintableIterator());
+                myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
 
             }
 

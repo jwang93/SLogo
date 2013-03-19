@@ -210,7 +210,7 @@ public class Turtle extends Sprite implements Paintable {
             return new Location[] { nextLocation, nextCenter };
         }
 
-        double angle = getHeading();
+        double angle = ONE_QUARTER_TURN_DEGREES - getHeading();
         if (getHeading() > HALF_TURN_DEGREES) {
             angle = -(getHeading() - THREE_QUARTER_TURN_DEGREES);
         }
