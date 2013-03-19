@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -7,7 +8,11 @@ import commands.ICommand;
 import exceptions.VariableNotFoundException;
 
 
-public class MethodScope {
+public class MethodScope implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private Stack<Map<String, ICommand>> myScope = new Stack<Map<String, ICommand>>();
     private Map<String, ICommand> myCurrentScope;
 

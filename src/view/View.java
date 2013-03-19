@@ -223,7 +223,7 @@ public class View extends JFrame implements Observer {
             @Override
             public void actionPerformed (ActionEvent e) {
 
-                int response = FILE_CHOOSER.showOpenDialog(null);
+                int response = FILE_CHOOSER.showSaveDialog(null);
                 if (response == JFileChooser.APPROVE_OPTION) {
                     File file = FILE_CHOOSER.getSelectedFile();
 
