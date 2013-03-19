@@ -1,10 +1,15 @@
 package commands;
 
+import java.io.Serializable;
 import model.Model;
 
 
-public class Variable implements ICommand {
+public class Variable implements ICommand, Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private String myName;
     private Model myModel;
 

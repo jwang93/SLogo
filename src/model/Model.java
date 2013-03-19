@@ -2,6 +2,12 @@ package model;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
@@ -99,12 +105,59 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public void saveFunctionsAndVariables (File fileToSave) {
-        // not implemented :(
+
+        Scope scope1 = myScope;
+        MethodScope scope2 = myMethods;
+        
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(fileToSave);
+            ObjectOutputStream oos = new ObjectOutputStream(fos); 
+            oos.writeObject(scope1); 
+            oos.writeObject(scope2);
+            oos.flush(); 
+            oos.close(); 
+        }
+        catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } 
+
+        System.out.println(fileToSave.getAbsolutePath());
     }
 
     @Override
     public void loadFunctionsAndVariables (File fileToLoad) {
         // not implemented :(
+        
+        FileInputStream fis;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream(fileToLoad);
+            ois = new ObjectInputStream(fis); 
+            myScope = (Scope)ois.readObject();
+            myMethods = (MethodScope)ois.readObject();
+            ois.close(); 
+        }
+        
+        catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } 
+        
+
     }
 
     @Override
