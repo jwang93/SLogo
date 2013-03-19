@@ -49,7 +49,7 @@ public class Parser {
     }
 
     /**
-     * This function takes a command stream prses the entire stream of commands, and returns
+     * This function takes a command stream parses the entire stream of commands, and returns
      * an executable ICommand whose head is the start of a program parsed.
      * 
      * @param commandStream

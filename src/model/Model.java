@@ -106,24 +106,18 @@ public class Model extends Observable implements IModel, DataSource {
     @Override
     public void saveFunctionsAndVariables (File fileToSave) {
 
-        Scope scope1 = myScope;
-        MethodScope scope2 = myMethods;
-        
-        FileOutputStream fos;
         try {
-            fos = new FileOutputStream(fileToSave);
-            ObjectOutputStream oos = new ObjectOutputStream(fos); 
-            oos.writeObject(scope1); 
-            oos.writeObject(scope2);
-            oos.flush(); 
-            oos.close(); 
+            FileOutputStream fileOutputStream = new FileOutputStream(fileToSave);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream); 
+            objectOutputStream.writeObject(myScope); 
+            objectOutputStream.writeObject(myMethods); //Currently not working - serializable issues
+            objectOutputStream.flush(); 
+            objectOutputStream.close(); 
         }
         catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
 
@@ -132,32 +126,24 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public void loadFunctionsAndVariables (File fileToLoad) {
-        // not implemented :(
-        
-        FileInputStream fis;
-        ObjectInputStream ois = null;
+
         try {
-            fis = new FileInputStream(fileToLoad);
-            ois = new ObjectInputStream(fis); 
-            myScope = (Scope)ois.readObject();
-            myMethods = (MethodScope)ois.readObject();
-            ois.close(); 
+            FileInputStream fileInputStream = new FileInputStream(fileToLoad);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream); 
+            myScope = (Scope) objectInputStream.readObject();
+            myMethods = (MethodScope) objectInputStream.readObject();
+            objectInputStream.close(); 
         }
         
         catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
-        
-
     }
 
     @Override
