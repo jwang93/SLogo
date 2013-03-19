@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Image;
 import java.io.File;
 import java.util.Observer;
 import util.DataSource;
@@ -47,4 +48,6 @@ public interface IModel {
      * @param observer object in the View
      */
     public void initializeObserver (Observer observer);
+    
+    public void addBackgroundImage (Image backgroundImage);
 }

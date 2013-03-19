@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,7 @@ public class Canvas extends JComponent {
     private static final long serialVersionUID = 1L;
 
     private Iterator<Paintable> myPaintableIterator;
+    private Image myBackground;
 
     /**
      * Create a panel so that it knows its size.
@@ -36,6 +38,7 @@ public class Canvas extends JComponent {
         // prepare to receive input
         List<Paintable> emptyList = new ArrayList<Paintable>();
         myPaintableIterator = emptyList.iterator();
+        
     }
 
     /**
@@ -51,6 +54,7 @@ public class Canvas extends JComponent {
     public void paintComponent (Graphics pen) {
         pen.setColor(Color.WHITE);
         pen.fillRect(0, 0, getSize().width, getSize().height);
+        pen.drawImage(myBackground, 0, 0, getSize().width, getSize().height, null);
         while (myPaintableIterator.hasNext()) {
             pen.setColor(Color.BLACK);
             Paintable paintable = myPaintableIterator.next();
@@ -63,8 +67,9 @@ public class Canvas extends JComponent {
      * 
      * @param iterator iterator to update
      */
-    public void update (Iterator<Paintable> iterator) {
+    public void update (Iterator<Paintable> iterator, Image backgroundImage) {
         myPaintableIterator = iterator;
+        myBackground = backgroundImage;
         repaint();
     }
 

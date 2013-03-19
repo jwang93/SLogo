@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -201,5 +202,17 @@ public class Model extends Observable implements IModel, DataSource {
 
     public MethodScope getMethods () {
         return myMethods;
+    }
+
+    @Override
+    public Image getBackgroundImage () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void addBackgroundImage (Image backgroundImage) {
+        // TODO Auto-generated method stub
+        
     }
 }
