@@ -14,12 +14,12 @@ public class PenDown extends AbstractZeroParameterTurtleCommand {
     @Override
     public int execute () {
         Turtle turtle = getTurtle();
-        return turtle.isPenDown();
+        return turtle.showPen();
     }
 
     @Override
     public String toString () {
-        return "pendown " + getCommands().get(0).toString();
+        return "pendown ";
     }
 
 }
