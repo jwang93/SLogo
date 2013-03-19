@@ -211,7 +211,7 @@ public class Model extends Observable implements IModel, DataSource {
     }
 
     @Override
-    public void addBackgroundImage (Image backgroundImage) {
+    public void addImage (Image image) {
         // TODO Auto-generated method stub
         
     }

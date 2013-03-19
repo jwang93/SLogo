@@ -49,5 +49,6 @@ public interface IModel {
      */
     public void initializeObserver (Observer observer);
     
-    public void addBackgroundImage (Image backgroundImage);
+    public void addImage (Image image);
+    
 }
