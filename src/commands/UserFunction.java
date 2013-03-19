@@ -2,7 +2,6 @@ package commands;
 
 import java.util.List;
 import model.Scope;
-import exceptions.VariableNotFoundException;
 import factory.UserFunctionMetaData;
 
 
@@ -31,24 +30,27 @@ public class UserFunction extends CommandList implements ICommand {
         myData = data;
         setCommands(parameters);
         myScope = scope;
+        setVariables();
     }
 
-    public int execute () throws VariableNotFoundException {
-        setVariables();
+    @Override
+    public int execute () {
         return super.execute();
     }
 
-    private void setVariables () throws VariableNotFoundException {
-      //TODO BUGBUG Remove makes the command unuseable after it executes once. rewrite to preserve command
+    private void setVariables () {
+        // TODO BUGBUG Remove makes the command unuseable after it executes once. rewrite to
+        // preserve command
         List<String> varNames = myData.getVarNames();
         List<ICommand> commands = getCommands();
-        for (int i = 0; i < myData.getNumArgs(); i++) {
-            String key = varNames.get(i);
+        for (String key : varNames) {
             ICommand value = commands.remove(0);
             myScope.setVariable(key, value.execute());
         }
     }
 
+    // TODO fix, no make commands any more
+    @Override
     public String toString () {
         StringBuilder sb = new StringBuilder();
         sb.append(myData.getFunctionName() + " ");

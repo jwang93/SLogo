@@ -3,7 +3,6 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import exceptions.VariableNotFoundException;
 
 
 /**
@@ -25,7 +24,7 @@ public class RandomCommand extends AbstractSingleParameterCommand {
     /**
      * @return random value up to parameter
      */
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         return new Random().nextInt(getOnlyParameter());
     }

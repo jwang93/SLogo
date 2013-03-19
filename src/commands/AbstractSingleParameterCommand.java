@@ -1,7 +1,6 @@
 package commands;
 
 import java.util.List;
-import exceptions.VariableNotFoundException;
 
 
 /**
@@ -27,7 +26,7 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
      * 
      * @param parameters
      */
-    protected void resolveParameters () throws VariableNotFoundException {
+    protected void resolveParameters () {
         List<ICommand> myChildren = getCommands();
         setOnlyParameter(myChildren.get(PARAMETER_INDEX).execute());
     }

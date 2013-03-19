@@ -2,7 +2,6 @@ package commands;
 
 import java.util.List;
 import model.Turtle;
-import exceptions.VariableNotFoundException;
 
 
 public class Forward extends AbstractSingleParameterTurtleCommand {
@@ -18,7 +17,7 @@ public class Forward extends AbstractSingleParameterTurtleCommand {
      * call the turtle's move method to make it go
      * @return the amount of pixels moved
      */
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         Turtle turtle = getTurtle();
         turtle.move(getOnlyParameter());

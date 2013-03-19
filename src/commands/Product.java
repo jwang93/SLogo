@@ -2,7 +2,6 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import exceptions.VariableNotFoundException;
 
 
 /**
@@ -22,7 +21,7 @@ public class Product extends AbstractDoubleParameterCommand {
     /**
      * @return the sum of the two parameters
      */
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         return getFirstParameter() * getSecondParameter();
     }

@@ -2,7 +2,6 @@ package commands;
 
 import java.util.List;
 import model.Turtle;
-import exceptions.VariableNotFoundException;
 
 
 public class Left extends AbstractSingleParameterTurtleCommand {
@@ -14,7 +13,7 @@ public class Left extends AbstractSingleParameterTurtleCommand {
     }
 
     @Override
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         Turtle turtle = getTurtle();
         turtle.turn((-1) * getOnlyParameter());

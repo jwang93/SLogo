@@ -2,7 +2,6 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import exceptions.VariableNotFoundException;
 
 
 public class Minus extends AbstractSingleParameterCommand {
@@ -18,7 +17,7 @@ public class Minus extends AbstractSingleParameterCommand {
     /**
      * @return negative value of parameter
      */
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         return (-1) * getOnlyParameter();
     }

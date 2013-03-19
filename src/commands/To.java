@@ -1,11 +1,9 @@
 package commands;
 
-import java.util.Arrays;
 import java.util.List;
 import model.MethodScope;
 import model.Scope;
 import factory.Parser;
-import exceptions.FormattingException;
 
 
 public class To extends AbstractSingleParameterCommand implements ICommand {

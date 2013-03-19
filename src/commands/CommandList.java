@@ -2,7 +2,6 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import exceptions.VariableNotFoundException;
 
 
 /**
@@ -43,7 +42,7 @@ public class CommandList implements ICommand {
     }
 
     @Override
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         for (ICommand command : myCommands) {
             myReturn = command.execute();
         }

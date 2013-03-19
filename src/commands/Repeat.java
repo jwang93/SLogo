@@ -1,7 +1,6 @@
 package commands;
 
 import java.util.List;
-import exceptions.VariableNotFoundException;
 
 
 public class Repeat extends CommandList implements ICommand {
@@ -31,7 +30,7 @@ public class Repeat extends CommandList implements ICommand {
      * @return the return value of the last command executed. 
      * This is enforced by the return value of <code>CommandList<code>
      */
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         int returnValue = 0;
         for (int i = 0; i < myParameter; i++) {
@@ -49,14 +48,7 @@ public class Repeat extends CommandList implements ICommand {
 
     private void resolveParameters () {
         List<ICommand> commands = getCommands();
-
-        try {
-            myParameter = commands.get(INDEX_OF_PARAMETER).execute();
-        }
-        catch (VariableNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        myParameter = commands.get(INDEX_OF_PARAMETER).execute();
         myCodeBlock = commands.get(INDEX_OF_CODE_BLOCK);
     }
 

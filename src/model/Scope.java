@@ -3,7 +3,6 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import exceptions.VariableNotFoundException;
 
 
 /**
@@ -26,6 +25,7 @@ import exceptions.VariableNotFoundException;
  * 
  */
 public class Scope {
+    private static final int DEFAULT_VARIABLE_VALUE = 0;
     private Stack<Map<String, Integer>> myScope = new Stack<Map<String, Integer>>();
     private Map<String, Integer> myCurrentScope;
 
@@ -41,9 +41,9 @@ public class Scope {
      * @return the value of the variable
      * @throws VariableNotFoundException
      */
-    public int get (String varName) throws VariableNotFoundException {
+    public int get (String varName){
         if (!myCurrentScope.containsKey(varName))
-            throw new VariableNotFoundException();
+            return DEFAULT_VARIABLE_VALUE;
         return myCurrentScope.get(varName);
     }
 

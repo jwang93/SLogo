@@ -82,9 +82,7 @@ public class Model extends Observable implements IModel, DataSource {
             myReturnMessage = "Formatting error";
 
         }
-        catch (VariableNotFoundException e) {
-            myReturnMessage = "Variable not found";
-        }
+        
         finally {
             myReturnValue = returnValue;
             notifyView();

@@ -2,7 +2,6 @@ package commands;
 
 import java.util.List;
 import model.Scope;
-import exceptions.VariableNotFoundException;
 
 
 public class Make extends AbstractSingleParameterCommand implements ICommand {
@@ -18,7 +17,7 @@ public class Make extends AbstractSingleParameterCommand implements ICommand {
     }
 
     @Override
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         resolveParameters();
         myScope.setVariable(myName, getOnlyParameter());
         return getOnlyParameter();

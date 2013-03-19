@@ -1,7 +1,6 @@
 package commands;
 
 import model.Turtle;
-import exceptions.VariableNotFoundException;
 
 
 public class Heading extends AbstractZeroParameterTurtleCommand {
@@ -13,7 +12,7 @@ public class Heading extends AbstractZeroParameterTurtleCommand {
     }
 
     @Override
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         Turtle turtle = getTurtle();
         int heading = (int) turtle.getHeading();
         return adjustAngle(heading);

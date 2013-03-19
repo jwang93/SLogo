@@ -1,6 +1,6 @@
 package testsuite;
-
-public class ModelTests {
+import junit.framework.TestCase;
+public class ModelTests extends TestCase{
 
     public ModelTests () {
 

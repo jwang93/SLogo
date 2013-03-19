@@ -1,7 +1,6 @@
 package commands;
 
 import model.Turtle;
-import exceptions.VariableNotFoundException;
 
 
 public class XCor extends AbstractZeroParameterTurtleCommand {
@@ -13,7 +12,7 @@ public class XCor extends AbstractZeroParameterTurtleCommand {
     }
 
     @Override
-    public int execute () throws VariableNotFoundException {
+    public int execute () {
         Turtle turtle = getTurtle();
         int position = (int) turtle.getTurtlePosition().x;
         return position;
