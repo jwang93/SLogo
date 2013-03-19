@@ -23,6 +23,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -53,11 +54,15 @@ public class View extends JFrame implements Observer {
     private JLabel myTurtleHeadingLabel;
     private JTextField myCommandLineTextField;
     private JButton myClearButton;
+    
+    private JTabbedPane myTabbedPane; 
 
     private ResourceBundle myResources;
     private IModel myModel;
     private Canvas myCanvas;
     private DataSource myDataSource;
+    private int currentWorkspace=0;
+    private int numberOfWorkspace=1;
 
     /**
      * Creates the view window.
@@ -80,12 +85,17 @@ public class View extends JFrame implements Observer {
         myModel = model;
         model.initializeObserver(this);
         myDataSource = model.getDataSource();
+        makeTabbedPane();
+        getContentPane().add(myTabbedPane);
+        myTabbedPane.addTab("Workspace 1", createNewWorkspace());
+        myTabbedPane.addTab("Workspace 2", createNewWorkspace());
 
-        getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
-        getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
-        getContentPane().add(makeTurtleDisplay(), BorderLayout.CENTER);
+        //getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
+       // getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
+     //   getContentPane().add(makeTurtleDisplay(), BorderLayout.CENTER);
         setJMenuBar(makeMenuBar());
         setComponentListener();
+
 
         pack();
         setVisible(true);
@@ -101,6 +111,21 @@ public class View extends JFrame implements Observer {
      * 
      * @return JComponent representing the command history
      */
+    public JComponent createNewWorkspace(){
+    	JPanel panel=new JPanel();
+    	panel.add(makeCommandLinePanel(), BorderLayout.SOUTH);
+    	panel.add(makeCommandHistory(), BorderLayout.WEST);
+    	panel.add(makeTurtleDisplay(), BorderLayout.CENTER);
+    	return panel;
+    	
+    }
+    
+    private void makeTabbedPane(){
+    	myTabbedPane = new JTabbedPane();
+    	
+    	
+    }
+    
     private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
         commandHistoryPanel.setLayout(new BorderLayout());
