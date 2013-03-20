@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -56,6 +57,7 @@ public class WorkspaceInView extends JComponent{
         this.add(makeCommandHistory(), BorderLayout.WEST);
         this.add(makeTurtleDisplay(), BorderLayout.CENTER);
         this.setVisible(true);
+        myCanvas.update(myDataSource.getPaintableIterator(), null);
     	
     }
     
@@ -160,7 +162,7 @@ public class WorkspaceInView extends JComponent{
         return myClearButton;
     }
     
-    private void showMessage (String message) {
+    public void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
     }
 
@@ -176,7 +178,7 @@ public class WorkspaceInView extends JComponent{
      * 
      * @param location
      */
-    private void updatePositionLabel (Location location) {
+    public void updatePositionLabel (Location location) {
         myTurtlePositionLabel.setText(myResources.getString("Position") + " "
                                       + location.getX() + ", " + location.getY());
     }
@@ -186,9 +188,18 @@ public class WorkspaceInView extends JComponent{
      * 
      * @param heading
      */
-    private void updateHeadingLabel (int heading) {
+    public void updateHeadingLabel (int heading) {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " "
                                      + heading);
+
+    }
+    
+    public void update () {
+        myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
+        updateHeadingLabel(myDataSource.getTurtleHeading());
+        updatePositionLabel(myDataSource.getTurtlePosition());
+        showMessage("" + myDataSource.getReturnValue());
+        showMessage(myDataSource.showMessage());
 
     }
 
