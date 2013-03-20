@@ -97,7 +97,7 @@ public abstract class AbstractInitializer {
             int startLength = myParameters.size();
             processParameter(commands);
             if (!(myParameters.size() > startLength))
-                throw new FormattingException(String.format("Could not resolve the %d'th parameter when parsing %s", i+1, this.getClass().getName()));
+                throw new FormattingException(String.format("Could not resolve parameter %d when parsing %s", i+1, this.getClass().getName()));
         }
         return myParameters;
     }
@@ -171,6 +171,7 @@ public abstract class AbstractInitializer {
             CommandList codeBlock = new CommandList();
             while (!commandStream.peek().equals("]")) {
                 codeBlock.add(myParser.parseOnce(commandStream));
+                if(commandStream.peek() == null) throw new FormattingException("Formatting Error: please check syntax");
             }
             myParameters.add(codeBlock);
             // remove the last bracket

@@ -1,9 +1,11 @@
 package commands;
 
 import java.util.List;
+import model.Scope;
 
 
 public class Repeat extends CommandList implements ICommand {
+    private static final String ITERATION_VARIABLE_NAME = "repcount";
     public static final int NUM_ARGS = 2;
     /*
      * The parser parses variabes in order, so the syntax of a repeat statement,
@@ -17,9 +19,11 @@ public class Repeat extends CommandList implements ICommand {
     private static final int INDEX_OF_CODE_BLOCK = 1;
     private int myNumTimes;
     private ICommand myCodeBlock;
+    private Scope myScope;
 
-    public Repeat (List<ICommand> parameters) {
+    public Repeat (List<ICommand> parameters, Scope scope) {
         super(parameters);
+        myScope = scope;
     }
 
     @Override
@@ -32,8 +36,10 @@ public class Repeat extends CommandList implements ICommand {
      */
     public int execute () {
         resolveParameters();
+        myScope.setVariable(ITERATION_VARIABLE_NAME, 1);
         int returnValue = 0;
         for (int i = 0; i < myNumTimes; i++) {
+            myScope.setVariable(ITERATION_VARIABLE_NAME, i+1);
             returnValue = myCodeBlock.execute();
         }
         return returnValue;

@@ -78,7 +78,15 @@ public class Model extends Observable implements IModel, DataSource {
     public Scope getScope () {
         return myScope;
     }
-
+    
+    /**
+     * Execution is a two step process. First the parser reads 
+     * the String and builds a command tree. The ICommand returned from
+     * the parser is the head of the command tree. When <code>execute()</code> 
+     * is called the command recursively executes down the tree in 
+     * a way that resembles a post-order traversal, although you'd never
+     * guess that by looking at the code.  
+     */
     @Override
     public void executeCommand (String command) {
 
