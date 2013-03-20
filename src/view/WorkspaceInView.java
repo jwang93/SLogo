@@ -15,9 +15,12 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import model.IModel;
 
@@ -39,6 +42,8 @@ public class WorkspaceInView extends JComponent{
     private JLabel myTurtleHeadingLabel;
     private JTextField myCommandLineTextField;
     private JButton myClearButton;
+    private JTextArea myUserVariables;
+    private JTextArea myUserFuncs;
     
     private ResourceBundle myResources;
     private IModel myModel;
@@ -52,13 +57,25 @@ public class WorkspaceInView extends JComponent{
                 + language);
     	myCanvas = new Canvas(canvasBounds);
     	myDataSource=myModel.getDataSource();
+    	initialize();
+        myCanvas.update(myDataSource.getPaintableIterator(), null);
+        // the following lines are for testing!
+        showVariables("testing testing");
+        showFunctions("testing testing");
+    	
+    }
+    
+    /**
+     * adds components to GUI
+     */
+    private void initialize(){
     	this.setLayout(new BorderLayout());
     	this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
         this.add(makeCommandHistory(), BorderLayout.WEST);
+        this.add(makeUserDefinedFuncAndVarDisplay(),BorderLayout.EAST);
         this.add(makeTurtleDisplay(), BorderLayout.CENTER);
+        
         this.setVisible(true);
-        myCanvas.update(myDataSource.getPaintableIterator(), null);
-    	
     }
     
     
@@ -146,6 +163,34 @@ public class WorkspaceInView extends JComponent{
         return myCommandLineTextField;
     }
     
+    private JComponent makeUserDefinedFuncAndVarDisplay(){
+    	JPanel panel=new JPanel();
+    	panel.setLayout(new BorderLayout());
+    	Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+    	myUserVariables=new JTextArea(FIELD_SIZE/2,FIELD_SIZE);
+    	myUserVariables.setEditable(false);
+    	
+    	myUserFuncs=new JTextArea(FIELD_SIZE/2,FIELD_SIZE);
+    	myUserFuncs.setEditable(false);
+  
+    	JPanel top=new JPanel();
+    	top.setLayout(new BorderLayout());
+    	top.add(myUserVariables);
+    	top.add(new JLabel(myResources.getString("my_variables")),BorderLayout.NORTH);
+    	top.setBorder(raisedetched);
+    	
+    	JPanel bottom=new JPanel();
+    	bottom.setLayout(new BorderLayout());
+    	bottom.add(myUserFuncs);
+    	bottom.add(new JLabel(myResources.getString("my_functions")),BorderLayout.NORTH);
+    	bottom.setBorder(raisedetched);
+    	
+    	panel.add(top,BorderLayout.WEST);
+    	panel.add(bottom,BorderLayout.EAST);
+    	return panel;
+    	
+    }
+    
     /**
      * Makes the button that clears the command history.
      * 
@@ -171,6 +216,22 @@ public class WorkspaceInView extends JComponent{
      */
     private void clearCommandWindow () {
         myCommandHistoryTextArea.setText("");
+    }
+    /**
+     * show user-defined variables on relevant panel
+     * @param var
+     */
+    
+    private void showVariables(String var){
+    	myUserVariables.setText(var);
+    }
+    /**
+     * show user-defined functions on relevant panel
+     * @param func
+     */
+    
+    private void showFunctions(String func){
+    	myUserFuncs.setText(func);
     }
 
     /**
@@ -202,6 +263,10 @@ public class WorkspaceInView extends JComponent{
         showMessage(myDataSource.showMessage());
 
     }
+    
+    
+    
+
 
    
 
