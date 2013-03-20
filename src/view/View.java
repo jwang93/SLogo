@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -27,6 +28,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import model.IModel;
 import util.DataSource;
 import util.Location;
@@ -45,24 +49,18 @@ public class View extends JFrame implements Observer {
     private static final long serialVersionUID = 401L;
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
-    private static final int FIELD_SIZE = 20;
     private static final JFileChooser FILE_CHOOSER = new JFileChooser(System
             .getProperties().getProperty(USER_DIR));
-
-    private JTextArea myCommandHistoryTextArea;
-    private JLabel myTurtlePositionLabel;
-    private JLabel myTurtleHeadingLabel;
-    private JTextField myCommandLineTextField;
-    private JButton myClearButton;
     
     private JTabbedPane myTabbedPane; 
-
     private ResourceBundle myResources;
     private IModel myModel;
-    private Canvas myCanvas;
     private DataSource myDataSource;
-    private int currentWorkspace=0;
-    private int numberOfWorkspace=1;
+    private int numberOfWorkspaces=0;
+    private String myLanguage;
+    private Dimension myCanvasBounds;
+    
+    private ArrayList<WorkspaceInView> myWorkspaces=new ArrayList<WorkspaceInView>();
 
     /**
      * Creates the view window.
@@ -79,136 +77,39 @@ public class View extends JFrame implements Observer {
     public View (String title, String language, IModel model,
                  Dimension canvasBounds) {
         setTitle(title);
-        myCanvas = new Canvas(canvasBounds);
+        myCanvasBounds=canvasBounds;
+        myLanguage=language;
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-                                               + language);
+                                               + myLanguage);
         myModel = model;
         model.initializeObserver(this);
         myDataSource = model.getDataSource();
-        makeTabbedPane();
+        myTabbedPane = new JTabbedPane();
         getContentPane().add(myTabbedPane);
-        myTabbedPane.addTab("Workspace 1", createNewWorkspace());
-        myTabbedPane.addTab("Workspace 2", createNewWorkspace());
+        createNewWorkspace();
+        createNewWorkspace();
 
-        //getContentPane().add(makeCommandLinePanel(), BorderLayout.SOUTH);
-       // getContentPane().add(makeCommandHistory(), BorderLayout.WEST);
-     //   getContentPane().add(makeTurtleDisplay(), BorderLayout.CENTER);
         setJMenuBar(makeMenuBar());
         setComponentListener();
-
+        setTabChangeListener();
 
         pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        myCanvas.update(myDataSource.getPaintableIterator(), null);
     }
 
     /**
-     * Creates the command history part of the window, including a label at the
-     * top, a non-user-editable text area to display the history and a clear
-     * button that clears the command history.
-     * 
-     * @return JComponent representing the command history
+     * creates a new workspace, update no. of workspaces, my workspace arraylist
      */
-    public JComponent createNewWorkspace(){
-    	JPanel panel=new JPanel();
-    	panel.add(makeCommandLinePanel(), BorderLayout.SOUTH);
-    	panel.add(makeCommandHistory(), BorderLayout.WEST);
-    	panel.add(makeTurtleDisplay(), BorderLayout.CENTER);
-    	return panel;
+    public void createNewWorkspace(){
+    	numberOfWorkspaces++;
+    	WorkspaceInView workspace=new WorkspaceInView(myModel, myCanvasBounds,myLanguage, numberOfWorkspaces);
+    	myTabbedPane.addTab("Workspace "+numberOfWorkspaces, workspace);
+    	myWorkspaces.add(workspace);
     	
     }
-    
-    private void makeTabbedPane(){
-    	myTabbedPane = new JTabbedPane();
-    	
-    	
-    }
-    
-    private JComponent makeCommandHistory () {
-        JPanel commandHistoryPanel = new JPanel();
-        commandHistoryPanel.setLayout(new BorderLayout());
-        commandHistoryPanel.add(
-                                new JLabel(myResources.getString("CommandHistory")),
-                                BorderLayout.NORTH);
-        myCommandHistoryTextArea = new JTextArea(FIELD_SIZE, FIELD_SIZE);
-        myCommandHistoryTextArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(myCommandHistoryTextArea);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        commandHistoryPanel.add(scrollPane, BorderLayout.CENTER);
-        commandHistoryPanel.add(makeClearButton(), BorderLayout.SOUTH);
 
-        return commandHistoryPanel;
-
-    }
-
-    /**
-     * Displays the canvas and the heading and position label for the turtle on
-     * the canvas.
-     * 
-     * @return JComponent representing the canvas and turtle state information
-     */
-    private JComponent makeTurtleDisplay () {
-
-        JPanel turtleInfoPanel = new JPanel();
-        turtleInfoPanel.setLayout(new BorderLayout());
-
-        JPanel canvasPanel = new JPanel();
-        canvasPanel.add(myCanvas);
-        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        turtleInfoPanel.add(canvasPanel, BorderLayout.CENTER);
-
-        JPanel state = new JPanel();
-        myTurtlePositionLabel = new JLabel();
-        myTurtleHeadingLabel = new JLabel();
-        state.add(myTurtlePositionLabel);
-        state.add(myTurtleHeadingLabel);
-        updateHeadingLabel(myDataSource.getTurtleHeading());
-        updatePositionLabel(myDataSource.getTurtlePosition());
-        turtleInfoPanel.add(state, BorderLayout.SOUTH);
-
-        return turtleInfoPanel;
-
-    }
-
-    /**
-     * Creates the comand line, including a typable command line text box and a
-     * label.
-     * 
-     * @return JComponent representing the command line panel
-     */
-    private JComponent makeCommandLinePanel () {
-        JPanel commandLinePanel = new JPanel();
-        commandLinePanel.setLayout(new BoxLayout(commandLinePanel,
-                                                 BoxLayout.LINE_AXIS));
-
-        commandLinePanel.add(new JLabel(myResources.getString("CommandLine")));
-        commandLinePanel.add(makeCommandLine());
-        return commandLinePanel;
-    }
-
-    /**
-     * Creates a command line that passes info to the Model and clears the text
-     * field upon hitting enter.
-     * 
-     * @return JTextField representing the command line text field
-     */
-    private JTextField makeCommandLine () {
-        myCommandLineTextField = new JTextField(FIELD_SIZE);
-        myCommandLineTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                String givenCommand = myCommandLineTextField.getText();
-                showMessage(myResources.getString("TextBoxCommand")
-                            + givenCommand);
-                myModel.executeCommand(givenCommand);
-                myCommandLineTextField.setText("");
-
-            }
-        });
-        return myCommandLineTextField;
-    }
 
     /**
      * Creates the menu bar.
@@ -270,35 +171,12 @@ public class View extends JFrame implements Observer {
     }
 
     /**
-     * Makes the button that clears the command history.
-     * 
-     * @return JButton representing the clear button
-     */
-    private JButton makeClearButton () {
-        myClearButton = new JButton(myResources.getString("ClearCommand"));
-        myClearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                clearCommandWindow();
-            }
-        });
-        return myClearButton;
-    }
-
-    /**
      * Writes the message to the command window.
      * 
      * @param message
      */
     private void showMessage (String message) {
-        myCommandHistoryTextArea.append(message + "\n");
-    }
-
-    /**
-     * Clears the command window.
-     */
-    private void clearCommandWindow () {
-        myCommandHistoryTextArea.setText("");
+    	getCurrentWorkspace().showMessage(message);
     }
 
     /**
@@ -307,8 +185,13 @@ public class View extends JFrame implements Observer {
      * @param location
      */
     private void updatePositionLabel (Location location) {
-        myTurtlePositionLabel.setText(myResources.getString("Position") + " "
-                                      + location.getX() + ", " + location.getY());
+    	getCurrentWorkspace().updatePositionLabel(location);
+    }
+    
+    private WorkspaceInView getCurrentWorkspace(){
+    	int currentWorkspace=myTabbedPane.getSelectedIndex();
+    	return myWorkspaces.get(currentWorkspace);
+    	
     }
 
     /**
@@ -317,8 +200,7 @@ public class View extends JFrame implements Observer {
      * @param heading
      */
     private void updateHeadingLabel (int heading) {
-        myTurtleHeadingLabel.setText(myResources.getString("Heading") + " "
-                                     + heading);
+    	getCurrentWorkspace().updateHeadingLabel(heading);
 
     }
 
@@ -334,11 +216,12 @@ public class View extends JFrame implements Observer {
      */
     @Override
     public void update (Observable arg0, Object arg1) {
-        myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
+    	getCurrentWorkspace().update();
+        /*myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
         updateHeadingLabel(myDataSource.getTurtleHeading());
         updatePositionLabel(myDataSource.getTurtlePosition());
         showMessage("" + myDataSource.getReturnValue());
-        showMessage(myDataSource.showMessage());
+        showMessage(myDataSource.showMessage());*/
 
     }
 
@@ -351,7 +234,7 @@ public class View extends JFrame implements Observer {
         addComponentListener(new ComponentListener() {
             @Override
             public void componentResized (ComponentEvent evt) {
-                myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
+               getCurrentWorkspace().update();
 
             }
 
@@ -368,8 +251,21 @@ public class View extends JFrame implements Observer {
             @Override
             public void componentShown (ComponentEvent arg0) {
 
+
             }
         });
+    }
+    
+    /**
+     * monitor tab change; if changed update, to ensure repainting
+     */
+    public void setTabChangeListener(){
+    	myTabbedPane.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+              System.out.println("Tab=" + myTabbedPane.getSelectedIndex());
+              getCurrentWorkspace().update();
+            }
+          });
     }
 
 }
