@@ -9,15 +9,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
-import util.Pixmap;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
@@ -45,8 +42,6 @@ public class Model extends Observable implements IModel, DataSource {
     private MethodScope myMethods;
     private int myReturnValue;
     private String myReturnMessage;
-    private WorkspaceContainer myWorkspaces;
-    private List<Image> myImageList = new ArrayList<Image>();
 
     /**
      * Instantiates parser, scope, and turtle and passes the canvasBounds.
@@ -90,8 +85,8 @@ public class Model extends Observable implements IModel, DataSource {
             myReturnMessage = "";
         }
         catch (FormattingException e) {
-            myReturnMessage = "Formatting error";
-
+            //myReturnMessage = "Formatting error";
+            myReturnMessage = e.getMessage();
         }
 
         finally {
@@ -217,7 +212,8 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public void addImage (Image image) {
-        myImageList.add(image);        
+        // TODO Auto-generated method stub
+        
     }
 
     @Override

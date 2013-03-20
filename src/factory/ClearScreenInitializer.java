@@ -13,7 +13,17 @@ public class ClearScreenInitializer extends AbstractInitializer {
         setNumArgs(ClearScreen.NUM_ARGS);
         // TODO Auto-generated constructor stub
     }
-
+    /*
+     * Overriding because using the AbstractInitializer functionality 
+     * here would be like using a Tank when a golf cart would do.
+     * 
+     * p.s. you can take my word for it that you COULD use 
+     * the abstract initializer here if you wanted. . .
+     */
+    /**
+     * Returns a new instance of a Home command
+     * @return a new Home command.
+     */
     protected ICommand build (CommandStream commandStream) throws FormattingException {
         return new ClearScreen(getModel().getTurtle());
     }

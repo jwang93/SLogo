@@ -2,7 +2,6 @@ package util;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import javax.swing.ImageIcon;
@@ -35,14 +34,6 @@ public class Pixmap {
      */
     public Pixmap (Pixmap other) {
         this(other.myFileName);
-    }
-    
-    /**
-     * Provides an alternate way of creating a Pixmap with an image.
-     */
-    public Pixmap (Image image) {
-        myImage = image;
-        myFileName = "";
     }
 
     /**

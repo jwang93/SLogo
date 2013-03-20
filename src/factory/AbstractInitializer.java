@@ -97,7 +97,7 @@ public abstract class AbstractInitializer {
             int startLength = myParameters.size();
             processParameter(commands);
             if (!(myParameters.size() > startLength))
-                throw new FormattingException();
+                throw new FormattingException(String.format("Could not resolve the %d'th parameter when parsing %s", i+1, this.getClass().getName()));
         }
         return myParameters;
     }
