@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class AbstractDoubleParameterCommand extends CommandList implements ICommand {
     private static final int FIRST_PARAMETER_INDEX = 0;
     private static final int SECOND_PARAMETER_INDEX = 1;
-
+    private static final int NUM_ARGS = 2;
     private int myFirstParameter;
     private int mySecondParameter;
 
