@@ -42,7 +42,7 @@ public class Model extends Observable implements IModel, DataSource {
     public static final int ERROR_RETURN_VALUE = -1;
 
     private Parser myParser;
-    private Turtle myTurtle;
+    private ITurtle myTurtle;
     private Scope myScope;
     private MethodScope myMethods;
     private int myReturnValue;
@@ -56,7 +56,7 @@ public class Model extends Observable implements IModel, DataSource {
      * @param canvasBounds to pass to turtle
      */
     public Model (Dimension canvasBounds) {
-        myTurtle = new Turtle(canvasBounds);
+        myTurtle = new Turtles(canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
         myMethods = new MethodScope();

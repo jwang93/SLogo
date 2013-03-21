@@ -1,6 +1,8 @@
 package model;
 
+import java.util.Iterator;
 import util.Location;
+import util.Paintable;
 
 
 public interface ITurtle {
@@ -104,5 +106,7 @@ public interface ITurtle {
     public abstract double getHeading ();
 
     public abstract Location getTurtlePosition ();
+
+    public abstract Iterator<Paintable> getPaintableIterator ();
 
 }
