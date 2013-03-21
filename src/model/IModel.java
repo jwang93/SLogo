@@ -53,5 +53,4 @@ public interface IModel {
     
     public void changeToWorkspace(int workspaceNumber);
     
-    public DataSource getDataSource (int workspaceNumber);
 }

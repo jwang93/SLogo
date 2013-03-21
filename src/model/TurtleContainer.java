@@ -13,11 +13,13 @@ public class TurtleContainer implements ITurtle {
 
     Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
+    Dimension currentDimension;
     
     public TurtleContainer (Dimension canvasBounds) {
         Turtle firstTurtle = new Turtle(canvasBounds);
         myTurtles.put(1, firstTurtle);
         myActiveTurtles.add(firstTurtle);
+        currentDimension = canvasBounds;
     }
     
     private List<Turtle> getActiveTurtles() {
