@@ -30,7 +30,7 @@ public class Scope implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 502L;
     private static final int DEFAULT_VARIABLE_VALUE = 0;
     private Stack<Map<String, Integer>> myScope = new Stack<Map<String, Integer>>();
     private Map<String, Integer> myCurrentScope;

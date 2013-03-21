@@ -3,6 +3,8 @@ package model;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.util.Iterator;
+import model.scope.MethodScope;
+import model.scope.Scope;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
@@ -10,9 +12,25 @@ import util.Paintable;
 public class Workspace implements DataSource {
 
     TurtleContainer myTurtleContainer;
+    private Scope myScope;
+    private MethodScope myMethods;
     
     public Workspace (Dimension canvasBounds) {
        myTurtleContainer = new TurtleContainer(canvasBounds);
+       myScope = new Scope();
+       myMethods = new MethodScope();
+    }
+    
+    public ITurtle getTurtle () {
+        return myTurtleContainer;
+    }
+    
+    public Scope getScope () {
+        return myScope;
+    }
+    
+    public MethodScope getMethodScope () {
+        return myMethods;
     }
 
     @Override

@@ -44,7 +44,7 @@ import util.Location;
  * @author David Winegar
  * 
  */
-public class View extends JFrame implements Observer {
+public class View extends JFrame {
 	private static final long serialVersionUID = 401L;
 	private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
 	private static final String USER_DIR = "user.dir";
@@ -81,7 +81,7 @@ public class View extends JFrame implements Observer {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 				+ myLanguage);
 		myModel = model;
-		//model.initializeObserver(this);
+		
 		myDataSource = model.getDataSource();
 		myTabbedPane = new JTabbedPane();
 		getContentPane().add(myTabbedPane);
@@ -205,30 +205,6 @@ public class View extends JFrame implements Observer {
 	 */
 	private void updateHeadingLabel(int heading) {
 		getCurrentWorkspace().updateHeadingLabel(heading);
-
-	}
-
-	/**
-	 * Overrides the default Obeserver method. When called it updates canvas
-	 * with the new paintable iterator and then updates all labels and shows the
-	 * return value.
-	 * 
-	 * @param arg0
-	 *            Object passed in to observer, unused in this class
-	 * @param arg1
-	 *            Object passed in to observer, unused in this class
-	 */
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		getCurrentWorkspace().update();
-		/*
-		 * myCanvas.update(myDataSource.getPaintableIterator(),
-		 * myDataSource.getBackgroundImage());
-		 * updateHeadingLabel(myDataSource.getTurtleHeading());
-		 * updatePositionLabel(myDataSource.getTurtlePosition()); showMessage(""
-		 * + myDataSource.getReturnValue());
-		 * showMessage(myDataSource.showMessage());
-		 */
 
 	}
 

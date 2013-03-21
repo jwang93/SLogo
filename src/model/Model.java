@@ -33,7 +33,7 @@ import factory.Parser;
  * @author Jay Wang
  * 
  */
-public class Model extends Observable implements IModel, DataSource {
+public class Model implements IModel, DataSource {
 
     /**
      * return value in the event of an error.
@@ -69,7 +69,7 @@ public class Model extends Observable implements IModel, DataSource {
      */
     public ITurtle getTurtle () {
         return myTurtle;
-
+        // return myWorkspaces.getCurrentWorkspace().getITurtle();
     }
 
     /**
@@ -79,6 +79,7 @@ public class Model extends Observable implements IModel, DataSource {
      */
     public Scope getScope () {
         return myScope;
+        // return myWorkspaces.getCurrentWorkspace().getScope();
     }
     
     /**
@@ -106,17 +107,8 @@ public class Model extends Observable implements IModel, DataSource {
 
         finally {
             myReturnValue = returnValue;
-            notifyView();
         }
 
-    }
-
-    /**
-     * sets observable as changed and notifies observers.
-     */
-    private void notifyView () {
-        setChanged();
-        notifyObservers();
     }
 
     @Override
@@ -166,11 +158,6 @@ public class Model extends Observable implements IModel, DataSource {
     public DataSource getDataSource () {
         return this;
         //return myWorkspaces.getCurrentWorkspace();
-    }
-
-    @Override
-    public void initializeObserver (Observer observer) {
-        addObserver(observer);
     }
 
     @Override
@@ -232,8 +219,8 @@ public class Model extends Observable implements IModel, DataSource {
     }
 
     @Override
-    public void changeToWorkspace (int workspaceNumber) {
-        
+    public void switchToWorkspace (int workspaceNumber) {
+        myWorkspaces.switchToWorkspace(workspaceNumber);
     }
 
 }

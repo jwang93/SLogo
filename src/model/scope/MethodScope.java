@@ -12,7 +12,7 @@ public class MethodScope implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 501L;
     private Stack<Map<String, ICommand>> myScope = new Stack<Map<String, ICommand>>();
     private Map<String, ICommand> myCurrentScope;
 

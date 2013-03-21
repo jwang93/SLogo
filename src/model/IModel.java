@@ -40,17 +40,9 @@ public interface IModel {
      * @return datasource
      */
     public DataSource getDataSource ();
-
-    /**
-     * Adds View observer of Model. This observer is notified when datasource needs to be queried by
-     * View.
-     * 
-     * @param observer object in the View
-     */
-    public void initializeObserver (Observer observer);
     
     public void addImage (Image image);
     
-    public void changeToWorkspace(int workspaceNumber);
+    public void switchToWorkspace(int workspaceNumber);
     
 }

@@ -12,11 +12,9 @@ public class WorkspaceContainer {
     Dimension myCanvasBounds;
     
     public WorkspaceContainer (Dimension canvasBounds, Model model) {
-        Workspace original = new Workspace(canvasBounds);
-        myWorkspaceMap.put(0, original);
-        myCurrentWorkspace = original;
         myModel = model;
         myCanvasBounds = canvasBounds;
+        switchToWorkspace(0);
     }
     
     public Workspace getCurrentWorkspace () {
