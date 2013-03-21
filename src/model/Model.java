@@ -19,7 +19,6 @@ import model.scope.Scope;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
-import util.Pixmap;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
@@ -60,6 +59,7 @@ public class Model extends Observable implements IModel, DataSource {
         myScope = new Scope();
         myParser = new Parser(this);
         myMethods = new MethodScope();
+        myWorkspaces = new WorkspaceContainer(canvasBounds, this);
     }
 
     /**
@@ -165,6 +165,7 @@ public class Model extends Observable implements IModel, DataSource {
     @Override
     public DataSource getDataSource () {
         return this;
+        //return myWorkspaces.getCurrentWorkspace();
     }
 
     @Override
@@ -232,12 +233,7 @@ public class Model extends Observable implements IModel, DataSource {
 
     @Override
     public void changeToWorkspace (int workspaceNumber) {
-                
+        
     }
 
-    @Override
-    public DataSource getDataSource (int workspaceNumber) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

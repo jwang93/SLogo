@@ -1,8 +1,13 @@
 package model;
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.util.Iterator;
+import util.DataSource;
+import util.Location;
+import util.Paintable;
 
-public class Workspace {
+public class Workspace implements DataSource {
 
     TurtleContainer myTurtleContainer;
     
@@ -10,4 +15,41 @@ public class Workspace {
        myTurtleContainer = new TurtleContainer(canvasBounds);
     }
 
+    @Override
+    public Iterator<Paintable> getPaintableIterator () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int getReturnValue () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public Location getTurtlePosition () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int getTurtleHeading () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public String showMessage () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Image getBackgroundImage () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    
 }
