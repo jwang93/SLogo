@@ -234,4 +234,10 @@ public class Model extends Observable implements IModel, DataSource {
     public void changeToWorkspace (int workspaceNumber) {
                 
     }
+
+    @Override
+    public DataSource getDataSource (int workspaceNumber) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

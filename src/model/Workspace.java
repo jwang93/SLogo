@@ -1,9 +1,13 @@
 package model;
 
+import java.awt.Dimension;
+
 public class Workspace {
 
-    public Workspace () {
-        // TODO Auto-generated constructor stub
+    TurtleContainer myTurtleContainer;
+    
+    public Workspace (Dimension canvasBounds) {
+       myTurtleContainer = new TurtleContainer(canvasBounds);
     }
 
 }
