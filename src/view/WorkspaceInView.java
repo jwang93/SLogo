@@ -157,7 +157,7 @@ public class WorkspaceInView extends JComponent{
                             + givenCommand);
                 myModel.executeCommand(givenCommand);
                 myCommandLineTextField.setText("");
-
+                update();
             }
         });
         return myCommandLineTextField;

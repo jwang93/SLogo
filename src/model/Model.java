@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import model.scope.MethodScope;
+import model.scope.Scope;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
@@ -65,7 +67,7 @@ public class Model extends Observable implements IModel, DataSource {
      * 
      * @return turtle to return
      */
-    public Turtle getTurtle () {
+    public ITurtle getTurtle () {
         return myTurtle;
 
     }

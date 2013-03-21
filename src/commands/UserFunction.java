@@ -2,7 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Scope;
+import model.scope.Scope;
 import factory.UserFunctionMetaData;
 
 

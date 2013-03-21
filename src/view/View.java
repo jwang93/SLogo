@@ -81,7 +81,7 @@ public class View extends JFrame implements Observer {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 				+ myLanguage);
 		myModel = model;
-		model.initializeObserver(this);
+		//model.initializeObserver(this);
 		myDataSource = model.getDataSource();
 		myTabbedPane = new JTabbedPane();
 		getContentPane().add(myTabbedPane);

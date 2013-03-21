@@ -1,18 +1,17 @@
 package commands;
 
-import model.Turtle;
-
+import model.ITurtle;
 
 public abstract class AbstractZeroParameterTurtleCommand extends AbstractZeroParameterCommand
         implements ICommand {
     public static final int NUM_ARGS =0;
-    private Turtle myTurtle;
+    private ITurtle myTurtle;
 
-    public AbstractZeroParameterTurtleCommand (Turtle turtle) {
+    public AbstractZeroParameterTurtleCommand (ITurtle turtle) {
         myTurtle = turtle;
     }
 
-    protected Turtle getTurtle () {
+    protected ITurtle getTurtle () {
         return myTurtle;
     }
 

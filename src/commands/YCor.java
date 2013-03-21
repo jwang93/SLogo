@@ -1,19 +1,19 @@
 package commands;
 
-import model.Turtle;
+import model.ITurtle;
 
 
 public class YCor extends AbstractZeroParameterTurtleCommand {
 
     public static final int NUM_ARGS = 0;
 
-    public YCor (Turtle turtle) {
+    public YCor (ITurtle turtle) {
         super(turtle);
     }
 
     @Override
     public int execute () {
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         int position = (int) turtle.getTurtlePosition().y;
         return position;
     }

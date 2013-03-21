@@ -1,19 +1,19 @@
 package commands;
 
-import model.Turtle;
+import model.ITurtle;
 
 
 public class Showing extends AbstractZeroParameterTurtleCommand {
 
     public static final int NUM_ARGS = 0;
 
-    public Showing (Turtle turtle) {
+    public Showing (ITurtle turtle) {
         super(turtle);
     }
 
     @Override
     public int execute () {
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         return turtle.isTurtleShowing();
     }
 

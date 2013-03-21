@@ -1,10 +1,10 @@
 package commands;
 
-import model.Turtle;
+import model.ITurtle;
 
 public class ShowTurtle extends AbstractZeroParameterTurtleCommand implements ICommand {
     public static final int NUM_ARGS =0;
-    public ShowTurtle (Turtle turtle) {
+    public ShowTurtle (ITurtle turtle) {
         super(turtle);
     }
     

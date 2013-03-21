@@ -1,19 +1,19 @@
 package commands;
 
 import java.util.List;
-import model.Turtle;
+import model.ITurtle;
 
 
 public abstract class AbstractDoubleParameterTurtleCommand extends AbstractDoubleParameterCommand
         implements ICommand {
-    private Turtle myTurtle;
+    private ITurtle myTurtle;
 
-    public AbstractDoubleParameterTurtleCommand (List<ICommand> parameters, Turtle turtle) {
+    public AbstractDoubleParameterTurtleCommand (List<ICommand> parameters, ITurtle turtle) {
         super(parameters);
         myTurtle = turtle;
     }
 
-    protected Turtle getTurtle () {
+    protected ITurtle getTurtle () {
         return myTurtle;
     }
 }

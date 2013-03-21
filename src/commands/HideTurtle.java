@@ -1,6 +1,6 @@
 package commands;
 
-import model.Turtle;
+import model.ITurtle;
 
 public class HideTurtle extends AbstractZeroParameterTurtleCommand implements ICommand {
 
@@ -9,7 +9,7 @@ public class HideTurtle extends AbstractZeroParameterTurtleCommand implements IC
      */
     private static final long serialVersionUID = 1L;
 
-    public HideTurtle (Turtle turtle) {
+    public HideTurtle (ITurtle turtle) {
         super(turtle);
     }
 

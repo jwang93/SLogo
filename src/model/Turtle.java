@@ -17,7 +17,7 @@ import util.Vector;
  * @author David Winegar
  * @author Zhen Gou
  */
-public class Turtle extends Sprite implements Paintable {
+public class Turtle extends Sprite implements Paintable, ITurtle {
 
     private static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif");
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);

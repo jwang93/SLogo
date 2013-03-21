@@ -1,8 +1,8 @@
 package commands;
 
 import java.util.List;
-import model.MethodScope;
-import model.Scope;
+import model.scope.MethodScope;
+import model.scope.Scope;
 import factory.Parser;
 
 

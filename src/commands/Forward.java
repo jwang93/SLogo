@@ -1,13 +1,14 @@
 package commands;
 
 import java.util.List;
+import model.ITurtle;
 import model.Turtle;
 
 
 public class Forward extends AbstractSingleParameterTurtleCommand {
     public static final int NUM_ARGS = 1;
 
-    public Forward (List<ICommand> commands, Turtle turtle) {
+    public Forward (List<ICommand> commands, ITurtle turtle) {
         super(commands, turtle);
     }
 
@@ -19,7 +20,7 @@ public class Forward extends AbstractSingleParameterTurtleCommand {
      */
     public int execute () {
         resolveParameters();
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         turtle.move(getOnlyParameter());
         return getOnlyParameter();
     }

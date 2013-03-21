@@ -1,21 +1,21 @@
 package commands;
 
 import java.util.List;
-import model.Turtle;
+import model.ITurtle;
 
 
 public class SetHeading extends AbstractSingleParameterTurtleCommand {
 
     public static final int NUM_ARGS = 1;
 
-    public SetHeading (List<ICommand> commands, Turtle turtle) {
+    public SetHeading (List<ICommand> commands, ITurtle turtle) {
         super(commands, turtle);
     }
 
     @Override    
     public int execute () {
         resolveParameters();
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         return (int) turtle.setHeading(getOnlyParameter());
     }
 

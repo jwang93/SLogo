@@ -1,19 +1,19 @@
 package commands;
 
-import model.Turtle;
+import model.ITurtle;
 
 
 public class Heading extends AbstractZeroParameterTurtleCommand {
 
     public static final int NUM_ARGS = 0;
 
-    public Heading (Turtle turtle) {
+    public Heading (ITurtle turtle) {
         super(turtle);
     }
 
     @Override
     public int execute () {
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         int heading = (int) turtle.getHeading();
         return adjustAngle(heading);
     }

@@ -1,12 +1,12 @@
 package commands;
 
-import model.Turtle;
+import model.ITurtle;
 import commands.AbstractZeroParameterTurtleCommand;
 import commands.ICommand;
 
 public class PenUp extends AbstractZeroParameterTurtleCommand implements ICommand {
 
-    public PenUp (Turtle turtle) {
+    public PenUp (ITurtle turtle) {
         super(turtle);
     }
 

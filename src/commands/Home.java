@@ -1,17 +1,16 @@
 package commands;
 
-import util.Location;
-import model.Turtle;
+import model.ITurtle;
 
 public class Home extends AbstractZeroParameterTurtleCommand implements ICommand {
 
 
-    public Home (Turtle turtle) {
+    public Home (ITurtle turtle) {
         super(turtle);
     }
     
     public int execute(){
-        return getTurtle().setLocation(new Location(0,0));
+        return getTurtle().home();
     }
 
 }

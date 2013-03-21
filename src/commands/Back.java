@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import model.ITurtle;
 import model.Turtle;
 
 
@@ -8,14 +9,14 @@ public class Back extends AbstractSingleParameterTurtleCommand {
 
     public static final int NUM_ARGS = 1;
 
-    public Back (List<ICommand> commands, Turtle turtle) {
+    public Back (List<ICommand> commands, ITurtle turtle) {
         super(commands, turtle);
     }
 
     @Override
     public int execute () {
         resolveParameters();
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         turtle.move((-1) * getOnlyParameter());
         return getOnlyParameter();
     }

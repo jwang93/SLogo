@@ -1,5 +1,6 @@
 package commands;
 
+import model.ITurtle;
 import model.Turtle;
 
 
@@ -7,13 +8,13 @@ public class PenDown extends AbstractZeroParameterTurtleCommand {
 
     public static final int NUM_ARGS = 0;
 
-    public PenDown (Turtle turtle) {
+    public PenDown (ITurtle turtle) {
         super(turtle);
     }
 
     @Override
     public int execute () {
-        Turtle turtle = getTurtle();
+        ITurtle turtle = getTurtle();
         return turtle.showPen();
     }
 

@@ -1,7 +1,7 @@
 package commands;
 
 import java.util.List;
-import model.Scope;
+import model.scope.Scope;
 
 
 public class Repeat extends CommandList implements ICommand {
