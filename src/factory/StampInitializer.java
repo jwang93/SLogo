@@ -10,7 +10,6 @@ public class StampInitializer extends AbstractInitializer {
 
     public StampInitializer (Model model, Parser parser) {
         super(model, parser);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
