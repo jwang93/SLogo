@@ -56,7 +56,7 @@ public class Model extends Observable implements IModel, DataSource {
      * @param canvasBounds to pass to turtle
      */
     public Model (Dimension canvasBounds) {
-        myTurtle = new Turtles(canvasBounds);
+        myTurtle = new TurtleContainer(canvasBounds);
         myScope = new Scope();
         myParser = new Parser(this);
         myMethods = new MethodScope();

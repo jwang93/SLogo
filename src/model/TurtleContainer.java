@@ -9,12 +9,12 @@ import java.util.Map;
 import util.Location;
 import util.Paintable;
 
-public class Turtles implements ITurtle {
+public class TurtleContainer implements ITurtle {
 
     Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     
-    public Turtles (Dimension canvasBounds) {
+    public TurtleContainer (Dimension canvasBounds) {
         Turtle firstTurtle = new Turtle(canvasBounds);
         myTurtles.put(1, firstTurtle);
         myActiveTurtles.add(firstTurtle);
@@ -32,7 +32,7 @@ public class Turtles implements ITurtle {
         }
         return i;
     }
-
+    
     @Override
     public double turn (double degrees) {
         double i = 0;
