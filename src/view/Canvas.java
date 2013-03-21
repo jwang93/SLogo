@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import util.Paintable;
 
@@ -38,7 +39,6 @@ public class Canvas extends JComponent {
         // prepare to receive input
         List<Paintable> emptyList = new ArrayList<Paintable>();
         myPaintableIterator = emptyList.iterator();
-        
     }
 
     /**
@@ -70,6 +70,12 @@ public class Canvas extends JComponent {
     public void update (Iterator<Paintable> iterator, Image backgroundImage) {
         myPaintableIterator = iterator;
         myBackground = backgroundImage;
+        repaint();
+    }
+    
+    public void changeSize (Dimension size) {
+        setPreferredSize(size);
+        setSize(size);
         repaint();
     }
 

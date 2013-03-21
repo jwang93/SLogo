@@ -5,9 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
 import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,70 +13,66 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-
 import model.IModel;
-
 import util.DataSource;
 import util.Location;
 
-public class WorkspaceInView extends JComponent{
-	/**
+
+public class WorkspaceInView extends JComponent {
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private int myID;
-	private static final int FIELD_SIZE = 20;
-	private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
+    private static final long serialVersionUID = 1L;
+    private int myID;
+    private static final int FIELD_SIZE = 20;
+    private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
 
-
-	private JTextArea myCommandHistoryTextArea;
+    private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
     private JTextField myCommandLineTextField;
     private JButton myClearButton;
     private JTextArea myUserVariables;
     private JTextArea myUserFuncs;
-    
+
     private ResourceBundle myResources;
     private IModel myModel;
     private Canvas myCanvas;
     private DataSource myDataSource;
-    
-    public WorkspaceInView(IModel model, Dimension canvasBounds,String language, int id){
-    	myID=id;
-    	myModel=model;
-    	myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-                + language);
-    	myCanvas = new Canvas(canvasBounds);
-    	myDataSource=myModel.getDataSource();
-    	initialize();
+
+    public WorkspaceInView (IModel model, Dimension canvasBounds, String language, int id) {
+        myID = id;
+        myModel = model;
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+                                               + language);
+        myCanvas = new Canvas(canvasBounds);
+        myDataSource = myModel.getDataSource();
+        initialize();
         myCanvas.update(myDataSource.getPaintableIterator(), null);
         // the following lines are for testing!
         showVariables("testing testing");
         showFunctions("testing testing");
-    	
+
     }
-    
+
     /**
      * adds components to GUI
      */
-    private void initialize(){
-    	this.setLayout(new BorderLayout());
-    	this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
+    private void initialize () {
+        setLayout(new BorderLayout());
+        this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
         this.add(makeCommandHistory(), BorderLayout.WEST);
-        this.add(makeUserDefinedFuncAndVarDisplay(),BorderLayout.EAST);
+        this.add(makeUserDefinedFuncAndVarDisplay(), BorderLayout.EAST);
         this.add(makeTurtleDisplay(), BorderLayout.CENTER);
-        
-        this.setVisible(true);
+
+        setVisible(true);
     }
-    
-    
+
     private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
         commandHistoryPanel.setLayout(new BorderLayout());
@@ -109,7 +103,7 @@ public class WorkspaceInView extends JComponent{
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.add(myCanvas);
-        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        myCanvas.setBorder(BorderFactory.createLineBorder(Color.black));
         turtleInfoPanel.add(canvasPanel, BorderLayout.CENTER);
 
         JPanel state = new JPanel();
@@ -162,35 +156,35 @@ public class WorkspaceInView extends JComponent{
         });
         return myCommandLineTextField;
     }
-    
-    private JComponent makeUserDefinedFuncAndVarDisplay(){
-    	JPanel panel=new JPanel();
-    	panel.setLayout(new BorderLayout());
-    	Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-    	myUserVariables=new JTextArea(FIELD_SIZE/2,FIELD_SIZE);
-    	myUserVariables.setEditable(false);
-    	
-    	myUserFuncs=new JTextArea(FIELD_SIZE/2,FIELD_SIZE);
-    	myUserFuncs.setEditable(false);
-  
-    	JPanel top=new JPanel();
-    	top.setLayout(new BorderLayout());
-    	top.add(myUserVariables);
-    	top.add(new JLabel(myResources.getString("my_variables")),BorderLayout.NORTH);
-    	top.setBorder(raisedetched);
-    	
-    	JPanel bottom=new JPanel();
-    	bottom.setLayout(new BorderLayout());
-    	bottom.add(myUserFuncs);
-    	bottom.add(new JLabel(myResources.getString("my_functions")),BorderLayout.NORTH);
-    	bottom.setBorder(raisedetched);
-    	
-    	panel.add(top,BorderLayout.WEST);
-    	panel.add(bottom,BorderLayout.EAST);
-    	return panel;
-    	
+
+    private JComponent makeUserDefinedFuncAndVarDisplay () {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+        myUserVariables = new JTextArea(FIELD_SIZE / 2, FIELD_SIZE);
+        myUserVariables.setEditable(false);
+
+        myUserFuncs = new JTextArea(FIELD_SIZE / 2, FIELD_SIZE);
+        myUserFuncs.setEditable(false);
+
+        JPanel top = new JPanel();
+        top.setLayout(new BorderLayout());
+        top.add(myUserVariables);
+        top.add(new JLabel(myResources.getString("my_variables")), BorderLayout.NORTH);
+        top.setBorder(raisedetched);
+
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BorderLayout());
+        bottom.add(myUserFuncs);
+        bottom.add(new JLabel(myResources.getString("my_functions")), BorderLayout.NORTH);
+        bottom.setBorder(raisedetched);
+
+        panel.add(top, BorderLayout.WEST);
+        panel.add(bottom, BorderLayout.EAST);
+        return panel;
+
     }
-    
+
     /**
      * Makes the button that clears the command history.
      * 
@@ -206,7 +200,7 @@ public class WorkspaceInView extends JComponent{
         });
         return myClearButton;
     }
-    
+
     public void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
     }
@@ -217,21 +211,25 @@ public class WorkspaceInView extends JComponent{
     private void clearCommandWindow () {
         myCommandHistoryTextArea.setText("");
     }
+
     /**
      * show user-defined variables on relevant panel
+     * 
      * @param var
      */
-    
-    private void showVariables(String var){
-    	myUserVariables.setText(var);
+
+    private void showVariables (String var) {
+        myUserVariables.setText(var);
     }
+
     /**
      * show user-defined functions on relevant panel
+     * 
      * @param func
      */
-    
-    private void showFunctions(String func){
-    	myUserFuncs.setText(func);
+
+    private void showFunctions (String func) {
+        myUserFuncs.setText(func);
     }
 
     /**
@@ -254,7 +252,7 @@ public class WorkspaceInView extends JComponent{
                                      + heading);
 
     }
-    
+
     public void update () {
         myCanvas.update(myDataSource.getPaintableIterator(), myDataSource.getBackgroundImage());
         updateHeadingLabel(myDataSource.getTurtleHeading());
@@ -263,12 +261,5 @@ public class WorkspaceInView extends JComponent{
         showMessage(myDataSource.showMessage());
 
     }
-    
-    
-    
-
-
-   
-
 
 }
