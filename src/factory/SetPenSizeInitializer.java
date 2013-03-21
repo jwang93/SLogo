@@ -5,6 +5,7 @@ import model.Model;
 import commands.ICommand;
 import commands.SetPenSize;
 
+
 public class SetPenSizeInitializer extends AbstractInitializer {
 
     public SetPenSizeInitializer (Model model, Parser parser) {

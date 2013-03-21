@@ -2,6 +2,7 @@ package commands;
 
 import model.ITurtle;
 
+
 public class HideTurtle extends AbstractZeroParameterTurtleCommand implements ICommand {
 
     /**

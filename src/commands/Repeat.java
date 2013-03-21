@@ -39,7 +39,7 @@ public class Repeat extends CommandList implements ICommand {
         myScope.setVariable(ITERATION_VARIABLE_NAME, 1);
         int returnValue = 0;
         for (int i = 0; i < myNumTimes; i++) {
-            myScope.setVariable(ITERATION_VARIABLE_NAME, i+1);
+            myScope.setVariable(ITERATION_VARIABLE_NAME, i + 1);
             returnValue = myCodeBlock.execute();
         }
         return returnValue;

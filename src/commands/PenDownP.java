@@ -1,7 +1,6 @@
 package commands;
 
 import model.ITurtle;
-import model.Turtle;
 
 
 public class PenDownP extends AbstractZeroParameterTurtleCommand {
@@ -16,7 +15,7 @@ public class PenDownP extends AbstractZeroParameterTurtleCommand {
     public int execute () {
         ITurtle turtle = getTurtle();
         return turtle.isPenDown();
-        
+
     }
 
     @Override

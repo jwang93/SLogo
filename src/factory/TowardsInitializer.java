@@ -2,8 +2,8 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.Towards;
 import commands.ICommand;
+import commands.Towards;
 
 
 public class TowardsInitializer extends AbstractInitializer {

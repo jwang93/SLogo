@@ -47,5 +47,5 @@ public interface DataSource {
      */
     public String showMessage ();
 
-    public Image getBackgroundImage();
+    public Image getBackgroundImage ();
 }

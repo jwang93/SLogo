@@ -2,6 +2,7 @@ package commands;
 
 import model.ITurtle;
 
+
 public class Shape extends AbstractZeroParameterTurtleCommand {
 
     /**
@@ -13,8 +14,9 @@ public class Shape extends AbstractZeroParameterTurtleCommand {
         super(turtle);
     }
 
-    public int execute(){
-        //TODO waiting for IModel implementation
+    @Override
+    public int execute () {
+        // TODO waiting for IModel implementation
         return 0;
     }
 }

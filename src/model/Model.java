@@ -12,8 +12,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.DataSource;
@@ -81,14 +79,14 @@ public class Model implements IModel, DataSource {
         return myScope;
         // return myWorkspaces.getCurrentWorkspace().getScope();
     }
-    
+
     /**
-     * Execution is a two step process. First the parser reads 
+     * Execution is a two step process. First the parser reads
      * the String and builds a command tree. The ICommand returned from
-     * the parser is the head of the command tree. When <code>execute()</code> 
-     * is called the command recursively executes down the tree in 
+     * the parser is the head of the command tree. When <code>execute()</code> is called the command
+     * recursively executes down the tree in
      * a way that resembles a post-order traversal, although you'd never
-     * guess that by looking at the code.  
+     * guess that by looking at the code.
      */
     @Override
     public void executeCommand (String command) {
@@ -116,18 +114,19 @@ public class Model implements IModel, DataSource {
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(fileToSave);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream); 
-            objectOutputStream.writeObject(myScope); 
-            objectOutputStream.writeObject(myMethods); //Currently not working - serializable issues
-            objectOutputStream.flush(); 
-            objectOutputStream.close(); 
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(myScope);
+            objectOutputStream.writeObject(myMethods); // Currently not working - serializable
+                                                       // issues
+            objectOutputStream.flush();
+            objectOutputStream.close();
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         catch (IOException e) {
             e.printStackTrace();
-        } 
+        }
 
         System.out.println(fileToSave.getAbsolutePath());
     }
@@ -137,12 +136,12 @@ public class Model implements IModel, DataSource {
 
         try {
             FileInputStream fileInputStream = new FileInputStream(fileToLoad);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream); 
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             myScope = (Scope) objectInputStream.readObject();
             myMethods = (MethodScope) objectInputStream.readObject();
-            objectInputStream.close(); 
+            objectInputStream.close();
         }
-        
+
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -151,13 +150,13 @@ public class Model implements IModel, DataSource {
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } 
+        }
     }
 
     @Override
     public DataSource getDataSource () {
         return this;
-        //return myWorkspaces.getCurrentWorkspace();
+        // return myWorkspaces.getCurrentWorkspace();
     }
 
     @Override
@@ -215,7 +214,7 @@ public class Model implements IModel, DataSource {
 
     @Override
     public void addImage (Image image) {
-        myImageList.add(image);        
+        myImageList.add(image);
     }
 
     @Override

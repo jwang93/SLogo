@@ -2,7 +2,6 @@ package commands;
 
 import java.util.List;
 import model.ITurtle;
-import model.Turtle;
 
 
 public class Left extends AbstractSingleParameterTurtleCommand {

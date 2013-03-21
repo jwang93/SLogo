@@ -6,6 +6,7 @@ import commands.ICommand;
 import commands.If;
 import commands.IfElse;
 
+
 public class IfElseInitializer extends AbstractInitializer {
 
     public IfElseInitializer (Model model, Parser parser) {

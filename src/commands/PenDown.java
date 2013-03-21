@@ -1,7 +1,6 @@
 package commands;
 
 import model.ITurtle;
-import model.Turtle;
 
 
 public class PenDown extends AbstractZeroParameterTurtleCommand {

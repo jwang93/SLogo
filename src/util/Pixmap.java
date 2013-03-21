@@ -44,10 +44,12 @@ public class Pixmap {
         myImage = new ImageIcon(getClass().getResource(RESOURCE_LOCATION + fileName)).getImage();
         myFileName = fileName;
     }
-	 public Pixmap (Image image) {
-			myImage = image;
-			myFileName = "";
-		}
+
+    public Pixmap (Image image) {
+        myImage = image;
+        myFileName = "";
+    }
+
     /**
      * Describes how to draw the image on the screen.
      */

@@ -12,7 +12,7 @@ public class SetHeading extends AbstractSingleParameterTurtleCommand {
         super(commands, turtle);
     }
 
-    @Override    
+    @Override
     public int execute () {
         resolveParameters();
         ITurtle turtle = getTurtle();
@@ -23,6 +23,5 @@ public class SetHeading extends AbstractSingleParameterTurtleCommand {
     public String toString () {
         return "SetHeading " + getCommands().get(0).toString();
     }
-
 
 }

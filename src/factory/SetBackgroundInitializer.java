@@ -1,9 +1,9 @@
 package factory;
 
 import java.util.List;
-import commands.*;
 import model.Model;
-import factory.AbstractInitializer;
+import commands.ICommand;
+import commands.SetBackground;
 
 
 public class SetBackgroundInitializer extends AbstractInitializer {

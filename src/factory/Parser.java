@@ -83,7 +83,10 @@ public class Parser {
                     new UserFunctionInitializer(myModel, this, myUserFunctions.get(keyword));
             return init.build(commandStream);
         }
-        if (!myResourceBundle.containsKey(keyword)) throw new FormattingException(String.format("Error: The Parser didnt recognize the command %s" , keyword));
+        if (!myResourceBundle.containsKey(keyword))
+            throw new FormattingException(
+                                          String.format("Error: The Parser didnt recognize the command %s",
+                                                        keyword));
         AbstractInitializer init = getInitializer(myResourceBundle.getString(keyword));
         return init.build(commandStream);
     }
@@ -107,16 +110,20 @@ public class Parser {
                     return (AbstractInitializer) constructor.newInstance(myModel, this);
                 }
                 catch (IllegalArgumentException e) {
-                    throw new FormattingException("Formatting Error: Encountered Illegal Argument Exception");
+                    throw new FormattingException(
+                                                  "Formatting Error: Encountered Illegal Argument Exception");
                 }
                 catch (InstantiationException e) {
-                    throw new FormattingException("Formatting Error: Encountered Instantiation Exception");
+                    throw new FormattingException(
+                                                  "Formatting Error: Encountered Instantiation Exception");
                 }
                 catch (IllegalAccessException e) {
-                    throw new FormattingException("Formatting Error: Encountered Illegal Access Exception");
+                    throw new FormattingException(
+                                                  "Formatting Error: Encountered Illegal Access Exception");
                 }
                 catch (InvocationTargetException e) {
-                    throw new FormattingException("Formatting Error: Encountered Invocation target Exception");
+                    throw new FormattingException(
+                                                  "Formatting Error: Encountered Invocation target Exception");
                 }
             }
 

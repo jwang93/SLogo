@@ -1,8 +1,8 @@
 package commands;
 
 import java.util.List;
-import util.Location;
 import model.ITurtle;
+import util.Location;
 
 
 public class Towards extends AbstractDoubleParameterTurtleCommand {
@@ -13,7 +13,7 @@ public class Towards extends AbstractDoubleParameterTurtleCommand {
         super(commands, turtle);
     }
 
-    @Override    
+    @Override
     public int execute () {
         resolveParameters();
         ITurtle turtle = getTurtle();
@@ -24,6 +24,5 @@ public class Towards extends AbstractDoubleParameterTurtleCommand {
     public String toString () {
         return "Towards " + getCommands().get(0).toString();
     }
-
 
 }

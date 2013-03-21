@@ -15,7 +15,7 @@ public class RepeatInitializer extends AbstractInitializer {
 
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {
-        return new Repeat(parameters , getModel().getScope());
+        return new Repeat(parameters, getModel().getScope());
     }
 
 }

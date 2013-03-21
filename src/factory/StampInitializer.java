@@ -2,8 +2,9 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.*;
+import commands.ICommand;
 import commands.Stamp;
+
 
 public class StampInitializer extends AbstractInitializer {
 

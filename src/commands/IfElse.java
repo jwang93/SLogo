@@ -1,8 +1,7 @@
 package commands;
 
 import java.util.List;
-import model.Model;
-import factory.Parser;
+
 
 public class IfElse extends CommandList implements ICommand {
     public static final int NUM_ARGS = 3;
@@ -19,9 +18,7 @@ public class IfElse extends CommandList implements ICommand {
 
     @Override
     public int execute () {
-        if(myTest.execute() == 1){
-            return myTrueCodeBlock.execute();
-        }
+        if (myTest.execute() == 1) return myTrueCodeBlock.execute();
         return myFalseCodeBlock.execute();
     }
 

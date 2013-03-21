@@ -9,36 +9,37 @@ import java.util.Map;
 import util.Location;
 import util.Paintable;
 
+
 public class TurtleContainer implements ITurtle {
 
     Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     Dimension currentDimension;
-    
+
     public TurtleContainer (Dimension canvasBounds) {
         Turtle firstTurtle = new Turtle(canvasBounds);
         myTurtles.put(1, firstTurtle);
         myActiveTurtles.add(firstTurtle);
         currentDimension = canvasBounds;
     }
-    
-    private List<Turtle> getActiveTurtles() {
+
+    private List<Turtle> getActiveTurtles () {
         return myActiveTurtles;
     }
 
     @Override
     public int move (int pixels) {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.move(pixels);
         }
         return i;
     }
-    
+
     @Override
     public double turn (double degrees) {
         double i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.turn(degrees);
         }
         return i;
@@ -47,7 +48,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public double setHeading (double heading) {
         double i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.setHeading(heading);
         }
         return i;
@@ -56,7 +57,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public double towards (Location location) {
         double i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.towards(location);
         }
         return i;
@@ -65,7 +66,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int setLocation (Location location) {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.setLocation(location);
         }
         return i;
@@ -74,7 +75,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int showTurtle () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.showTurtle();
         }
         return i;
@@ -83,7 +84,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int hideTurtle () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.hideTurtle();
         }
         return i;
@@ -92,7 +93,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int showPen () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.showPen();
         }
         return i;
@@ -101,7 +102,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int hidePen () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.hidePen();
         }
         return i;
@@ -110,7 +111,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int home () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.home();
         }
         return i;
@@ -119,7 +120,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int clearScreen () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.clearScreen();
         }
         return i;
@@ -128,7 +129,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int isTurtleShowing () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.isTurtleShowing();
         }
         return i;
@@ -137,7 +138,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public int isPenDown () {
         int i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.isPenDown();
         }
         return i;
@@ -146,7 +147,7 @@ public class TurtleContainer implements ITurtle {
     @Override
     public double getHeading () {
         double i = 0;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.getHeading();
         }
         return i;
@@ -155,12 +156,13 @@ public class TurtleContainer implements ITurtle {
     @Override
     public Location getTurtlePosition () {
         Location i = null;
-        for(Turtle turtle : getActiveTurtles()) {
+        for (Turtle turtle : getActiveTurtles()) {
             i = turtle.getTurtlePosition();
         }
         return i;
     }
 
+    @Override
     public Iterator<Paintable> getPaintableIterator () {
         return getActiveTurtles().get(getActiveTurtles().size() - 1).getPaintableIterator();
     }

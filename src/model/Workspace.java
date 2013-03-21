@@ -9,26 +9,27 @@ import util.DataSource;
 import util.Location;
 import util.Paintable;
 
+
 public class Workspace implements DataSource {
 
     TurtleContainer myTurtleContainer;
     private Scope myScope;
     private MethodScope myMethods;
-    
+
     public Workspace (Dimension canvasBounds) {
-       myTurtleContainer = new TurtleContainer(canvasBounds);
-       myScope = new Scope();
-       myMethods = new MethodScope();
+        myTurtleContainer = new TurtleContainer(canvasBounds);
+        myScope = new Scope();
+        myMethods = new MethodScope();
     }
-    
+
     public ITurtle getTurtle () {
         return myTurtleContainer;
     }
-    
+
     public Scope getScope () {
         return myScope;
     }
-    
+
     public MethodScope getMethodScope () {
         return myMethods;
     }
@@ -69,5 +70,4 @@ public class Workspace implements DataSource {
         return null;
     }
 
-    
 }

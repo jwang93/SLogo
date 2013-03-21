@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import util.Paintable;
 
@@ -72,7 +71,7 @@ public class Canvas extends JComponent {
         myBackground = backgroundImage;
         repaint();
     }
-    
+
     public void changeSize (Dimension size) {
         setPreferredSize(size);
         setSize(size);

@@ -1,6 +1,8 @@
 package commands;
-import model.Model;
+
 import java.util.List;
+import model.Model;
+
 
 public class SetBackground extends AbstractSingleParameterCommand implements ICommand {
 
@@ -11,19 +13,20 @@ public class SetBackground extends AbstractSingleParameterCommand implements ICo
     public static final int NUM_ARGS = 1;
     private Model myModel;
 
-    public SetBackground (List<ICommand> parameters , Model model) {
+    public SetBackground (List<ICommand> parameters, Model model) {
         super(parameters);
-        myModel  = model;
+        myModel = model;
     }
+
     @Override
-    public int execute(){
+    public int execute () {
         resolveParameters();
-        //TODO how to do this???
+        // TODO how to do this???
         return getOnlyParameter();
     }
 
-    
-    public String toString(){
+    @Override
+    public String toString () {
         return "setbackground " + getCommands().get(0).toString();
     }
 }

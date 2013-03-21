@@ -16,6 +16,7 @@ public abstract class AbstractSingleParameterCommand extends CommandList impleme
     private static final int PARAMETER_INDEX = 0;
     private int myOnlyParameter;
     private static final int NUM_ARGS = 1;
+
     public AbstractSingleParameterCommand (List<ICommand> parameters) {
         super(parameters);
     }

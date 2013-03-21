@@ -3,8 +3,9 @@ package factory;
 import java.util.List;
 import model.Model;
 import commands.ICommand;
-import exceptions.FormattingException;
 import commands.ShowTurtle;
+import exceptions.FormattingException;
+
 
 public class ShowTurtleInitializer extends AbstractInitializer {
 
@@ -13,11 +14,13 @@ public class ShowTurtleInitializer extends AbstractInitializer {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
     protected ICommand build (CommandStream commandStream) throws FormattingException {
         return new ShowTurtle(getModel().getTurtle());
     }
+
     /*
-     *This class is so simple theres really no need to implement this 
+     * This class is so simple theres really no need to implement this
      */
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {

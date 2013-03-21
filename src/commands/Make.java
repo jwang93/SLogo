@@ -5,7 +5,7 @@ import model.scope.Scope;
 
 
 public class Make extends AbstractSingleParameterCommand implements ICommand {
-    
+
     private static final long serialVersionUID = 1L;
     // don't count the variable name, just the number -- "make varname expression"
     public static final int NUM_ARGS = 1;

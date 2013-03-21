@@ -2,8 +2,8 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.SetHeading;
 import commands.ICommand;
+import commands.SetHeading;
 
 
 public class SetHeadingInitializer extends AbstractInitializer {

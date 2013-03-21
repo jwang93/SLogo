@@ -2,7 +2,6 @@ package model;
 
 import java.awt.Image;
 import java.io.File;
-import java.util.Observer;
 import util.DataSource;
 
 
@@ -40,9 +39,9 @@ public interface IModel {
      * @return datasource
      */
     public DataSource getDataSource ();
-    
+
     public void addImage (Image image);
-    
-    public void switchToWorkspace(int workspaceNumber);
-    
+
+    public void switchToWorkspace (int workspaceNumber);
+
 }
