@@ -25,6 +25,7 @@ public class Turtle extends Sprite implements Paintable {
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
+    private boolean active=true;
     private Line myLine = new Line();
     private Dimension myCanvasBounds;
     private int myCenterXValue;
@@ -391,6 +392,25 @@ public class Turtle extends Sprite implements Paintable {
         if (myPenDown) return 1;
         return 0;
     }
+    
+    /**
+     * make this turtle active
+     * @return 1 
+     */
+    
+    public int activate(){
+    	active=true;
+    	return 1;
+    }
+    /**
+     * make this turtle inactive
+     * @return 0
+     */
+    
+    public int deactivate(){
+    	active=false;
+    	return 0;
+    }
 
     private Location convertFromViewCoordinates (Location location) {
         return new Location(location.getX() - myCenterXValue, myCenterYValue - location.getY());
@@ -405,6 +425,9 @@ public class Turtle extends Sprite implements Paintable {
         ArrayList<Paintable> paintList = new ArrayList<Paintable>();
         if (myTurtleShowing) {
             paintList.add(this);
+        }
+        if (active){
+        	paintList.add(new turtleHighlighter(this));
         }
         paintList.add(myLine);
         return paintList.iterator();
