@@ -10,11 +10,11 @@ public class WorkspaceContainer {
     Map<Integer, Workspace> myWorkspaceMap = new HashMap<Integer, Workspace>();
     Workspace myCurrentWorkspace;
     Model myModel;
-    Dimension myCanvasBounds;
+    Dimension myDefaultCanvasBounds;
 
     public WorkspaceContainer (Dimension canvasBounds, Model model) {
         myModel = model;
-        myCanvasBounds = canvasBounds;
+        myDefaultCanvasBounds = canvasBounds;
         switchToWorkspace(0);
     }
 
@@ -24,7 +24,7 @@ public class WorkspaceContainer {
 
     public void switchToWorkspace (int workspaceNumber) {
         if (!myWorkspaceMap.containsKey(workspaceNumber)) {
-            Workspace workspace = new Workspace(myCanvasBounds);
+            Workspace workspace = new Workspace(myDefaultCanvasBounds);
             myWorkspaceMap.put(workspaceNumber, workspace);
             myCurrentWorkspace = workspace;
         }

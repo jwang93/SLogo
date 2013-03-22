@@ -110,5 +110,33 @@ public interface ITurtle {
     public abstract Iterator<Paintable> getPaintableIterator ();
 
     // TODO need view background, shape, color size functionality for part 3 commands
-
+    
+    public abstract int setBackground (int colorIndex);
+    
+    public abstract int setPenColor (int colorIndex);
+    
+    public abstract int setPenSize (int pixels);
+    
+    public abstract int setShape (int shapeIndex);
+    
+    public abstract int setPalette (int colorIndex, int red, int green, int blue);
+    
+    public abstract int getPenColor ();
+    
+    public abstract int stamp ();
+    
+    public abstract int clearStamps ();
+    
+    public abstract int getShapeIndex ();
+    
+    public abstract int getTurtleID ();
+    
+    public abstract int setActiveTurtles (int[] turtleIds);
+    
+    public abstract void resetActiveTurtles ();
+    
+    public abstract int makeEvenTurtlesActive ();
+    
+    public abstract int makeOddTurtlesActive ();
+    
 }

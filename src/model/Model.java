@@ -39,9 +39,6 @@ public class Model implements IModel, DataSource {
     public static final int ERROR_RETURN_VALUE = -1;
 
     private Parser myParser;
-    private ITurtle myTurtle;
-    private Scope myScope;
-    private MethodScope myMethods;
     private int myReturnValue;
     private String myReturnMessage;
     private WorkspaceContainer myWorkspaces;
@@ -53,10 +50,7 @@ public class Model implements IModel, DataSource {
      * @param canvasBounds to pass to turtle
      */
     public Model (Dimension canvasBounds) {
-        myTurtle = new TurtleContainer(canvasBounds);
-        myScope = new Scope();
         myParser = new Parser(this);
-        myMethods = new MethodScope();
         myWorkspaces = new WorkspaceContainer(canvasBounds, this);
     }
 
@@ -66,8 +60,7 @@ public class Model implements IModel, DataSource {
      * @return turtle to return
      */
     public ITurtle getTurtle () {
-        return myTurtle;
-        // return myWorkspaces.getCurrentWorkspace().getITurtle();
+        return myWorkspaces.getCurrentWorkspace();
     }
 
     /**
@@ -76,8 +69,11 @@ public class Model implements IModel, DataSource {
      * @return myScope
      */
     public Scope getScope () {
-        return myScope;
-        // return myWorkspaces.getCurrentWorkspace().getScope();
+        return myWorkspaces.getCurrentWorkspace().getScope();
+    }
+    
+    public MethodScope getMethodScope () {
+        return myWorkspaces.getCurrentWorkspace().getMethodScope();
     }
 
     /**
@@ -105,6 +101,7 @@ public class Model implements IModel, DataSource {
 
         finally {
             myReturnValue = returnValue;
+            myWorkspaces.getCurrentWorkspace().setReturnValue(returnValue);
         }
 
     }
@@ -115,8 +112,8 @@ public class Model implements IModel, DataSource {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(fileToSave);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(myScope);
-            objectOutputStream.writeObject(myMethods); // Currently not working - serializable
+            objectOutputStream.writeObject(getScope());
+            objectOutputStream.writeObject(getMethodScope()); // Currently not working - serializable
                                                        // issues
             objectOutputStream.flush();
             objectOutputStream.close();
@@ -137,8 +134,9 @@ public class Model implements IModel, DataSource {
         try {
             FileInputStream fileInputStream = new FileInputStream(fileToLoad);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            myScope = (Scope) objectInputStream.readObject();
-            myMethods = (MethodScope) objectInputStream.readObject();
+            // scope now in myWorkspaces.currentWorkspace(), need to combine this with that
+            // = (Scope) objectInputStream.readObject();
+            // = (MethodScope) objectInputStream.readObject();
             objectInputStream.close();
         }
 
@@ -148,9 +146,9 @@ public class Model implements IModel, DataSource {
         catch (IOException e) {
             e.printStackTrace();
         }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        //catch (ClassNotFoundException e) {
+        //    e.printStackTrace();
+       // }
     }
 
     @Override
@@ -161,7 +159,7 @@ public class Model implements IModel, DataSource {
 
     @Override
     public Iterator<Paintable> getPaintableIterator () {
-        return myTurtle.getPaintableIterator();
+        return myWorkspaces.myCurrentWorkspace.getPaintableIterator();
     }
 
     @Override
@@ -171,12 +169,12 @@ public class Model implements IModel, DataSource {
 
     @Override
     public Location getTurtlePosition () {
-        return myTurtle.getTurtlePosition();
+        return myWorkspaces.myCurrentWorkspace.getTurtlePosition();
     }
 
     @Override
     public int getTurtleHeading () {
-        return (int) myTurtle.getHeading();
+        return (int) myWorkspaces.myCurrentWorkspace.getHeading();
     }
 
     @Override
@@ -200,10 +198,6 @@ public class Model implements IModel, DataSource {
      */
     public void setReturnMessage (String message) {
         myReturnMessage = message;
-    }
-
-    public MethodScope getMethods () {
-        return myMethods;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ToInitializer extends AbstractInitializer {
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {
 
-        return new To(parameters, myFunctionName, getModel().getScope(), getModel().getMethods(),
+        return new To(parameters, myFunctionName, getModel().getScope(), getModel().getMethodScope(),
                       getParser(), myVariableNames);
     }
 

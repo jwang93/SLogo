@@ -2,7 +2,11 @@ package model;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.DataSource;
@@ -10,20 +14,23 @@ import util.Location;
 import util.Paintable;
 
 
-public class Workspace implements DataSource {
+public class Workspace implements DataSource, ITurtle {
 
-    TurtleContainer myTurtleContainer;
     private Scope myScope;
     private MethodScope myMethods;
+    
+    Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
+    List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
+    Dimension myCanvasBounds;
 
     public Workspace (Dimension canvasBounds) {
-        myTurtleContainer = new TurtleContainer(canvasBounds);
         myScope = new Scope();
         myMethods = new MethodScope();
-    }
-
-    public ITurtle getTurtle () {
-        return myTurtleContainer;
+        
+        Turtle firstTurtle = new Turtle(canvasBounds);
+        myTurtles.put(0, firstTurtle);
+        myActiveTurtles.add(firstTurtle);
+        myCanvasBounds = canvasBounds;
     }
 
     public Scope getScope () {
@@ -33,23 +40,15 @@ public class Workspace implements DataSource {
     public MethodScope getMethodScope () {
         return myMethods;
     }
-
-    @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        // TODO Auto-generated method stub
-        return null;
+    
+    public void setReturnValue (int returnValue) {
+        
     }
 
     @Override
     public int getReturnValue () {
         // TODO Auto-generated method stub
         return 0;
-    }
-
-    @Override
-    public Location getTurtlePosition () {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
@@ -68,6 +67,255 @@ public class Workspace implements DataSource {
     public Image getBackgroundImage () {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    private List<Turtle> getActiveTurtles () {
+        return myActiveTurtles;
+    }
+
+    @Override
+    public int move (int pixels) {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.move(pixels);
+        }
+        return i;
+    }
+
+    @Override
+    public double turn (double degrees) {
+        double i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.turn(degrees);
+        }
+        return i;
+    }
+
+    @Override
+    public double setHeading (double heading) {
+        double i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.setHeading(heading);
+        }
+        return i;
+    }
+
+    @Override
+    public double towards (Location location) {
+        double i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.towards(location);
+        }
+        return i;
+    }
+
+    @Override
+    public int setLocation (Location location) {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.setLocation(location);
+        }
+        return i;
+    }
+
+    @Override
+    public int showTurtle () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.showTurtle();
+        }
+        return i;
+    }
+
+    @Override
+    public int hideTurtle () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.hideTurtle();
+        }
+        return i;
+    }
+
+    @Override
+    public int showPen () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.showPen();
+        }
+        return i;
+    }
+
+    @Override
+    public int hidePen () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.hidePen();
+        }
+        return i;
+    }
+
+    @Override
+    public int home () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.home();
+        }
+        return i;
+    }
+
+    @Override
+    public int clearScreen () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.clearScreen();
+        }
+        return i;
+    }
+
+    @Override
+    public int isTurtleShowing () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.isTurtleShowing();
+        }
+        return i;
+    }
+
+    @Override
+    public int isPenDown () {
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.isPenDown();
+        }
+        return i;
+    }
+
+    @Override
+    public double getHeading () {
+        double i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.getHeading();
+        }
+        return i;
+    }
+
+    @Override
+    public Location getTurtlePosition () {
+        Location i = null;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.getTurtlePosition();
+        }
+        return i;
+    }
+
+    @Override
+    public Iterator<Paintable> getPaintableIterator () {
+        return getActiveTurtles().get(getActiveTurtles().size() - 1).getPaintableIterator();
+    }
+
+    @Override
+    public int setBackground (int colorIndex) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int setPenColor (int colorIndex) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int setPenSize (int pixels) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int setShape (int shapeIndex) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int setPalette (int colorIndex, int red, int green, int blue) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getPenColor () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int stamp () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int clearStamps () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getShapeIndex () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getTurtleID () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int setActiveTurtles (int[] turtleIds) {
+        myActiveTurtles = new ArrayList<Turtle>();
+        for(int id : turtleIds){
+            if(myTurtles.containsKey(id)){
+                myActiveTurtles.add(myTurtles.get(id));
+            } else {
+                Turtle newTurtle = new Turtle(myCanvasBounds);
+                myTurtles.put(id, newTurtle);
+                myActiveTurtles.add(newTurtle);
+            }
+        }
+        return turtleIds[turtleIds.length - 1];
+    }
+
+    @Override
+    public void resetActiveTurtles () {
+        myActiveTurtles = new ArrayList<Turtle>(myTurtles.values());
+    }
+
+    @Override
+    public int makeEvenTurtlesActive () {
+        return evenOddHelper(0);
+    }
+    
+    private int evenOddHelper (int oddOrEven) {
+        myActiveTurtles = new ArrayList<Turtle>();
+        int lastId = 0;
+        for(int id : myTurtles.keySet()){
+            if(id % 2 == oddOrEven){
+                myActiveTurtles.add(myTurtles.get(id));
+                lastId = id;
+            }
+        }
+        if (myActiveTurtles.isEmpty()) {
+            myActiveTurtles = new ArrayList<Turtle>(myTurtles.values());
+        }
+        return lastId;
+    }
+
+    @Override
+    public int makeOddTurtlesActive () {
+        return evenOddHelper(1);
     }
 
 }
