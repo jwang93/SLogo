@@ -3,13 +3,17 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,14 +35,21 @@ public class WorkspaceInView extends JComponent {
     private int myID;
     private static final int FIELD_SIZE = 20;
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
+    private static final String USER_DIR = "user.dir";
+    private static final JFileChooser FILE_CHOOSER = new JFileChooser(System
+            .getProperties().getProperty(USER_DIR));
+    private static final String RESOURCE_LOCATION = "/images/";
+    
 
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
     private JTextField myCommandLineTextField;
     private JButton myClearButton;
+    private JButton myChangeBackgroundButton;
     private JTextArea myUserVariables;
     private JTextArea myUserFuncs;
+    private Image myBackgroundImage;
 
     private ResourceBundle myResources;
     private IModel myModel;
@@ -107,12 +118,14 @@ public class WorkspaceInView extends JComponent {
         turtleInfoPanel.add(canvasPanel, BorderLayout.CENTER);
 
         JPanel state = new JPanel();
+        
         myTurtlePositionLabel = new JLabel();
         myTurtleHeadingLabel = new JLabel();
         state.add(myTurtlePositionLabel);
         state.add(myTurtleHeadingLabel);
         updateHeadingLabel(myDataSource.getTurtleHeading());
         updatePositionLabel(myDataSource.getTurtlePosition());
+        state.add(makeChangeBackgroundButton());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
 
         return turtleInfoPanel;
@@ -199,6 +212,28 @@ public class WorkspaceInView extends JComponent {
             }
         });
         return myClearButton;
+    }
+    
+    private JButton makeChangeBackgroundButton(){
+    	myChangeBackgroundButton=new JButton(myResources.getString("change_background"));
+    	myChangeBackgroundButton.addActionListener(new ActionListener(){
+    		
+    		@Override
+    		public void actionPerformed (ActionEvent e){
+    			int response = FILE_CHOOSER.showDialog(null, myResources.getString("select_image"));
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    String fileName = FILE_CHOOSER.getSelectedFile().getName();
+                    Image myImage = new ImageIcon(getClass().getResource(RESOURCE_LOCATION + fileName)).getImage();
+                    myBackgroundImage=myImage;
+                   
+                    // todo, not sure what to call for now
+    		     }
+    		}
+                
+    		
+    	});
+    	return myChangeBackgroundButton;
+    	
     }
 
     public void showMessage (String message) {
