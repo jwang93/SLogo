@@ -39,7 +39,6 @@ public class WorkspaceInView extends JComponent {
     private static final JFileChooser FILE_CHOOSER = new JFileChooser(System
             .getProperties().getProperty(USER_DIR));
     private static final String RESOURCE_LOCATION = "/images/";
-    
 
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
@@ -118,7 +117,7 @@ public class WorkspaceInView extends JComponent {
         turtleInfoPanel.add(canvasPanel, BorderLayout.CENTER);
 
         JPanel state = new JPanel();
-        
+
         myTurtlePositionLabel = new JLabel();
         myTurtleHeadingLabel = new JLabel();
         state.add(myTurtlePositionLabel);
@@ -213,27 +212,28 @@ public class WorkspaceInView extends JComponent {
         });
         return myClearButton;
     }
-    
-    private JButton makeChangeBackgroundButton(){
-    	myChangeBackgroundButton=new JButton(myResources.getString("change_background"));
-    	myChangeBackgroundButton.addActionListener(new ActionListener(){
-    		
-    		@Override
-    		public void actionPerformed (ActionEvent e){
-    			int response = FILE_CHOOSER.showDialog(null, myResources.getString("select_image"));
+
+    private JButton makeChangeBackgroundButton () {
+        myChangeBackgroundButton = new JButton(myResources.getString("change_background"));
+        myChangeBackgroundButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                int response = FILE_CHOOSER.showDialog(null, myResources.getString("select_image"));
                 if (response == JFileChooser.APPROVE_OPTION) {
                     String fileName = FILE_CHOOSER.getSelectedFile().getName();
-                    Image myImage = new ImageIcon(getClass().getResource(RESOURCE_LOCATION + fileName)).getImage();
-                    myBackgroundImage=myImage;
-                   
-                    // todo, not sure what to call for now
-    		     }
-    		}
-                
-    		
-    	});
-    	return myChangeBackgroundButton;
-    	
+                    Image myImage =
+                            new ImageIcon(getClass().getResource(RESOURCE_LOCATION + fileName))
+                                    .getImage();
+                    myBackgroundImage = myImage;
+
+                    // TODO, not sure what to call for now
+                }
+            }
+
+        });
+        return myChangeBackgroundButton;
+
     }
 
     public void showMessage (String message) {

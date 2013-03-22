@@ -10,13 +10,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.DataSource;
-import util.Location;
-import util.Paintable;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
@@ -31,7 +28,7 @@ import factory.Parser;
  * @author Jay Wang
  * 
  */
-public class Model implements IModel, DataSource {
+public class Model implements IModel {
 
     /**
      * return value in the event of an error.
@@ -39,10 +36,7 @@ public class Model implements IModel, DataSource {
     public static final int ERROR_RETURN_VALUE = -1;
 
     private Parser myParser;
-    private int myReturnValue;
-    private String myReturnMessage;
     private WorkspaceContainer myWorkspaces;
-    private List<Image> myImageList = new ArrayList<Image>();
 
     /**
      * Instantiates parser, scope, and turtle and passes the canvasBounds.
@@ -92,15 +86,12 @@ public class Model implements IModel, DataSource {
         try {
             executable = myParser.parse(command);
             returnValue = executable.execute();
-            myReturnMessage = "";
         }
         catch (FormattingException e) {
-            myReturnMessage = e.getMessage();
-
+            
         }
 
         finally {
-            myReturnValue = returnValue;
             myWorkspaces.getCurrentWorkspace().setReturnValue(returnValue);
         }
 
@@ -153,62 +144,12 @@ public class Model implements IModel, DataSource {
 
     @Override
     public DataSource getDataSource () {
-        return this;
-        // return myWorkspaces.getCurrentWorkspace();
-    }
-
-    @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        return myWorkspaces.myCurrentWorkspace.getPaintableIterator();
-    }
-
-    @Override
-    public int getReturnValue () {
-        return myReturnValue;
-    }
-
-    @Override
-    public Location getTurtlePosition () {
-        return myWorkspaces.myCurrentWorkspace.getTurtlePosition();
-    }
-
-    @Override
-    public int getTurtleHeading () {
-        return (int) myWorkspaces.myCurrentWorkspace.getHeading();
-    }
-
-    @Override
-    public String showMessage () {
-        return myReturnMessage;
-    }
-
-    /**
-     * Sets current return value
-     * 
-     * @param value to set
-     */
-    public void setReturnValue (int value) {
-        myReturnValue = value;
-    }
-
-    /**
-     * Sets the return message
-     * 
-     * @param message to set
-     */
-    public void setReturnMessage (String message) {
-        myReturnMessage = message;
-    }
-
-    @Override
-    public Image getBackgroundImage () {
-        // TODO Auto-generated method stub
-        return null;
+        return myWorkspaces.getCurrentWorkspace();
     }
 
     @Override
     public void addImage (Image image) {
-        myImageList.add(image);
+        //myImageList.add(image);
     }
 
     @Override

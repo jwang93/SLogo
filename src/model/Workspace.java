@@ -42,7 +42,7 @@ public class Workspace implements DataSource, ITurtle {
     }
     
     public void setReturnValue (int returnValue) {
-        
+        // TODO
     }
 
     @Override
@@ -214,7 +214,13 @@ public class Workspace implements DataSource, ITurtle {
     }
 
     @Override
-    public int setBackground (int colorIndex) {
+    public int setBackgroundColor (int colorIndex) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int setBackgroundImage (int imageIndex) {
         // TODO Auto-generated method stub
         return 0;
     }
@@ -317,5 +323,7 @@ public class Workspace implements DataSource, ITurtle {
     public int makeOddTurtlesActive () {
         return evenOddHelper(1);
     }
+
+    
 
 }

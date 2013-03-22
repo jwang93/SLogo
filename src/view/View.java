@@ -39,7 +39,6 @@ public class View extends JFrame {
     private JTabbedPane myTabbedPane;
     private ResourceBundle myResources;
     private IModel myModel;
-    private DataSource myDataSource;
     private int numberOfWorkspaces = 0;
     private String myLanguage;
     private Dimension myCanvasBounds;
@@ -67,7 +66,6 @@ public class View extends JFrame {
                                                + myLanguage);
         myModel = model;
 
-        myDataSource = model.getDataSource();
         myTabbedPane = new JTabbedPane();
         getContentPane().add(myTabbedPane);
         createNewWorkspace();

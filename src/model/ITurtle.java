@@ -108,10 +108,10 @@ public interface ITurtle {
     public abstract Location getTurtlePosition ();
 
     public abstract Iterator<Paintable> getPaintableIterator ();
-
-    // TODO need view background, shape, color size functionality for part 3 commands
     
-    public abstract int setBackground (int colorIndex);
+    public abstract int setBackgroundColor (int colorIndex);
+    
+    public abstract int setBackgroundImage (int imageIndex);
     
     public abstract int setPenColor (int colorIndex);
     
