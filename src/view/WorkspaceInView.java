@@ -44,8 +44,10 @@ public class WorkspaceInView extends JComponent {
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
     private JTextField myCommandLineTextField;
+    
     private JButton myClearButton;
     private JButton myChangeBackgroundButton;
+    private JButton myToggleHighlightButton;
     private JTextArea myUserVariables;
     private JTextArea myUserFuncs;
     private Image myBackgroundImage;
@@ -125,6 +127,7 @@ public class WorkspaceInView extends JComponent {
         updateHeadingLabel(myDataSource.getTurtleHeading());
         updatePositionLabel(myDataSource.getTurtlePosition());
         state.add(makeChangeBackgroundButton());
+        state.add(makeToggleHighlight());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
 
         return turtleInfoPanel;
@@ -226,14 +229,31 @@ public class WorkspaceInView extends JComponent {
                             new ImageIcon(getClass().getResource(RESOURCE_LOCATION + fileName))
                                     .getImage();
                     myBackgroundImage = myImage;
+                    
 
                     // TODO, not sure what to call for now
                 }
+                update(); //deal with turtle disappearance after action
             }
 
         });
         return myChangeBackgroundButton;
 
+    }
+    private JButton makeToggleHighlight () {
+    	myToggleHighlightButton = new JButton(myResources.getString("toggle_highlight"));
+    	myToggleHighlightButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                //Todo: waiting for a way to communicate with turtles belong to this workspace
+            	
+            	update(); //deal with turtle disappearance after action
+                
+            }
+
+        });
+        return myToggleHighlightButton;
     }
 
     public void showMessage (String message) {
