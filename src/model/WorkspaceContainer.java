@@ -1,7 +1,11 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import model.scope.MethodScope;
 
@@ -12,7 +16,12 @@ public class WorkspaceContainer {
     Workspace myCurrentWorkspace;
     Model myModel;
     Dimension myDefaultCanvasBounds;
+
     private MethodScope myMethods;
+
+    List<Image> myBackgroundImages = new ArrayList<Image>();
+    List<Image> myTurtleImages = new ArrayList<Image>();
+    List<Color> myColors = new ArrayList<Color>();
 
     public WorkspaceContainer (Dimension canvasBounds, Model model) {
         myModel = model;
@@ -35,9 +44,9 @@ public class WorkspaceContainer {
             myCurrentWorkspace = myWorkspaceMap.get(workspaceNumber);
         }
     }
+
     public MethodScope getMethods(){
         return myMethods;
-
     }
     
     
@@ -47,7 +56,6 @@ public class WorkspaceContainer {
     
     public void addTurtleImage (Image image) {
         
-
 
     }
 

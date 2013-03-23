@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import util.Location;
 import util.Paintable;
 
-public class turtleHighlighter implements Paintable{
+public class TurtleHighlighter implements Paintable{
 	private Location topLeft;
 	private Location topRight;
 	private Location botLeft;

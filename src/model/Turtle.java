@@ -2,7 +2,8 @@ package model;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.List;
 import util.Location;
 import util.Paintable;
 import util.Pixmap;
@@ -25,11 +26,12 @@ public class Turtle extends Sprite implements Paintable {
 
     private boolean myPenDown = true;
     private boolean myTurtleShowing = true;
-    private boolean active=true;
     private Line myLine = new Line();
+    private TurtleHighlighter myTurtleHighlighter = new TurtleHighlighter(this);
     private Dimension myCanvasBounds;
     private int myCenterXValue;
     private int myCenterYValue;
+    List<Paintable> myPaintableObjects = new ArrayList<Paintable>();
 
     /**
      * Creates a turtle sprite.
@@ -44,11 +46,9 @@ public class Turtle extends Sprite implements Paintable {
         myCanvasBounds = canvasBounds;
         myCenterXValue = (int) myCanvasBounds.getWidth() / 2;
         myCenterYValue = (int) myCanvasBounds.getHeight() / 2;
-
         myPaintableObjects.add(this);
         myPaintableObjects.add(myLine);
         activateTurtleHighlighter();
-
     }
 
     /**
@@ -321,6 +321,9 @@ public class Turtle extends Sprite implements Paintable {
      */
     public int showTurtle () {
         myTurtleShowing = true;
+        if(!myPaintableObjects.contains(this)){
+            myPaintableObjects.add(this);
+        }
         return 1;
     }
 
@@ -331,6 +334,7 @@ public class Turtle extends Sprite implements Paintable {
      */
     public int hideTurtle () {
         myTurtleShowing = false;
+        myPaintableObjects.remove(this);
         return 0;
     }
 
@@ -403,8 +407,8 @@ public class Turtle extends Sprite implements Paintable {
      * @return 1 
      */
     
-    public int activate(){
-    	active=true;
+    public int activateTurtleHighlighter(){
+    	myPaintableObjects.add(myTurtleHighlighter);
     	return 1;
     }
     /**
@@ -412,8 +416,8 @@ public class Turtle extends Sprite implements Paintable {
      * @return 0
      */
     
-    public int deactivate(){
-    	active=false;
+    public int deactivateTurtleHighlighter(){
+    	myPaintableObjects.remove(myTurtleHighlighter);
     	return 0;
     }
 
@@ -426,16 +430,8 @@ public class Turtle extends Sprite implements Paintable {
      * 
      * @return iterator of paintables
      */
-    public Iterator<Paintable> getPaintableIterator () {
-        ArrayList<Paintable> paintList = new ArrayList<Paintable>();
-        if (myTurtleShowing) {
-            paintList.add(this);
-        }
-        if (active){
-        	paintList.add(new turtleHighlighter(this));
-        }
-        paintList.add(myLine);
-        return paintList.iterator();
+    public Collection<Paintable> getPaintables () {
+        return myPaintableObjects;
     }
 
     /**

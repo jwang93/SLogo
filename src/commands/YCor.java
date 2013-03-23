@@ -14,7 +14,7 @@ public class YCor extends AbstractZeroParameterTurtleCommand {
     @Override
     public int execute () {
         ITurtle turtle = getTurtle();
-        int position = (int) turtle.getTurtlePosition().y;
+        int position = (int) turtle.getY();
         return position;
     }
 
