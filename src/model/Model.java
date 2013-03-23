@@ -2,13 +2,17 @@ package model;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import model.scope.MethodScope;
@@ -34,9 +38,15 @@ public class Model implements IModel {
      * return value in the event of an error.
      */
     public static final int ERROR_RETURN_VALUE = -1;
+    public static final String TO_COMMAND = "to";
+    public static final String MAKE_COMMAND = "make";
 
+    private File sessionFile;
+    private FileWriter fileWriter;
     private Parser myParser;
     private WorkspaceContainer myWorkspaces;
+    private FileChannel sourceChannel;
+    private FileChannel targetChannel;
 
     /**
      * Instantiates parser, scope, and turtle and passes the canvasBounds.
@@ -48,6 +58,16 @@ public class Model implements IModel {
         myWorkspaces = new WorkspaceContainer(canvasBounds, this);
         // do this second
         myParser = new Parser(this);
+        sourceChannel = null;
+        targetChannel = null;
+        sessionFile = new File("src/files/session.txt");
+        try {
+            fileWriter = new FileWriter(sessionFile);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -87,8 +107,8 @@ public class Model implements IModel {
         int returnValue = ERROR_RETURN_VALUE;
         try {
             executable = myParser.parse(command);
+            processFunctionsAndVariables(command);
             returnValue = executable.execute();
-            System.out.println(returnValue);
         }
         catch (FormattingException e) {
             
@@ -97,20 +117,39 @@ public class Model implements IModel {
         finally {
             myWorkspaces.getCurrentWorkspace().setReturnValue(returnValue);
         }
+        
+    }
 
+    /**
+     * 1. Called at the completion of every legitimate command 
+     * 2. If that command began with a make or to, it gets written to the session file
+     * @param command
+     */
+    private void processFunctionsAndVariables (String command) {
+        String first_token = command.split("\\s+")[0];
+        if (first_token.equals(MAKE_COMMAND) || first_token.equals(TO_COMMAND)) {
+            try {
+                fileWriter.write(command + System.getProperty("line.separator"));
+                fileWriter.flush();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public void saveFunctionsAndVariables (File fileToSave) {
-
+    /**
+     * 1. Creates the file to be saved and places it into the files package
+     * 2. Copies over the contents from session.txt into the new file 
+     */
+    public void saveFunctionsAndVariables (File file) {
+        
+        File fileToSave = new File (file.getAbsolutePath());
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(fileToSave);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(getScope());
-            objectOutputStream.writeObject(getMethodScope()); // Currently not working - serializable
-                                                       // issues
-            objectOutputStream.flush();
-            objectOutputStream.close();
+            sourceChannel = new FileInputStream(sessionFile).getChannel();
+            targetChannel = new FileOutputStream(fileToSave).getChannel();
+            targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());   
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -118,31 +157,47 @@ public class Model implements IModel {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println(fileToSave.getAbsolutePath());
+        finally {
+            try {
+                if (sourceChannel != null) {
+                    sourceChannel.close();
+                }
+                if (targetChannel != null) {
+                    targetChannel.close();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }  
     }
 
     @Override
+    /**
+     * 1. Reads the contents of fileToLoad line by line
+     * 2. Each line will either be a make or to command
+     * 3. Executes each make or to command to "reset" the scope
+     */
     public void loadFunctionsAndVariables (File fileToLoad) {
-
+        
+        BufferedReader reader = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(fileToLoad);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            // scope now in myWorkspaces.currentWorkspace(), need to combine this with that
-            // = (Scope) objectInputStream.readObject();
-            // = (MethodScope) objectInputStream.readObject();
-            objectInputStream.close();
+            reader = new BufferedReader(new FileReader(fileToLoad));
         }
-
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
+        catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                executeCommand(line);
+            }
+            reader.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        //catch (ClassNotFoundException e) {
-        //    e.printStackTrace();
-       // }
+
     }
 
     @Override
