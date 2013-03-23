@@ -23,6 +23,7 @@ public class Workspace implements DataSource, ITurtle {
     Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     Dimension myCanvasBounds;
+    int myReturnValue;
 
     public Workspace (Dimension canvasBounds) {
         myScope = new Scope();
@@ -43,13 +44,12 @@ public class Workspace implements DataSource, ITurtle {
     }
     
     public void setReturnValue (int returnValue) {
-        // TODO
+        myReturnValue = returnValue;
     }
 
     @Override
-    public int getReturnValue () {
-        // TODO Auto-generated method stub
-        return 0;
+    public int getReturnValue () { 
+        return myReturnValue;
     }
 
     @Override
