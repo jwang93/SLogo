@@ -47,7 +47,8 @@ public class WorkspaceContainer {
 
     public MethodScope getMethods(){
         return myMethods;
-
+    }
+    
     
     public void addBackgroundImage (Image image) {
         
