@@ -21,7 +21,7 @@ public interface ITurtle {
      * @param degrees to turn by
      * @return command return value
      */
-    public abstract int turn (int degrees);
+    public abstract double turn (double degrees);
 
     /**
      * sets current heading.
@@ -29,7 +29,7 @@ public interface ITurtle {
      * @param heading to set
      * @return current heading
      */
-    public abstract int setHeading (int heading);
+    public abstract double setHeading (double heading);
 
     /**
      * Sets heading to go towards location **AS IN VIEW'S COORDINATES**
@@ -37,7 +37,7 @@ public interface ITurtle {
      * @param location location to set heading towards
      * @return distance of turn
      */
-    public abstract int towards (Location location);
+    public abstract double towards (Location location);
 
     /**
      * Moves turtle to location **AS IN VIEW'S COORDINATES**
@@ -103,11 +103,11 @@ public interface ITurtle {
      */
     public abstract int isPenDown ();
 
-    public abstract int getHeading ();
+    public abstract double getHeading ();
 
-    public abstract int getX ();
-    
-    public abstract int getY ();
+    public abstract Location getTurtlePosition ();
+
+    public abstract Iterator<Paintable> getPaintableIterator ();
     
     public abstract int setBackgroundColor (int colorIndex);
     
@@ -133,7 +133,7 @@ public interface ITurtle {
     
     public abstract int setActiveTurtles (int[] turtleIds);
     
-    public abstract int setAllTurtlesActive ();
+    public abstract void resetActiveTurtles ();
     
     public abstract int makeEvenTurtlesActive ();
     

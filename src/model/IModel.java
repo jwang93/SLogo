@@ -40,9 +40,7 @@ public interface IModel {
      */
     public DataSource getDataSource ();
 
-    public void addBackgroundImage (Image image);
-    
-    public void addTurtleImage (Image image);
+    public void addImage (Image image);
 
     public void switchToWorkspace (int workspaceNumber);
 

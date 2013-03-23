@@ -3,7 +3,6 @@ package model;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +22,6 @@ public class Workspace implements DataSource, ITurtle {
     Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     Dimension myCanvasBounds;
-    int myReturnValue;
 
     public Workspace (Dimension canvasBounds) {
         myScope = new Scope();
@@ -44,12 +42,13 @@ public class Workspace implements DataSource, ITurtle {
     }
     
     public void setReturnValue (int returnValue) {
-        myReturnValue = returnValue;
+        // TODO
     }
 
     @Override
-    public int getReturnValue () { 
-        return myReturnValue;
+    public int getReturnValue () {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
     @Override
@@ -69,20 +68,6 @@ public class Workspace implements DataSource, ITurtle {
         // TODO Auto-generated method stub
         return null;
     }
-    
-    @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        Collection<Paintable> collection = new ArrayList<Paintable>();
-        for(Turtle turtle : myTurtles.values()){
-            collection.addAll(turtle.getPaintables());
-        }
-        return collection.iterator();
-    }
-
-    @Override
-    public Location getTurtlePosition () {
-        return myActiveTurtles.get(myActiveTurtles.size() - 1).getTurtlePosition();
-    }
 
     private List<Turtle> getActiveTurtles () {
         return myActiveTurtles;
@@ -98,28 +83,28 @@ public class Workspace implements DataSource, ITurtle {
     }
 
     @Override
-    public int turn (int degrees) {
-        int i = 0;
+    public double turn (double degrees) {
+        double i = 0;
         for (Turtle turtle : getActiveTurtles()) {
-            i = (int) turtle.turn(degrees);
+            i = turtle.turn(degrees);
         }
         return i;
     }
 
     @Override
-    public int setHeading (int heading) {
-        int i = 0;
+    public double setHeading (double heading) {
+        double i = 0;
         for (Turtle turtle : getActiveTurtles()) {
-            i = (int) turtle.setHeading(heading);
+            i = turtle.setHeading(heading);
         }
         return i;
     }
 
     @Override
-    public int towards (Location location) {
-        int i = 0;
+    public double towards (Location location) {
+        double i = 0;
         for (Turtle turtle : getActiveTurtles()) {
-            i = (int) turtle.towards(location);
+            i = turtle.towards(location);
         }
         return i;
     }
@@ -206,18 +191,26 @@ public class Workspace implements DataSource, ITurtle {
     }
 
     @Override
-    public int getHeading () {
-        return (int) myActiveTurtles.get(myActiveTurtles.size() - 1).getHeading();
+    public double getHeading () {
+        double i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.getHeading();
+        }
+        return i;
     }
-    
+
     @Override
-    public int getX () {
-        return (int) myActiveTurtles.get(myActiveTurtles.size() - 1).getX();
+    public Location getTurtlePosition () {
+        Location i = null;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.getTurtlePosition();
+        }
+        return i;
     }
-    
+
     @Override
-    public int getY () {
-        return (int) myActiveTurtles.get(myActiveTurtles.size() - 1).getY();
+    public Iterator<Paintable> getPaintableIterator () {
+        return getActiveTurtles().get(getActiveTurtles().size() - 1).getPaintableIterator();
     }
 
     @Override
@@ -302,9 +295,8 @@ public class Workspace implements DataSource, ITurtle {
     }
 
     @Override
-    public int setAllTurtlesActive () {
+    public void resetActiveTurtles () {
         myActiveTurtles = new ArrayList<Turtle>(myTurtles.values());
-        return myActiveTurtles.size();
     }
 
     @Override
@@ -331,5 +323,7 @@ public class Workspace implements DataSource, ITurtle {
     public int makeOddTurtlesActive () {
         return evenOddHelper(1);
     }
+
+    
 
 }
