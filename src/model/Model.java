@@ -148,13 +148,20 @@ public class Model implements IModel {
     }
 
     @Override
-    public void addImage (Image image) {
-        //myImageList.add(image);
+    public void switchToWorkspace (int workspaceNumber) {
+        myWorkspaces.switchToWorkspace(workspaceNumber);
     }
 
     @Override
-    public void switchToWorkspace (int workspaceNumber) {
-        myWorkspaces.switchToWorkspace(workspaceNumber);
+    public void addBackgroundImage (Image image) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addTurtleImage (Image image) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
