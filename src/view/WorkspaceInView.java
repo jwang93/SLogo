@@ -46,6 +46,7 @@ public class WorkspaceInView extends JComponent {
     private JTextField myCommandLineTextField;
     
     private JButton myClearButton;
+    private JButton myToggleGridButton;
     private JButton myChangeBackgroundButton;
     private JButton myToggleHighlightButton;
     private JTextArea myUserVariables;
@@ -128,6 +129,7 @@ public class WorkspaceInView extends JComponent {
         updatePositionLabel(myDataSource.getTurtlePosition());
         state.add(makeChangeBackgroundButton());
         state.add(makeToggleHighlight());
+        state.add(makeToggleGridButton());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
 
         return turtleInfoPanel;
@@ -215,6 +217,18 @@ public class WorkspaceInView extends JComponent {
         });
         return myClearButton;
     }
+    
+    private JButton makeToggleGridButton () {
+        myToggleGridButton = new JButton(myResources.getString("toggle_grid"));
+        myToggleGridButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                myCanvas.toggleGrid();
+                update();
+            }
+        });
+        return myToggleGridButton;
+    }
 
     private JButton makeChangeBackgroundButton () {
         myChangeBackgroundButton = new JButton(myResources.getString("change_background"));
@@ -294,7 +308,7 @@ public class WorkspaceInView extends JComponent {
      */
     public void updatePositionLabel (Location location) {
         myTurtlePositionLabel.setText(myResources.getString("Position") + " "
-                                      + location.getX() + ", " + location.getY());
+                                      + (int)location.getX() + ", " + (int)location.getY());
     }
 
     /**

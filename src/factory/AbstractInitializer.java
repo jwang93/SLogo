@@ -43,7 +43,7 @@ public abstract class AbstractInitializer {
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private Parser myParser;
 
-    private Model myModel;
+    protected Model myModel;
     private int numArgs;
     private List<ICommand> myParameters = new ArrayList<ICommand>();
 

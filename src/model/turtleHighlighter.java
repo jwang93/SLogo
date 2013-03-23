@@ -11,16 +11,25 @@ public class turtleHighlighter implements Paintable{
 	private Location topRight;
 	private Location botLeft;
 	private Location botRight;
+	private Turtle myTurtle;
 	
-	public turtleHighlighter(Turtle turtle){
-		topLeft=new Location(turtle.getLeft(),turtle.getTop());
-		topRight=new Location(turtle.getRight(),turtle.getTop());
-		botLeft=new Location(turtle.getLeft(),turtle.getBottom());
-		botRight=new Location(turtle.getRight(),turtle.getBottom());
+
+	public TurtleHighlighter(Turtle turtle){
+		myTurtle=turtle;
+		updatePosition();
+
 		
+	}
+
+	private void updatePosition() {
+		topLeft=new Location(myTurtle.getLeft(),myTurtle.getTop());
+		topRight=new Location(myTurtle.getRight(),myTurtle.getTop());
+		botLeft=new Location(myTurtle.getLeft(),myTurtle.getBottom());
+		botRight=new Location(myTurtle.getRight(),myTurtle.getBottom());
 	}
 	
 	public void paint(Graphics2D pen){
+		updatePosition();
 		pen.setColor(Color.RED);
 		//draw top
 		pen.drawLine((int)topLeft.getX(), (int)topLeft.getY(), (int)topRight.getX(), (int)topRight.getY());
@@ -30,8 +39,6 @@ public class turtleHighlighter implements Paintable{
 		pen.drawLine((int)botLeft.getX(), (int)botLeft.getY(), (int)botRight.getX(), (int)botRight.getY());
 		//draw left
 		pen.drawLine((int)topLeft.getX(), (int)topLeft.getY(), (int)botLeft.getX(), (int)botLeft.getY());
-		
-		
 		
 	}
 

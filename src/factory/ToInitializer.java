@@ -22,7 +22,7 @@ public class ToInitializer extends AbstractInitializer {
     protected ICommand instantiate (List<ICommand> parameters) {
 
         return new To(parameters, myFunctionName, getModel().getScope(), 
-                      getParser(), myVariableNames);
+                      getParser(), myVariableNames, myModel);
     }
 
     @Override

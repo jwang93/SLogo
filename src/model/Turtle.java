@@ -44,6 +44,11 @@ public class Turtle extends Sprite implements Paintable {
         myCanvasBounds = canvasBounds;
         myCenterXValue = (int) myCanvasBounds.getWidth() / 2;
         myCenterYValue = (int) myCanvasBounds.getHeight() / 2;
+
+        myPaintableObjects.add(this);
+        myPaintableObjects.add(myLine);
+        activateTurtleHighlighter();
+
     }
 
     /**
