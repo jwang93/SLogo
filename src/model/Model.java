@@ -44,8 +44,10 @@ public class Model implements IModel {
      * @param canvasBounds to pass to turtle
      */
     public Model (Dimension canvasBounds) {
-        myParser = new Parser(this);
+        
         myWorkspaces = new WorkspaceContainer(canvasBounds, this);
+        // do this second
+        myParser = new Parser(this);
     }
 
     /**
@@ -86,6 +88,7 @@ public class Model implements IModel {
         try {
             executable = myParser.parse(command);
             returnValue = executable.execute();
+            System.out.println(returnValue);
         }
         catch (FormattingException e) {
             
@@ -157,4 +160,5 @@ public class Model implements IModel {
         myWorkspaces.switchToWorkspace(workspaceNumber);
     }
 
+    public MethodScope getMethods(){ return myWorkspaces.getMethods();}
 }

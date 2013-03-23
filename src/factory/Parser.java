@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import model.Model;
+import model.scope.MethodScope;
 import commands.CommandList;
 import commands.Constant;
 import commands.ICommand;
@@ -17,7 +18,7 @@ public class Parser {
     private static final String CONSTANT_REGEX = "[-]?[0-9]+";
     private static final String END_OF_CODE_BLOCK = "]";
     private static final String TOKEN_SEPARATOR_REGEX = "\\s+";
-    private Map<String, UserFunctionMetaData> myUserFunctions;
+    private MethodScope myUserFunctions;
     private Model myModel;
     private static final Class<?>[] INITIALIZER_PARAMETER_TYPES = { Model.class, Parser.class };
     private static final String BUNDLE_NAME = "Initializers";
@@ -26,9 +27,10 @@ public class Parser {
     private ResourceBundle myResourceBundle;
 
     public Parser (Model model) {
-        myUserFunctions = new HashMap<String, UserFunctionMetaData>();
+       // myUserFunctions = new HashMap<String, UserFunctionMetaData>();
         myModel = model;
         myResourceBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + BUNDLE_NAME);
+        myUserFunctions = model.getMethods();
     }
 
     /**
@@ -73,6 +75,7 @@ public class Parser {
      * @throws FormattingException
      */
     protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
+        
         String keyword = commandStream.remove();
         if (keyword.matches(CONSTANT_REGEX))
             return new Constant(Integer.parseInt(keyword));
@@ -150,7 +153,7 @@ public class Parser {
      * @param metadata
      */
     public void add (UserFunctionMetaData metadata) {
-        myUserFunctions.put(metadata.getFunctionName(), metadata);
+        myModel.getMethods().add(metadata);
     }
 
 }

@@ -3,6 +3,7 @@ package model;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
+import model.scope.MethodScope;
 
 
 public class WorkspaceContainer {
@@ -11,11 +12,13 @@ public class WorkspaceContainer {
     Workspace myCurrentWorkspace;
     Model myModel;
     Dimension myDefaultCanvasBounds;
+    private MethodScope myMethods;
 
     public WorkspaceContainer (Dimension canvasBounds, Model model) {
         myModel = model;
         myDefaultCanvasBounds = canvasBounds;
         switchToWorkspace(0);
+        myMethods = new MethodScope();
     }
 
     public Workspace getCurrentWorkspace () {
@@ -31,6 +34,9 @@ public class WorkspaceContainer {
         else {
             myCurrentWorkspace = myWorkspaceMap.get(workspaceNumber);
         }
+    }
+    public MethodScope getMethods(){
+        return myMethods;
     }
 
 }
