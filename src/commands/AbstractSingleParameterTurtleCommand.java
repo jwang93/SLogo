@@ -17,5 +17,7 @@ public abstract class AbstractSingleParameterTurtleCommand extends AbstractSingl
     protected ITurtle getTurtle () {
         return myTurtle;
     }
+    
+    
 
 }

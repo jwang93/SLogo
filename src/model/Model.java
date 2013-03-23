@@ -41,8 +41,10 @@ public class Model implements IModel {
     public static final String TO_COMMAND = "to";
     public static final String MAKE_COMMAND = "make";
 
-    private File sessionFile;
+
+
     private FileWriter fileWriter;
+    private File sessionFile;
     private Parser myParser;
     private WorkspaceContainer myWorkspaces;
     private FileChannel sourceChannel;
@@ -107,34 +109,12 @@ public class Model implements IModel {
         int returnValue = ERROR_RETURN_VALUE;
         try {
             executable = myParser.parse(command);
-            processFunctionsAndVariables(command);
             returnValue = executable.execute();
         }
-        catch (FormattingException e) {
-            
+        catch (FormattingException e) {           
         }
-
         finally {
             myWorkspaces.getCurrentWorkspace().setReturnValue(returnValue);
-        }
-        
-    }
-
-    /**
-     * 1. Called at the completion of every legitimate command 
-     * 2. If that command began with a make or to, it gets written to the session file
-     * @param command
-     */
-    private void processFunctionsAndVariables (String command) {
-        String first_token = command.split("\\s+")[0];
-        if (first_token.equals(MAKE_COMMAND) || first_token.equals(TO_COMMAND)) {
-            try {
-                fileWriter.write(command + System.getProperty("line.separator"));
-                fileWriter.flush();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -198,6 +178,14 @@ public class Model implements IModel {
             e.printStackTrace();
         }
 
+    }
+    
+    public FileWriter getFileWriter () {
+        return fileWriter;
+    }
+
+    public void setFileWriter (FileWriter fileWriter) {
+        this.fileWriter = fileWriter;
     }
 
     @Override

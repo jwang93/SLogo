@@ -18,7 +18,7 @@ public class MakeInitializer extends AbstractInitializer {
 
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {
-        return new Make(parameters, myName, getModel().getScope());
+        return new Make(parameters, myName, getModel().getScope(), myModel);
     }
 
     @Override
