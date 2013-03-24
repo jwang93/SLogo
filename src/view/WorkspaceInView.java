@@ -2,20 +2,27 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -39,6 +46,7 @@ public class WorkspaceInView extends JComponent {
     private static final JFileChooser FILE_CHOOSER = new JFileChooser(System
             .getProperties().getProperty(USER_DIR));
     private static final String RESOURCE_LOCATION = "/images/";
+    private static final Color DEFAULT_COLOR=Color.white;
 
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
@@ -52,24 +60,33 @@ public class WorkspaceInView extends JComponent {
     private JTextArea myUserVariables;
     private JTextArea myUserFuncs;
     private Image myBackgroundImage;
+    private Map<String,Color> myColorCollection;
 
     private ResourceBundle myResources;
     private IModel myModel;
     private Canvas myCanvas;
     private DataSource myDataSource;
+    
+    
+  
 
     public WorkspaceInView (IModel model, Dimension canvasBounds, String language, int id) {
+    	
         myID = id;
         myModel = model;
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
                                                + language);
         myCanvas = new Canvas(canvasBounds);
         myDataSource = myModel.getDataSource();
+      
         initialize();
         myCanvas.update(myDataSource.getPaintableIterator(), null);
         // the following lines are for testing!
         showVariables("testing testing");
         showFunctions("testing testing");
+       
+        
+       
 
     }
 
@@ -78,6 +95,7 @@ public class WorkspaceInView extends JComponent {
      */
     private void initialize () {
         setLayout(new BorderLayout());
+        loadColorCollection();
         this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
         this.add(makeCommandHistory(), BorderLayout.WEST);
         this.add(makeUserDefinedFuncAndVarDisplay(), BorderLayout.EAST);
@@ -86,7 +104,14 @@ public class WorkspaceInView extends JComponent {
         setVisible(true);
     }
 
-    private JComponent makeCommandHistory () {
+    private void loadColorCollection() {
+    	myColorCollection=new HashMap<String,Color>();
+		myColorCollection.put("yellow", Color.yellow);
+		myColorCollection.put("green", Color.green);
+		
+	}
+
+	private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
         commandHistoryPanel.setLayout(new BorderLayout());
         commandHistoryPanel.add(
@@ -113,6 +138,8 @@ public class WorkspaceInView extends JComponent {
 
         JPanel turtleInfoPanel = new JPanel();
         turtleInfoPanel.setLayout(new BorderLayout());
+        
+        turtleInfoPanel.add(makeBackgroundColorPanel(),BorderLayout.NORTH);
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.add(myCanvas);
@@ -136,7 +163,8 @@ public class WorkspaceInView extends JComponent {
 
     }
 
-    /**
+
+	/**
      * Creates the comand line, including a typable command line text box and a
      * label.
      * 
@@ -268,6 +296,39 @@ public class WorkspaceInView extends JComponent {
 
         });
         return myToggleHighlightButton;
+    }
+    
+    public JPanel makeBackgroundColorPanel(){
+    	JPanel area=new JPanel();
+    	area.add(new JLabel(myResources.getString("background_color")));
+    	ButtonGroup group=new ButtonGroup();
+    	Iterator<Entry<String, Color>> it= myColorCollection.entrySet().iterator();
+    	JRadioButton defaultButton=makeColorButton(DEFAULT_COLOR	,myResources.getString("white"));
+		group.add(defaultButton);
+		area.add(defaultButton);
+		defaultButton.setSelected(true);
+    	while (it.hasNext()){
+    		Entry<String, Color> next=it.next();
+    		JRadioButton button=makeColorButton(next.getValue(),next.getKey());
+    		group.add(button);
+    		area.add(button);
+    	}
+    	return area;
+    	
+    	
+    }
+    
+    public JRadioButton makeColorButton(final Color color, String colorName){
+    	JRadioButton button=new JRadioButton(myResources.getString(colorName));
+    	button.addActionListener(new ActionListener(){
+    		@Override
+    		public void actionPerformed(ActionEvent e){
+    			myCanvas.setBackgroundColor(color);
+    			update();
+    			
+    		}
+    	});
+    	return button;
     }
 
     public void showMessage (String message) {

@@ -23,9 +23,11 @@ public class Canvas extends JComponent {
     // default serialization ID
     private static final long serialVersionUID = 1L;
     private int DEFAULT_GRID_FREQUENCY=10;
+    private static final Color DEFAULT_BACKGROUND_COLOR=Color.WHITE;
 
     private Iterator<Paintable> myPaintableIterator;
     private Image myBackground;
+    private Color myBackgroundColor;
     private boolean gridShowing=true;
     private Grid myGrid;
 
@@ -38,6 +40,7 @@ public class Canvas extends JComponent {
         // set size (a bit of a pain)
         setPreferredSize(size);
         setSize(size);
+        setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
         // prepare to receive input
         List<Paintable> emptyList = new ArrayList<Paintable>();
         myPaintableIterator = emptyList.iterator();
@@ -56,7 +59,7 @@ public class Canvas extends JComponent {
      */
     @Override
     public void paintComponent (Graphics pen) {
-        pen.setColor(Color.WHITE);
+        pen.setColor(myBackgroundColor);
         pen.fillRect(0, 0, getSize().width, getSize().height);
         pen.drawImage(myBackground, 0, 0, getSize().width, getSize().height, null);
         
@@ -90,6 +93,11 @@ public class Canvas extends JComponent {
     
     public void toggleGrid(){
     	gridShowing=!gridShowing;
+    }
+    
+    public void setBackgroundColor(Color color){
+    	System.out.println("yes");
+    	myBackgroundColor=color;
     }
 
 }
