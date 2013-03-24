@@ -96,7 +96,6 @@ public class Canvas extends JComponent {
     }
     
     public void setBackgroundColor(Color color){
-    	System.out.println("yes");
     	myBackgroundColor=color;
     }
 

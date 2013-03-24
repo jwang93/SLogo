@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 
 import util.Location;
 import util.Paintable;
@@ -31,6 +32,7 @@ public class TurtleHighlighter implements Paintable{
 	public void paint(Graphics2D pen){
 		updatePosition();
 		pen.setColor(Color.RED);
+		
 		//draw top
 		pen.drawLine((int)topLeft.getX(), (int)topLeft.getY(), (int)topRight.getX(), (int)topRight.getY());
 		//draw right
@@ -40,6 +42,8 @@ public class TurtleHighlighter implements Paintable{
 		//draw left
 		pen.drawLine((int)topLeft.getX(), (int)topLeft.getY(), (int)botLeft.getX(), (int)botLeft.getY());
 		
+		//the following is for drawing circle highlighter
+		//pen.drawOval((int)topLeft.getX()	,(int) topLeft.getY(), (int)myTurtle.getWidth(), (int)myTurtle.getHeight());	
 	}
 
 }
