@@ -210,7 +210,7 @@ public class View extends JFrame {
 				WorkspaceInView workspace = myWorkspaces.get(myTabbedPane
 						.getSelectedIndex());
 				myModel.switchToWorkspace(workspace.getID());
-				getCurrentWorkspace().update();
+				getCurrentWorkspace().updateAndSuppressOutput();
 
 			}
 		});
