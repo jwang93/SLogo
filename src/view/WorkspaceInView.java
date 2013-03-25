@@ -346,7 +346,6 @@ public class WorkspaceInView extends JComponent {
 	}
 
 	public void update() {
-		myDataSource=myModel.getDataSource();
 		myCanvas.update(myDataSource.getPaintableIterator(),
 				myDataSource.getBackgroundImage());
 		updateHeadingLabel(myDataSource.getTurtleHeading());

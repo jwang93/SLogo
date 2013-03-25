@@ -211,7 +211,6 @@ public class View extends JFrame {
             @Override
             public void stateChanged (ChangeEvent e) {
                 System.out.println("Tab=" + myTabbedPane.getSelectedIndex());
-                myModel.switchToWorkspace(myTabbedPane.getSelectedIndex());
                 getCurrentWorkspace().update();
                 
             }
