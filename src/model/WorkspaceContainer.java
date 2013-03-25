@@ -25,6 +25,7 @@ public class WorkspaceContainer {
     List<Color> myColors = new ArrayList<Color>();
 
     public WorkspaceContainer (Dimension canvasBounds, Model model) {
+        myTurtleImages.add(Turtle.DEFAULT_IMAGE);
         myModel = model;
         myDefaultCanvasBounds = canvasBounds;
         switchToWorkspace(0);
@@ -37,7 +38,7 @@ public class WorkspaceContainer {
 
     public void switchToWorkspace (int workspaceNumber) {
         if (!myWorkspaceMap.containsKey(workspaceNumber)) {
-            Workspace workspace = new Workspace(myDefaultCanvasBounds);
+            Workspace workspace = new Workspace(myDefaultCanvasBounds, this);
             myWorkspaceMap.put(workspaceNumber, workspace);
             myCurrentWorkspace = workspace;
         }
@@ -64,6 +65,14 @@ public class WorkspaceContainer {
     
     public Image getBackgroundImage (int index) {
         return myBackgroundImages.get(index);
+    }
+    
+    public void addColor (int index, Color color){
+        myColors.add(index, color);
+    }
+    
+    public Color getColor (int index) {
+        return myColors.get(index);
     }
 
 }

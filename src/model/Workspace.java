@@ -15,6 +15,7 @@ import model.scope.Scope;
 import util.DataSource;
 import util.Location;
 import util.Paintable;
+import util.Pixmap;
 
 
 public class Workspace implements DataSource, ITurtle {
@@ -26,12 +27,17 @@ public class Workspace implements DataSource, ITurtle {
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     Dimension myCanvasBounds;
     int myReturnValue;
+    int myBackgroundImageIndex;
+    int myTurtleImageIndex = 0;
+    int myPenColor = 0;
+    WorkspaceContainer myContainer;
 
-    public Workspace (Dimension canvasBounds) {
+    public Workspace (Dimension canvasBounds, WorkspaceContainer container) {
         myScope = new Scope();
         myMethods = new MethodScope();
+        myContainer = container;
         
-        Turtle firstTurtle = new Turtle(canvasBounds);
+        Turtle firstTurtle = new Turtle(canvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
         myTurtles.put(0, firstTurtle);
         myActiveTurtles.add(firstTurtle);
         myCanvasBounds = canvasBounds;
@@ -56,8 +62,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int getTurtleHeading () {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int) getLastActiveTurtle().getHeading();
     }
 
     @Override
@@ -68,14 +73,34 @@ public class Workspace implements DataSource, ITurtle {
     
     @Override
     public void paint (Graphics2D pen) {
-        // TODO Auto-generated method stub
-        
+        for(Turtle turtle : myTurtles.values()){
+            turtle.paint(pen);
+        }
     }
 
     @Override
     public Color getBackgroundColor () {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    @Override
+    public Map<String, Integer> getUserVariables () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getUserFunctions () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void toggleHighlighter () {
+        for (Turtle turtle : getActiveTurtles()) {
+            turtle.toggleTurtleHighlighter();
+        }
     }
     
     @Override
@@ -89,7 +114,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Location getTurtlePosition () {
-        return myActiveTurtles.get(myActiveTurtles.size() - 1).getTurtlePosition();
+        return getLastActiveTurtle().getTurtlePosition();
     }
 
     private List<Turtle> getActiveTurtles () {
@@ -215,17 +240,17 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int getHeading () {
-        return (int) myActiveTurtles.get(myActiveTurtles.size() - 1).getHeading();
+        return (int) getLastActiveTurtle().getHeading();
     }
     
     @Override
     public int getX () {
-        return (int) myActiveTurtles.get(myActiveTurtles.size() - 1).getX();
+        return (int) getLastActiveTurtle().getX();
     }
     
     @Override
     public int getY () {
-        return (int) myActiveTurtles.get(myActiveTurtles.size() - 1).getY();
+        return (int) getLastActiveTurtle().getY();
     }
 
     @Override
@@ -236,8 +261,11 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int setBackgroundImage (int imageIndex) {
-        // TODO Auto-generated method stub
-        return 0;
+        if(myContainer.getBackgroundImage(imageIndex) == null) {
+            return 0;
+        }
+        myBackgroundImageIndex = imageIndex;
+        return myBackgroundImageIndex;
     }
 
     @Override
@@ -254,14 +282,21 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int setShape (int shapeIndex) {
-        // TODO Auto-generated method stub
-        return 0;
+        Pixmap image = myContainer.getTurtleImage(shapeIndex);
+        if(image == null) {
+            return 0;
+        }
+        myTurtleImageIndex = shapeIndex;
+        for(Turtle turtle : myActiveTurtles) {
+            turtle.setView(image);
+        }
+        return myTurtleImageIndex;
     }
 
     @Override
     public int setPalette (int colorIndex, int red, int green, int blue) {
-        // TODO Auto-generated method stub
-        return 0;
+        myContainer.addColor(colorIndex, new Color(red, green, blue));
+        return colorIndex;
     }
 
     @Override
@@ -301,7 +336,7 @@ public class Workspace implements DataSource, ITurtle {
             if(myTurtles.containsKey(id)){
                 myActiveTurtles.add(myTurtles.get(id));
             } else {
-                Turtle newTurtle = new Turtle(myCanvasBounds);
+                Turtle newTurtle = new Turtle(myCanvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
                 myTurtles.put(id, newTurtle);
                 myActiveTurtles.add(newTurtle);
             }
@@ -340,18 +375,7 @@ public class Workspace implements DataSource, ITurtle {
         return evenOddHelper(1);
     }
 
-    @Override
-    public Map<String, Integer> getUserVariables () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Map<String, String> getUserFunctions () {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-   
-
+   private Turtle getLastActiveTurtle () {
+       return myActiveTurtles.get(myActiveTurtles.size() - 1);
+   }
 }
