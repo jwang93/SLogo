@@ -22,7 +22,7 @@ Jay Wang and Will Nance: Factory and Command - the parts that deal with the pars
 
 ##### any books, papers, online, or human resources that you used in developing the project
 
-Javadoc, CS website resources
+Javadoc, CS website resources, (for writing/loading to .txt file) http://www.kodejava.org/examples/591.html
 
 ##### files used to start the project (i.e., the class containing main) and test the project (the class containing TestSuite)
 
