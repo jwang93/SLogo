@@ -86,6 +86,7 @@ public class View extends JFrame {
 				myCanvasBounds, myLanguage, numberOfWorkspaces);
 		myTabbedPane.addTab("Workspace " + numberOfWorkspaces, workspace);
 		myWorkspaces.add(workspace);
+		myTabbedPane.setSelectedIndex(numberOfWorkspaces-1);
 
 	}
 
@@ -163,6 +164,11 @@ public class View extends JFrame {
 	private void showMessage(String message) {
 		getCurrentWorkspace().showMessage(message);
 	}
+	
+	/**
+	 * return the active WorkspaceInView
+	 * @return
+	 */
 
 	private WorkspaceInView getCurrentWorkspace() {
 		int currentWorkspace = myTabbedPane.getSelectedIndex();
