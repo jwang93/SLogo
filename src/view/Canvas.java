@@ -47,7 +47,6 @@ public class Canvas extends JComponent {
         myGrid =
                 new Grid(new Dimension(getWidth(), getHeight()),
                          DEFAULT_GRID_FREQUENCY);
-
     }
 
     /**
@@ -97,7 +96,9 @@ public class Canvas extends JComponent {
     }
 
     public void setBackgroundColor (Color color) {
-        myBackgroundColor = color;
+        if(color != null) {
+            myBackgroundColor = color;
+        }
     }
 
 }

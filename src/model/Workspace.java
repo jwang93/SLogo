@@ -70,8 +70,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Image getBackgroundImage () {
-        // return myContainer.getBackgroundImage(myBackgroundImageIndex);
-        return null;
+         return myContainer.getBackgroundImage(myBackgroundImageIndex);
     }
 
     @Override
