@@ -57,7 +57,6 @@ public class WorkspaceInView extends JComponent {
     private JButton myToggleHighlightButton;
     private JTextArea myUserVariables;
     private JTextArea myUserFuncs;
-    private Image myBackgroundImage;
     private Map<String, Color> myColorCollection;
 
     private ResourceBundle myResources;

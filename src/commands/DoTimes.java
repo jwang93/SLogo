@@ -9,7 +9,6 @@ public class DoTimes extends AbstractSingleParameterCommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private static final int INDEX_OF_CODE_BLOCK = 0;
     private String myVarName;
     private ICommand myNumTimes;

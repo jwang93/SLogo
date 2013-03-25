@@ -8,7 +8,6 @@ public class HideTurtle extends AbstractZeroParameterTurtleCommand implements IC
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
 
     public HideTurtle (ITurtle turtle) {
         super(turtle);

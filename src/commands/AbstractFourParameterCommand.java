@@ -14,7 +14,6 @@ public abstract class AbstractFourParameterCommand extends CommandList {
     private static final int SECOND_PARAMETER_INDEX = 1;
     private static final int THIRD_PARAMETER_INDEX = 2;
     private static final int FOURTH_PARAMETER_INDEX = 3;
-    private static final int NUM_ARGS = 4;
     private int myFirstParameter;
     private int mySecondParameter;
     private int myThirdParameter;

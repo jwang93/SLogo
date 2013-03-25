@@ -11,7 +11,6 @@ public class Tell extends AbstractSingleParameterCommand implements ICommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private IModel myModel;
 
     public Tell ( List<ICommand> parameters, IModel model) {

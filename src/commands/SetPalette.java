@@ -2,6 +2,7 @@ package commands;
 
 import java.util.List;
 import model.IModel;
+import model.ITurtle;
 
 
 public class SetPalette extends AbstractFourParameterCommand {
@@ -9,7 +10,6 @@ public class SetPalette extends AbstractFourParameterCommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private IModel myModel;
 
     public SetPalette (List<ICommand> parameters, IModel model) {
@@ -20,8 +20,8 @@ public class SetPalette extends AbstractFourParameterCommand {
     @Override
     public int execute () {
         resolveParameters();
-        // TODO waiting on View implementation
-        return 0;
+        ITurtle turtle = myModel.getTurtle();
+        return turtle.setPalette(getFirstParameter(), getSecondParameter(), getThirdParameter(), getFourthParameter());
     }
 
 }
