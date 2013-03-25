@@ -45,7 +45,10 @@ public abstract class AbstractInitializer {
 
     protected Model myModel;
     private int numArgs;
-    private List<ICommand> myParameters = new ArrayList<ICommand>();
+    /* yes this is bad, I only did it for Tell, and only then because I was lazy at the time
+    and didnt want to write add and set methods . . . sorrrry, I could have fixed it 
+    given a cup of coffee and 10 minutes*/
+    protected List<ICommand> myParameters = new ArrayList<ICommand>();
 
     protected List<ICommand> getParameters () {
         return myParameters;
