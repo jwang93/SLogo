@@ -396,8 +396,14 @@ public class WorkspaceInView extends JComponent {
 		updateHeadingLabel(myDataSource.getTurtleHeading());
 		updatePositionLabel(myDataSource.getTurtlePosition());
 		showMessage("" + myDataSource.getReturnValue());
-		showMessage(myDataSource.showMessage());
 
+	}
+	
+	public void updateAndSuppressOutput () {
+	    myCanvas.update(myDataSource.getPaintableIterator(),
+                            myDataSource.getBackgroundImage());
+	    updateHeadingLabel(myDataSource.getTurtleHeading());
+            updatePositionLabel(myDataSource.getTurtlePosition());
 	}
 
 }

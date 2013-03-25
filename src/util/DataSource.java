@@ -1,7 +1,10 @@
 package util;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -45,7 +48,14 @@ public interface DataSource {
      * 
      * @return message to display
      */
-    public String showMessage ();
 
     public Image getBackgroundImage ();
+    
+    public void paint (Graphics2D pen);
+    
+    public Color getBackgroundColor ();
+    
+    public Map<String, Integer> getUserVariables ();
+    
+    public Map<String, String> getUserFunctions ();
 }

@@ -1,6 +1,8 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,13 +61,19 @@ public class Workspace implements DataSource, ITurtle {
     }
 
     @Override
-    public String showMessage () {
+    public Image getBackgroundImage () {
         // TODO Auto-generated method stub
         return null;
     }
+    
+    @Override
+    public void paint (Graphics2D pen) {
+        // TODO Auto-generated method stub
+        
+    }
 
     @Override
-    public Image getBackgroundImage () {
+    public Color getBackgroundColor () {
         // TODO Auto-generated method stub
         return null;
     }
@@ -331,5 +339,19 @@ public class Workspace implements DataSource, ITurtle {
     public int makeOddTurtlesActive () {
         return evenOddHelper(1);
     }
+
+    @Override
+    public Map<String, Integer> getUserVariables () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getUserFunctions () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+   
 
 }
