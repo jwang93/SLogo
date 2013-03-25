@@ -462,9 +462,15 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     public void setPenColor (Color color) {
-        // TODO Auto-generated method stub
+        myLine.setPenColor(color);
 
     }
+    
+    public void setPenSize (int size) {
+        myLine.setPenSize(size);
+
+    }
+
 
     public void stamp () {
         myPaintableObjects.add(new Stamp(DEFAULT_IMAGE, getLocation(), DEFAULT_DIMENSION));
