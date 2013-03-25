@@ -1,6 +1,5 @@
 package model.scope;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -9,7 +8,7 @@ import exceptions.VariableNotFoundException;
 import factory.UserFunctionMetaData;
 
 
-public class MethodScope implements Serializable {
+public class MethodScope {
     
     public MethodScope(){
         myUserFunctions = new HashMap<String, UserFunctionMetaData>();
@@ -18,7 +17,6 @@ public class MethodScope implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private Map<String, UserFunctionMetaData> myUserFunctions;
     
     public void add(UserFunctionMetaData data){

@@ -1,6 +1,5 @@
 package model.scope;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -26,11 +25,10 @@ import exceptions.VariableNotFoundException;
  * 
  * 
  */
-public class Scope implements Serializable {
+public class Scope {
     /**
      * 
      */
-    private static final long serialVersionUID = 502L;
     private static final int DEFAULT_VARIABLE_VALUE = 0;
     private Stack<Map<String, Integer>> myScope = new Stack<Map<String, Integer>>();
     private Map<String, Integer> myCurrentScope;
