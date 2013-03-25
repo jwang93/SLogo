@@ -34,9 +34,6 @@ public class Model implements IModel {
      * return value in the event of an error.
      */
     public static final int ERROR_RETURN_VALUE = -1;
-    public static final String TO_COMMAND = "to";
-    public static final String MAKE_COMMAND = "make";
-
     private FileWriter myFileWriter;
     private File sessionFile;
     private Parser myParser;
