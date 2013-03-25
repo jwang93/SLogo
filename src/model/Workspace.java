@@ -27,9 +27,10 @@ public class Workspace implements DataSource, ITurtle {
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     Dimension myCanvasBounds;
     int myReturnValue;
-    int myBackgroundImageIndex;
+    int myBackgroundImageIndex = 0;
     int myTurtleImageIndex = 0;
-    int myPenColor = 0;
+    int myPenColorIndex = 0;
+    int myBackgroundColorIndex = 0;
     WorkspaceContainer myContainer;
 
     public Workspace (Dimension canvasBounds, WorkspaceContainer container) {
@@ -67,8 +68,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Image getBackgroundImage () {
-        // TODO Auto-generated method stub
-        return null;
+        return myContainer.getBackgroundImage(myBackgroundImageIndex);
     }
     
     @Override
@@ -80,8 +80,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Color getBackgroundColor () {
-        // TODO Auto-generated method stub
-        return null;
+        return myContainer.getColor(myBackgroundColorIndex);
     }
     
     @Override
@@ -255,8 +254,12 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int setBackgroundColor (int colorIndex) {
-        // TODO Auto-generated method stub
-        return 0;
+        Color color = myContainer.getColor(colorIndex);
+        if(color == null) {
+            return 0;
+        }
+        myBackgroundColorIndex = colorIndex;
+        return colorIndex;
     }
 
     @Override
@@ -270,8 +273,14 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int setPenColor (int colorIndex) {
-        // TODO Auto-generated method stub
-        return 0;
+        Color color = myContainer.getColor(colorIndex);
+        if(color == null) {
+            return 0;
+        }
+        for(Turtle turtle : myActiveTurtles){
+            turtle.setPenColor(color);
+        }
+        return colorIndex;
     }
 
     @Override

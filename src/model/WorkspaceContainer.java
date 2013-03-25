@@ -53,10 +53,12 @@ public class WorkspaceContainer {
     
     public void addBackgroundImage (Image image) {
         myBackgroundImages.add(image);
+        getCurrentWorkspace().setBackgroundImage(myBackgroundImages.indexOf(image));
     }
     
     public void addTurtleImage (Image image) {
         myTurtleImages.add(new Pixmap(image));
+        getCurrentWorkspace().setShape(myTurtleImages.indexOf(image));
     }
     
     public Pixmap getTurtleImage (int index) {

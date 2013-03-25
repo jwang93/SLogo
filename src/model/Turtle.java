@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -453,6 +454,11 @@ public class Turtle extends Sprite implements Paintable {
      */
     public Location getTurtlePosition () {
         return convertFromViewCoordinates(getLocation());
+    }
+
+    public void setPenColor (Color color) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

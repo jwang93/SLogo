@@ -266,11 +266,9 @@ public class WorkspaceInView extends JComponent {
 					String fileName = FILE_CHOOSER.getSelectedFile().getName();
 					Image myImage = new ImageIcon(getClass().getResource(
 							RESOURCE_LOCATION + fileName)).getImage();
-					myBackgroundImage = myImage;
-
-					// TODO, not sure what to call for now
+					myModel.addBackgroundImage(myImage);
 				}
-				update(); // deal with turtle disappearance after action
+				updateAndSuppressOutput(); // deal with turtle disappearance after action
 			}
 
 		});
@@ -292,19 +290,6 @@ public class WorkspaceInView extends JComponent {
 
 		});
 		return myToggleHighlightButton;
-	}
-
-	public JRadioButton makeColorButton(final Color color, String colorName) {
-		JRadioButton button = new JRadioButton(myResources.getString(colorName));
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				myCanvas.setBackgroundColor(color);
-				updateAndSuppressOutput();
-
-			}
-		});
-		return button;
 	}
 
 	public void showMessage(String message) {
