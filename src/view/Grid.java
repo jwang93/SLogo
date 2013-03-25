@@ -60,7 +60,7 @@ public class Grid implements Paintable {
         for (int i = 0; i < myFrequency + 1; ++i) {
             int myY = 0 + i * segmentSize;
             pen.drawLine(0, myY, canvasWidth, myY);
-            TextLayout text = new TextLayout("" + (myY - canvasHeight / 2),
+            TextLayout text = new TextLayout("" + (canvasHeight / 2 - myY),
                                              myFont, pen.getFontRenderContext());
             text.draw(pen, 0 + xOffset, myY + yOffset * 2);
 

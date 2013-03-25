@@ -441,7 +441,7 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     private Location convertToViewCoordinates (Location location) {
-        return new Location(location.getX() - myCenterXValue, -myCenterYValue - location.getY());
+        return new Location(location.getX() - myCenterXValue, myCenterYValue - location.getY());
     }
 
     /**
