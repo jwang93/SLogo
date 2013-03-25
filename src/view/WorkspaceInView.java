@@ -46,18 +46,18 @@ public class WorkspaceInView extends JComponent {
             .getProperties().getProperty(USER_DIR));
     private static final String RESOURCE_LOCATION = "/images/";
 
+    private JTextField myCommandLineTextField;
+    private JTextArea myUserVariables;
+    private JTextArea myUserFuncs;
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
-    private JTextField myCommandLineTextField;
-
+   
     private JButton myClearButton;
     private JButton myToggleGridButton;
     private JButton myChangeBackgroundButton;
     private JButton myToggleHighlightButton;
-    private JTextArea myUserVariables;
-    private JTextArea myUserFuncs;
-
+   
     private ResourceBundle myResources;
     private IModel myModel;
     private Canvas myCanvas;
@@ -73,26 +73,26 @@ public class WorkspaceInView extends JComponent {
         myCanvas = new Canvas(canvasBounds, this);
         myModel.switchToWorkspace(myID);
         myDataSource = myModel.getDataSource();
-
-        initialize();
-        myCanvas.update();
-        // the following lines are for testing!
-        showVariables("testing testing");
-        showFunctions("testing testing");
-
+        
+        initializeGuiComponents();
     }
 
     /**
      * adds components to GUI
      */
-    private void initialize () {
+    private void initializeGuiComponents() {
         setLayout(new BorderLayout());
         this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
         this.add(makeCommandHistory(), BorderLayout.WEST);
         this.add(makeUserDefinedFuncAndVarDisplay(), BorderLayout.EAST);
         this.add(makeTurtleDisplay(), BorderLayout.CENTER);
         setVisible(true);
+        myCanvas.update();
     }
+    /**
+     * make the text area showing commands history and make the clear history button
+     * @return
+     */
 
     private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
@@ -182,7 +182,11 @@ public class WorkspaceInView extends JComponent {
         });
         return myCommandLineTextField;
     }
-
+    
+    /**
+     * make text areas displaying user defined functions and variables
+     * @return
+     */
     private JComponent makeUserDefinedFuncAndVarDisplay () {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -229,7 +233,11 @@ public class WorkspaceInView extends JComponent {
         });
         return myClearButton;
     }
-
+    
+    /**
+     * makes the button that toggles the reference grid
+     * @return
+     */
     private JButton makeToggleGridButton () {
         myToggleGridButton = new JButton(myResources.getString("toggle_grid"));
         myToggleGridButton.addActionListener(new ActionListener() {
@@ -241,7 +249,11 @@ public class WorkspaceInView extends JComponent {
         });
         return myToggleGridButton;
     }
-
+    
+    /**
+     * makes the button that when clicked lets user to select an image for background
+     * @return
+     */
     private JButton makeChangeBackgroundButton () {
         myChangeBackgroundButton = new JButton(
                                                myResources.getString("change_background"));
@@ -266,6 +278,11 @@ public class WorkspaceInView extends JComponent {
         return myChangeBackgroundButton;
 
     }
+    
+    /**
+     * makes the button that allow user to toggle whether to highlight active turtles
+     * @return
+     */
 
     private JButton makeToggleHighlight () {
         myToggleHighlightButton = new JButton(
@@ -283,6 +300,12 @@ public class WorkspaceInView extends JComponent {
         return myToggleHighlightButton;
     }
     
+    /**
+     * make a radio button for color selection
+     * @param color
+     * @param colorName
+     * @return
+     */
 	public JRadioButton makeColorButton(final Color color, String colorName) {
 		JRadioButton button = new JRadioButton(myResources.getString(colorName));
 		button.addActionListener(new ActionListener() {
@@ -295,6 +318,11 @@ public class WorkspaceInView extends JComponent {
 		});
 		return button;
 	}
+	
+	/**
+	 * show a message in command history
+	 * @param message
+	 */
 
     public void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
