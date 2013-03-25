@@ -318,20 +318,23 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int stamp () {
-        // TODO Auto-generated method stub
+        for (Turtle turtle : getActiveTurtles()) {
+            turtle.stamp();
+        }
         return 0;
     }
 
     @Override
     public int clearStamps () {
-        // TODO Auto-generated method stub
+        for (Turtle turtle : getActiveTurtles()) {
+            turtle.clearStamps();
+        }
         return 0;
     }
 
     @Override
     public int getShapeIndex () {
-        // TODO Auto-generated method stub
-        return 0;
+        return myTurtleImageIndex;
     }
 
     @Override
@@ -391,6 +394,6 @@ public class Workspace implements DataSource, ITurtle {
     }
 
    private Turtle getLastActiveTurtle () {
-       return myActiveTurtles.get(myActiveTurtles.size() - 1);
+       return getActiveTurtles().get(getActiveTurtles().size() - 1);
    }
 }

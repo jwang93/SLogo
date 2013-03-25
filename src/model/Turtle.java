@@ -438,6 +438,10 @@ public class Turtle extends Sprite implements Paintable {
         return new Location(myCenterXValue + location.getX(), myCenterYValue - location.getY());
         
     }
+    
+    private Location convertToViewCoordinates (Location location) {
+        return new Location( location.getX() - myCenterXValue, -myCenterYValue  - location.getY());
+    }
 
     /**
      * Gets all paintable objects currently showing and returns them in an iterator.
@@ -453,12 +457,24 @@ public class Turtle extends Sprite implements Paintable {
      * @return current turtle position.
      */
     public Location getTurtlePosition () {
-        return convertFromViewCoordinates(getLocation());
+        return convertToViewCoordinates(getLocation());
     }
 
     public void setPenColor (Color color) {
         // TODO Auto-generated method stub
         
+    }
+
+    public void stamp () {
+        myPaintableObjects.add(new Stamp(DEFAULT_IMAGE, getLocation(), DEFAULT_DIMENSION));
+    }
+
+    public void clearStamps () {
+        for(Paintable paintable : myPaintableObjects){
+            if(paintable instanceof Stamp){
+                myPaintableObjects.remove(paintable);
+            }
+        }
     }
 
 }

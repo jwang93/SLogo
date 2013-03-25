@@ -131,7 +131,7 @@ public interface ITurtle {
     
     public abstract int getTurtleID ();
     
-    public abstract int setActiveTurtles (int[] turtleIds);
+    public abstract int setActiveTurtles (int... turtleIds);
     
     public abstract int setAllTurtlesActive ();
     
