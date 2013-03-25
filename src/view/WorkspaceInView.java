@@ -7,16 +7,20 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -98,6 +102,7 @@ public class WorkspaceInView extends JComponent {
         myColorCollection.put("grey", Color.LIGHT_GRAY);
         myColorCollection.put("yellow", Color.yellow);
         myColorCollection.put("green", Color.green);
+        myColorCollection.put("cyan", Color.CYAN);
 
     }
 
@@ -147,6 +152,7 @@ public class WorkspaceInView extends JComponent {
         state.add(makeToggleHighlight());
         state.add(makeToggleGridButton());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
+        turtleInfoPanel.add( makeBackgroundColorPanel(),BorderLayout.NORTH);
 
         return turtleInfoPanel;
 
@@ -220,6 +226,33 @@ public class WorkspaceInView extends JComponent {
         return panel;
 
     }
+    
+	/**
+	 * make a panel contains series of JRadioButtons based on the color
+	 * collection map for selecting canvas background color
+	 * 
+	 */
+	public JPanel makeBackgroundColorPanel() {
+		JPanel area = new JPanel();
+		area.add(new JLabel(myResources.getString("background_color")));
+		ButtonGroup group = new ButtonGroup();
+		Iterator<Entry<String, Color>> it = myColorCollection.entrySet()
+				.iterator();
+		JRadioButton defaultButton = makeColorButton(DEFAULT_COLOR,
+				myResources.getString("white"));
+		group.add(defaultButton);
+		area.add(defaultButton);
+		defaultButton.setSelected(true);
+		while (it.hasNext()) {
+			Entry<String, Color> next = it.next();
+			JRadioButton button = makeColorButton(next.getValue(),
+					next.getKey());
+			group.add(button);
+			area.add(button);
+		}
+		return area;
+
+	}
 
     /**
      * Makes the button that clears the command history.
@@ -289,6 +322,19 @@ public class WorkspaceInView extends JComponent {
         });
         return myToggleHighlightButton;
     }
+    
+	public JRadioButton makeColorButton(final Color color, String colorName) {
+		JRadioButton button = new JRadioButton(myResources.getString(colorName));
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myCanvas.setBackgroundColor(color);
+				updateAndSuppressOutput();
+
+			}
+		});
+		return button;
+	}
 
     public void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
