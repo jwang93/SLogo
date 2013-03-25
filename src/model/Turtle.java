@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,7 +48,6 @@ public class Turtle extends Sprite implements Paintable {
         myCanvasBounds = canvasBounds;
         myCenterXValue = (int) myCanvasBounds.getWidth() / 2;
         myCenterYValue = (int) myCanvasBounds.getHeight() / 2;
-        myPaintableObjects.add(this);
         myPaintableObjects.add(myLine);
         deactivateTurtleHighlighter();
     }
@@ -330,9 +330,6 @@ public class Turtle extends Sprite implements Paintable {
      */
     public int showTurtle () {
         myTurtleShowing = true;
-        if (!myPaintableObjects.contains(this)) {
-            myPaintableObjects.add(this);
-        }
         return 1;
     }
 
@@ -343,7 +340,6 @@ public class Turtle extends Sprite implements Paintable {
      */
     public int hideTurtle () {
         myTurtleShowing = false;
-        myPaintableObjects.remove(this);
         return 0;
     }
 
@@ -481,6 +477,16 @@ public class Turtle extends Sprite implements Paintable {
             if (paintable instanceof Stamp) {
                 myPaintableObjects.remove(paintable);
             }
+        }
+    }
+    
+    @Override
+    public void paint (Graphics2D pen) {
+        if(myTurtleShowing) {
+            super.paint(pen);
+        }
+        for(Paintable paintable : myPaintableObjects) {
+            paintable.paint(pen);
         }
     }
 

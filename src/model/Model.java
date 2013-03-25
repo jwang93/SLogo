@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import model.scope.MethodScope;
 import model.scope.Scope;
-import util.DataSource;
 import commands.ICommand;
 import exceptions.FormattingException;
 import factory.Parser;
