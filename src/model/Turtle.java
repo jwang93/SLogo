@@ -288,14 +288,10 @@ public class Turtle extends Sprite implements Paintable {
      * @return distance of turn
      */
     public double towards (Location location) {
-        Location convertedLocation = convertFromViewCoordinates(location);
-        double turnDistance =
-                180 -
-                        (-1) *
-                        Vector.angleBetween(convertFromViewCoordinates(new Location(getX(), getY())),
-                                            convertedLocation);
-        turn(turnDistance);
-        return turnDistance;
+        double currentHeading = getHeading();
+        Vector tvector = new Vector(getLocation(), convertFromViewCoordinates(location));
+        setHeading(tvector.getDirection());
+        return Math.abs(currentHeading - getHeading());
     }
 
     /**
@@ -305,12 +301,11 @@ public class Turtle extends Sprite implements Paintable {
      * @return distance of move
      */
     public int setLocation (Location location) {
-        Location locationToMove = location;
-        // double heading = getHeading();
-        towards(locationToMove);
-        int distance = (int) Vector.distanceBetween(location, getLocation());
-        // setHeading(heading);
+        double heading = getHeading();
+        towards(location);
+        int distance = (int) Vector.distanceBetween(getLocation(), convertFromViewCoordinates(location));
         move(distance);
+        setHeading(heading);
         return distance;
     }
 
@@ -364,9 +359,7 @@ public class Turtle extends Sprite implements Paintable {
      * @return
      */
     public int home () {
-        Location center = new Location(myCenterXValue, myCenterYValue);
-        int distance = (int) Vector.distanceBetween(getLocation(), center);
-        setLocation(center);
+        int distance = setLocation(new Location(0, 0));
         resetHeading();
         return distance;
     }
@@ -422,7 +415,8 @@ public class Turtle extends Sprite implements Paintable {
     }
 
     private Location convertFromViewCoordinates (Location location) {
-        return new Location(location.getX() - myCenterXValue, myCenterYValue - location.getY());
+        return new Location(myCenterXValue + location.getX(), myCenterYValue - location.getY());
+        
     }
 
     /**
