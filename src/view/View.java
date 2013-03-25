@@ -167,28 +167,9 @@ public class View extends JFrame {
         getCurrentWorkspace().showMessage(message);
     }
 
-    /**
-     * Updates the position label with the new location.
-     * 
-     * @param location
-     */
-    private void updatePositionLabel (Location location) {
-        getCurrentWorkspace().updatePositionLabel(location);
-    }
-
     private WorkspaceInView getCurrentWorkspace () {
         int currentWorkspace = myTabbedPane.getSelectedIndex();
         return myWorkspaces.get(currentWorkspace);
-
-    }
-
-    /**
-     * updates the heading label with the new heading.
-     * 
-     * @param heading
-     */
-    private void updateHeadingLabel (int heading) {
-        getCurrentWorkspace().updateHeadingLabel(heading);
 
     }
 
