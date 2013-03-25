@@ -43,7 +43,7 @@ public class Model implements IModel {
 
 
 
-    private FileWriter fileWriter;
+    private FileWriter myFileWriter;
     private File sessionFile;
     private Parser myParser;
     private WorkspaceContainer myWorkspaces;
@@ -64,7 +64,7 @@ public class Model implements IModel {
         targetChannel = null;
         sessionFile = new File("src/files/session.txt");
         try {
-            fileWriter = new FileWriter(sessionFile);
+            myFileWriter = new FileWriter(sessionFile);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -181,11 +181,11 @@ public class Model implements IModel {
     }
     
     public FileWriter getFileWriter () {
-        return fileWriter;
+        return myFileWriter;
     }
 
     public void setFileWriter (FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
+        myFileWriter = fileWriter;
     }
 
     @Override
@@ -194,8 +194,13 @@ public class Model implements IModel {
     }
 
     @Override
-    public void addImage (Image image) {
-        //myImageList.add(image);
+    public void addBackgroundImage (Image image) {
+        myWorkspaces.addBackgroundImage(image);
+    }
+    
+    @Override
+    public void addTurtleImage (Image image) {
+        myWorkspaces.addTurtleImage(image);
     }
 
     @Override
