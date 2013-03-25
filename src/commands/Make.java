@@ -40,7 +40,7 @@ public class Make extends AbstractSingleParameterCommand implements ICommand {
         }
         catch (IOException e) {
             e.printStackTrace();
-        }        
+        }
     }
 
     @Override

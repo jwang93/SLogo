@@ -2,6 +2,8 @@ package commands;
 
 import java.util.List;
 import model.IModel;
+
+
 public class SetPalette extends AbstractFourParameterCommand {
 
     /**
@@ -14,10 +16,11 @@ public class SetPalette extends AbstractFourParameterCommand {
         super(parameters);
         myModel = model;
     }
-    
-    public int execute(){
+
+    @Override
+    public int execute () {
         resolveParameters();
-        //TODO waiting on View implementation 
+        // TODO waiting on View implementation
         return 0;
     }
 

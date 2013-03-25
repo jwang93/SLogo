@@ -63,7 +63,7 @@ public class Turtle extends Sprite implements Paintable {
              new Location(canvasBounds.getWidth() / 2, canvasBounds.getHeight() / 2),
              DEFAULT_DIMENSION, canvasBounds);
     }
-    
+
     /**
      * Uses default values for constructor, except for canvasBounds.
      * 
@@ -316,7 +316,8 @@ public class Turtle extends Sprite implements Paintable {
     public int setLocation (Location location) {
         double heading = getHeading();
         towards(location);
-        int distance = (int) Vector.distanceBetween(getLocation(), convertFromViewCoordinates(location));
+        int distance =
+                (int) Vector.distanceBetween(getLocation(), convertFromViewCoordinates(location));
         move(distance);
         setHeading(heading);
         return distance;
@@ -329,7 +330,7 @@ public class Turtle extends Sprite implements Paintable {
      */
     public int showTurtle () {
         myTurtleShowing = true;
-        if(!myPaintableObjects.contains(this)){
+        if (!myPaintableObjects.contains(this)) {
             myPaintableObjects.add(this);
         }
         return 1;
@@ -407,36 +408,40 @@ public class Turtle extends Sprite implements Paintable {
         if (myPenDown) return 1;
         return 0;
     }
-    
+
     /**
      * make this turtle active
-
      */
-    
-    public void activateTurtleHighlighter(){
-    	myPaintableObjects.add(myTurtleHighlighter);
+
+    public void activateTurtleHighlighter () {
+        myPaintableObjects.add(myTurtleHighlighter);
     }
+
     /**
      * make this turtle inactive
-
      */
-    
-    public void deactivateTurtleHighlighter(){
-    	myPaintableObjects.remove(myTurtleHighlighter);
+
+    public void deactivateTurtleHighlighter () {
+        myPaintableObjects.remove(myTurtleHighlighter);
     }
-    
+
     public void toggleTurtleHighlighter () {
-        if(myPaintableObjects.contains(myTurtleHighlighter)){
+        if (myPaintableObjects.contains(myTurtleHighlighter)) {
             deactivateTurtleHighlighter();
-        } else {
+        }
+        else {
             activateTurtleHighlighter();
         }
-        
+
     }
 
     private Location convertFromViewCoordinates (Location location) {
         return new Location(myCenterXValue + location.getX(), myCenterYValue - location.getY());
-        
+
+    }
+
+    private Location convertToViewCoordinates (Location location) {
+        return new Location(location.getX() - myCenterXValue, -myCenterYValue - location.getY());
     }
 
     /**
@@ -453,12 +458,24 @@ public class Turtle extends Sprite implements Paintable {
      * @return current turtle position.
      */
     public Location getTurtlePosition () {
-        return convertFromViewCoordinates(getLocation());
+        return convertToViewCoordinates(getLocation());
     }
 
     public void setPenColor (Color color) {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    public void stamp () {
+        myPaintableObjects.add(new Stamp(DEFAULT_IMAGE, getLocation(), DEFAULT_DIMENSION));
+    }
+
+    public void clearStamps () {
+        for (Paintable paintable : myPaintableObjects) {
+            if (paintable instanceof Stamp) {
+                myPaintableObjects.remove(paintable);
+            }
+        }
     }
 
 }

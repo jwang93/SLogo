@@ -14,7 +14,7 @@ public class Heading extends AbstractZeroParameterTurtleCommand {
     @Override
     public int execute () {
         ITurtle turtle = getTurtle();
-        int heading = (int) turtle.getHeading();
+        int heading = turtle.getHeading();
         return adjustAngle(heading);
     }
 

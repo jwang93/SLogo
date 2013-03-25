@@ -37,7 +37,7 @@ public class LineSegment implements Paintable {
      */
     @Override
     public void paint (Graphics2D pen) {
-    	pen.setStroke(new BasicStroke(2));
+        pen.setStroke(new BasicStroke(2));
         pen.drawLine((int) myStartLocation.getX(), (int) myStartLocation.getY(),
                      (int) myEndLocation.getX(), (int) myEndLocation.getY());
     }

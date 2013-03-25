@@ -16,8 +16,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import model.IModel;
-import util.DataSource;
-import util.Location;
 
 
 /**
@@ -182,7 +180,7 @@ public class View extends JFrame {
         addComponentListener(new ComponentListener() {
             @Override
             public void componentResized (ComponentEvent evt) {
-                getCurrentWorkspace().update();
+                getCurrentWorkspace().updateAndSuppressOutput();
 
             }
 
@@ -210,9 +208,10 @@ public class View extends JFrame {
         myTabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged (ChangeEvent e) {
-                System.out.println("Tab=" + myTabbedPane.getSelectedIndex());
+                WorkspaceInView workspace = myWorkspaces.get(myTabbedPane.getSelectedIndex());
+                myModel.switchToWorkspace(workspace.getID());
                 getCurrentWorkspace().update();
-                
+
             }
         });
     }

@@ -10,11 +10,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.List;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.DataSource;
@@ -41,8 +37,6 @@ public class Model implements IModel {
     public static final String TO_COMMAND = "to";
     public static final String MAKE_COMMAND = "make";
 
-
-
     private FileWriter myFileWriter;
     private File sessionFile;
     private Parser myParser;
@@ -56,7 +50,7 @@ public class Model implements IModel {
      * @param canvasBounds to pass to turtle
      */
     public Model (Dimension canvasBounds) {
-        
+
         myWorkspaces = new WorkspaceContainer(canvasBounds, this);
         // do this second
         myParser = new Parser(this);
@@ -77,6 +71,7 @@ public class Model implements IModel {
      * 
      * @return turtle to return
      */
+    @Override
     public ITurtle getTurtle () {
         return myWorkspaces.getCurrentWorkspace();
     }
@@ -89,7 +84,7 @@ public class Model implements IModel {
     public Scope getScope () {
         return myWorkspaces.getCurrentWorkspace().getScope();
     }
-    
+
     public MethodScope getMethodScope () {
         return myWorkspaces.getCurrentWorkspace().getMethodScope();
     }
@@ -111,7 +106,7 @@ public class Model implements IModel {
             executable = myParser.parse(command);
             returnValue = executable.execute();
         }
-        catch (FormattingException e) {           
+        catch (FormattingException e) {
         }
         finally {
             myWorkspaces.getCurrentWorkspace().setReturnValue(returnValue);
@@ -124,12 +119,12 @@ public class Model implements IModel {
      * 2. Copies over the contents from session.txt into the new file 
      */
     public void saveFunctionsAndVariables (File file) {
-        
-        File fileToSave = new File (file.getAbsolutePath());
+
+        File fileToSave = new File(file.getAbsolutePath());
         try {
             sourceChannel = new FileInputStream(sessionFile).getChannel();
             targetChannel = new FileOutputStream(fileToSave).getChannel();
-            targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());   
+            targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -149,7 +144,7 @@ public class Model implements IModel {
             catch (IOException e) {
                 e.printStackTrace();
             }
-        }  
+        }
     }
 
     @Override
@@ -159,7 +154,7 @@ public class Model implements IModel {
      * 3. Executes each make or to command to "reset" the scope
      */
     public void loadFunctionsAndVariables (File fileToLoad) {
-        
+
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(fileToLoad));
@@ -179,7 +174,7 @@ public class Model implements IModel {
         }
 
     }
-    
+
     public FileWriter getFileWriter () {
         return myFileWriter;
     }
@@ -197,7 +192,7 @@ public class Model implements IModel {
     public void addBackgroundImage (Image image) {
         myWorkspaces.addBackgroundImage(image);
     }
-    
+
     @Override
     public void addTurtleImage (Image image) {
         myWorkspaces.addTurtleImage(image);
@@ -208,5 +203,7 @@ public class Model implements IModel {
         myWorkspaces.switchToWorkspace(workspaceNumber);
     }
 
-    public MethodScope getMethods(){ return myWorkspaces.getMethods();}
+    public MethodScope getMethods () {
+        return myWorkspaces.getMethods();
+    }
 }

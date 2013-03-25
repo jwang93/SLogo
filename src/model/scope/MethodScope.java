@@ -2,29 +2,28 @@ package model.scope;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-import commands.ICommand;
-import exceptions.VariableNotFoundException;
 import factory.UserFunctionMetaData;
 
 
 public class MethodScope {
-    
-    public MethodScope(){
+
+    public MethodScope () {
         myUserFunctions = new HashMap<String, UserFunctionMetaData>();
     }
-    
+
     /**
      * 
      */
     private Map<String, UserFunctionMetaData> myUserFunctions;
-    
-    public void add(UserFunctionMetaData data){
+
+    public void add (UserFunctionMetaData data) {
         myUserFunctions.put(data.getFunctionName(), data);
     }
-    public UserFunctionMetaData get(String name){
+
+    public UserFunctionMetaData get (String name) {
         return myUserFunctions.get(name);
     }
+
     public boolean containsKey (String keyword) {
         return myUserFunctions.containsKey(keyword);
     }

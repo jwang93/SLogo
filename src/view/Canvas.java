@@ -22,13 +22,13 @@ import util.Paintable;
 public class Canvas extends JComponent {
     // default serialization ID
     private static final long serialVersionUID = 1L;
-    private int DEFAULT_GRID_FREQUENCY=10;
-    private static final Color DEFAULT_BACKGROUND_COLOR=Color.WHITE;
+    private int DEFAULT_GRID_FREQUENCY = 10;
+    private static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
 
     private Iterator<Paintable> myPaintableIterator;
     private Image myBackground;
     private Color myBackgroundColor;
-    private boolean gridShowing=true;
+    private boolean gridShowing = true;
     private Grid myGrid;
 
     /**
@@ -44,8 +44,10 @@ public class Canvas extends JComponent {
         // prepare to receive input
         List<Paintable> emptyList = new ArrayList<Paintable>();
         myPaintableIterator = emptyList.iterator();
-        myGrid=new Grid(new Dimension(this.getWidth(),this.getHeight()),this.DEFAULT_GRID_FREQUENCY);
-        
+        myGrid =
+                new Grid(new Dimension(getWidth(), getHeight()),
+                         DEFAULT_GRID_FREQUENCY);
+
     }
 
     /**
@@ -62,9 +64,9 @@ public class Canvas extends JComponent {
         pen.setColor(myBackgroundColor);
         pen.fillRect(0, 0, getSize().width, getSize().height);
         pen.drawImage(myBackground, 0, 0, getSize().width, getSize().height, null);
-        
-        if (gridShowing){
-        	myGrid.paint((Graphics2D) pen);
+
+        if (gridShowing) {
+            myGrid.paint((Graphics2D) pen);
         }
         while (myPaintableIterator.hasNext()) {
             pen.setColor(Color.BLACK);
@@ -72,7 +74,6 @@ public class Canvas extends JComponent {
             paintable.paint((Graphics2D) pen);
         }
     }
-    
 
     /**
      * Updates the iterator and repaints.
@@ -90,13 +91,13 @@ public class Canvas extends JComponent {
         setSize(size);
         repaint();
     }
-    
-    public void toggleGrid(){
-    	gridShowing=!gridShowing;
+
+    public void toggleGrid () {
+        gridShowing = !gridShowing;
     }
-    
-    public void setBackgroundColor(Color color){
-    	myBackgroundColor=color;
+
+    public void setBackgroundColor (Color color) {
+        myBackgroundColor = color;
     }
 
 }

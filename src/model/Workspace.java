@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.DataSource;
@@ -22,7 +23,7 @@ public class Workspace implements DataSource, ITurtle {
 
     private Scope myScope;
     private MethodScope myMethods;
-    
+
     Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
     List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
     Dimension myCanvasBounds;
@@ -37,8 +38,9 @@ public class Workspace implements DataSource, ITurtle {
         myScope = new Scope();
         myMethods = new MethodScope();
         myContainer = container;
-        
-        Turtle firstTurtle = new Turtle(canvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
+
+        Turtle firstTurtle =
+                new Turtle(canvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
         myTurtles.put(0, firstTurtle);
         myActiveTurtles.add(firstTurtle);
         myCanvasBounds = canvasBounds;
@@ -51,13 +53,13 @@ public class Workspace implements DataSource, ITurtle {
     public MethodScope getMethodScope () {
         return myMethods;
     }
-    
+
     public void setReturnValue (int returnValue) {
         myReturnValue = returnValue;
     }
 
     @Override
-    public int getReturnValue () { 
+    public int getReturnValue () {
         return myReturnValue;
     }
 
@@ -68,13 +70,13 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Image getBackgroundImage () {
-        //return myContainer.getBackgroundImage(myBackgroundImageIndex);
+        // return myContainer.getBackgroundImage(myBackgroundImageIndex);
         return null;
     }
-    
+
     @Override
     public void paint (Graphics2D pen) {
-        for(Turtle turtle : myTurtles.values()){
+        for (Turtle turtle : myTurtles.values()) {
             turtle.paint(pen);
         }
     }
@@ -83,7 +85,7 @@ public class Workspace implements DataSource, ITurtle {
     public Color getBackgroundColor () {
         return myContainer.getColor(myBackgroundColorIndex);
     }
-    
+
     @Override
     public Map<String, Integer> getUserVariables () {
         // TODO Auto-generated method stub
@@ -102,11 +104,11 @@ public class Workspace implements DataSource, ITurtle {
             turtle.toggleTurtleHighlighter();
         }
     }
-    
+
     @Override
     public Iterator<Paintable> getPaintableIterator () {
         Collection<Paintable> collection = new ArrayList<Paintable>();
-        for(Turtle turtle : myTurtles.values()){
+        for (Turtle turtle : myTurtles.values()) {
             collection.addAll(turtle.getPaintables());
         }
         return collection.iterator();
@@ -242,12 +244,12 @@ public class Workspace implements DataSource, ITurtle {
     public int getHeading () {
         return (int) getLastActiveTurtle().getHeading();
     }
-    
+
     @Override
     public int getX () {
         return (int) getLastActiveTurtle().getX();
     }
-    
+
     @Override
     public int getY () {
         return (int) getLastActiveTurtle().getY();
@@ -256,18 +258,14 @@ public class Workspace implements DataSource, ITurtle {
     @Override
     public int setBackgroundColor (int colorIndex) {
         Color color = myContainer.getColor(colorIndex);
-        if(color == null) {
-            return 0;
-        }
+        if (color == null) return 0;
         myBackgroundColorIndex = colorIndex;
         return colorIndex;
     }
 
     @Override
     public int setBackgroundImage (int imageIndex) {
-        if(myContainer.getBackgroundImage(imageIndex) == null) {
-            return 0;
-        }
+        if (myContainer.getBackgroundImage(imageIndex) == null) return 0;
         myBackgroundImageIndex = imageIndex;
         return myBackgroundImageIndex;
     }
@@ -275,10 +273,8 @@ public class Workspace implements DataSource, ITurtle {
     @Override
     public int setPenColor (int colorIndex) {
         Color color = myContainer.getColor(colorIndex);
-        if(color == null) {
-            return 0;
-        }
-        for(Turtle turtle : myActiveTurtles){
+        if (color == null) return 0;
+        for (Turtle turtle : myActiveTurtles) {
             turtle.setPenColor(color);
         }
         return colorIndex;
@@ -293,11 +289,9 @@ public class Workspace implements DataSource, ITurtle {
     @Override
     public int setShape (int shapeIndex) {
         Pixmap image = myContainer.getTurtleImage(shapeIndex);
-        if(image == null) {
-            return 0;
-        }
+        if (image == null) return 0;
         myTurtleImageIndex = shapeIndex;
-        for(Turtle turtle : myActiveTurtles) {
+        for (Turtle turtle : myActiveTurtles) {
             turtle.setView(image);
         }
         return myTurtleImageIndex;
@@ -317,36 +311,43 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int stamp () {
-        // TODO Auto-generated method stub
+        for (Turtle turtle : getActiveTurtles()) {
+            turtle.stamp();
+        }
         return 0;
     }
 
     @Override
     public int clearStamps () {
-        // TODO Auto-generated method stub
+        for (Turtle turtle : getActiveTurtles()) {
+            turtle.clearStamps();
+        }
         return 0;
     }
 
     @Override
     public int getShapeIndex () {
-        // TODO Auto-generated method stub
-        return 0;
+        return myTurtleImageIndex;
     }
 
     @Override
     public int getTurtleID () {
-        // TODO Auto-generated method stub
+        for (Entry<Integer, Turtle> entry : myTurtles.entrySet()) {
+            if (getLastActiveTurtle().equals(entry.getValue())) return entry.getKey();
+        }
         return 0;
     }
 
     @Override
     public int setActiveTurtles (int ... turtleIds) {
         myActiveTurtles = new ArrayList<Turtle>();
-        for(int id : turtleIds){
-            if(myTurtles.containsKey(id)){
+        for (int id : turtleIds) {
+            if (myTurtles.containsKey(id)) {
                 myActiveTurtles.add(myTurtles.get(id));
-            } else {
-                Turtle newTurtle = new Turtle(myCanvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
+            }
+            else {
+                Turtle newTurtle =
+                        new Turtle(myCanvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
                 myTurtles.put(id, newTurtle);
                 myActiveTurtles.add(newTurtle);
             }
@@ -364,12 +365,12 @@ public class Workspace implements DataSource, ITurtle {
     public int makeEvenTurtlesActive () {
         return evenOddHelper(0);
     }
-    
+
     private int evenOddHelper (int oddOrEven) {
         myActiveTurtles = new ArrayList<Turtle>();
         int lastId = 0;
-        for(int id : myTurtles.keySet()){
-            if(id % 2 == oddOrEven){
+        for (int id : myTurtles.keySet()) {
+            if (id % 2 == oddOrEven) {
                 myActiveTurtles.add(myTurtles.get(id));
                 lastId = id;
             }
@@ -385,7 +386,7 @@ public class Workspace implements DataSource, ITurtle {
         return evenOddHelper(1);
     }
 
-   private Turtle getLastActiveTurtle () {
-       return myActiveTurtles.get(myActiveTurtles.size() - 1);
-   }
+    private Turtle getLastActiveTurtle () {
+        return getActiveTurtles().get(getActiveTurtles().size() - 1);
+    }
 }

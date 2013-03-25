@@ -2,8 +2,6 @@ package factory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import model.Model;
 import model.scope.MethodScope;
@@ -27,7 +25,7 @@ public class Parser {
     private ResourceBundle myResourceBundle;
 
     public Parser (Model model) {
-       // myUserFunctions = new HashMap<String, UserFunctionMetaData>();
+        // myUserFunctions = new HashMap<String, UserFunctionMetaData>();
         myModel = model;
         myResourceBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + BUNDLE_NAME);
         myUserFunctions = model.getMethods();
@@ -75,7 +73,7 @@ public class Parser {
      * @throws FormattingException
      */
     protected ICommand parseOnce (CommandStream commandStream) throws FormattingException {
-        
+
         String keyword = commandStream.remove();
         if (keyword.matches(CONSTANT_REGEX))
             return new Constant(Integer.parseInt(keyword));

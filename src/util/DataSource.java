@@ -50,14 +50,14 @@ public interface DataSource {
      */
 
     public Image getBackgroundImage ();
-    
+
     public void paint (Graphics2D pen);
-    
+
     public Color getBackgroundColor ();
-    
+
     public Map<String, Integer> getUserVariables ();
-    
+
     public Map<String, String> getUserFunctions ();
-    
+
     public void toggleHighlighter ();
 }

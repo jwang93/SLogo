@@ -1,8 +1,8 @@
 package commands;
 
 import java.util.List;
-import util.Location;
 import model.ITurtle;
+import util.Location;
 
 
 public class SetXY extends AbstractDoubleParameterTurtleCommand {
@@ -17,7 +17,7 @@ public class SetXY extends AbstractDoubleParameterTurtleCommand {
     public int execute () {
         resolveParameters();
         ITurtle turtle = getTurtle();
-        return (int) turtle.setLocation(new Location(getFirstParameter(), getSecondParameter()));
+        return turtle.setLocation(new Location(getFirstParameter(), getSecondParameter()));
     }
 
     @Override

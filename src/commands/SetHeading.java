@@ -16,7 +16,7 @@ public class SetHeading extends AbstractSingleParameterTurtleCommand {
     public int execute () {
         resolveParameters();
         ITurtle turtle = getTurtle();
-        return (int) turtle.setHeading(getOnlyParameter());
+        return turtle.setHeading(getOnlyParameter());
     }
 
     @Override
