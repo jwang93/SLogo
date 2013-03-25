@@ -2,8 +2,8 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.ICommand;
 import commands.Greater;
+import commands.ICommand;
 
 
 public class GreaterInitializer extends AbstractInitializer {

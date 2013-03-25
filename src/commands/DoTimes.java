@@ -1,7 +1,9 @@
 package commands;
 
 import java.util.List;
-import model.scope.*;
+import model.scope.Scope;
+
+
 public class DoTimes extends AbstractSingleParameterCommand {
 
     /**
@@ -12,6 +14,7 @@ public class DoTimes extends AbstractSingleParameterCommand {
     private String myVarName;
     private ICommand myNumTimes;
     private Scope myScope;
+
     public DoTimes (List<ICommand> parameters, String varName, ICommand numTimes, Scope scope) {
         super(parameters);
         myVarName = varName;
@@ -19,21 +22,22 @@ public class DoTimes extends AbstractSingleParameterCommand {
         myScope = scope;
     }
 
-    
-    public int execute(){
+    @Override
+    public int execute () {
         resolveParameters();
-        int ret=0;
-        for(int i = 0; i < myNumTimes.execute(); i ++){
+        int ret = 0;
+        for (int i = 0; i < myNumTimes.execute(); i++) {
             myScope.setVariable(myVarName, i);
             ret = getCommands().get(INDEX_OF_CODE_BLOCK).execute();
         }
-            
+
         return ret;
     }
-    
-    public String toString(){
-        return "dotimes [ :" + myVarName + " " + myNumTimes.toString() + " ] " + getCommands().get(INDEX_OF_CODE_BLOCK).toString();
+
+    @Override
+    public String toString () {
+        return "dotimes [ :" + myVarName + " " + myNumTimes.toString() + " ] " +
+               getCommands().get(INDEX_OF_CODE_BLOCK).toString();
     }
-    
-    
+
 }

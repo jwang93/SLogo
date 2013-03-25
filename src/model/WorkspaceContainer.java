@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import util.Pixmap;
 import model.scope.MethodScope;
+import util.Pixmap;
 
 
 public class WorkspaceContainer {
@@ -47,32 +47,32 @@ public class WorkspaceContainer {
         }
     }
 
-    public MethodScope getMethods(){
+    public MethodScope getMethods () {
         return myMethods;
     }
-    
+
     public void addBackgroundImage (Image image) {
         myBackgroundImages.add(image);
         getCurrentWorkspace().setBackgroundImage(myBackgroundImages.indexOf(image));
     }
-    
+
     public void addTurtleImage (Image image) {
         myTurtleImages.add(new Pixmap(image));
         getCurrentWorkspace().setShape(myTurtleImages.indexOf(image));
     }
-    
+
     public Pixmap getTurtleImage (int index) {
         return myTurtleImages.get(index);
     }
-    
+
     public Image getBackgroundImage (int index) {
         return myBackgroundImages.get(index);
     }
-    
-    public void addColor (int index, Color color){
+
+    public void addColor (int index, Color color) {
         myColors.add(index, color);
     }
-    
+
     public Color getColor (int index) {
         return myColors.get(index);
     }

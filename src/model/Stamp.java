@@ -6,8 +6,9 @@ import util.Location;
 import util.Paintable;
 import util.Pixmap;
 
+
 public class Stamp implements Paintable {
-    
+
     Pixmap myImage;
     Location myLocation;
     Dimension mySize;

@@ -3,8 +3,9 @@ package commands;
 import java.util.List;
 import model.IModel;
 
+
 public class Tell extends AbstractSingleParameterCommand implements ICommand {
-      
+
     /**
      * 
      */
@@ -15,15 +16,13 @@ public class Tell extends AbstractSingleParameterCommand implements ICommand {
         super(parameters);
         myModel = model;
     }
-    
-    
-    public int execute(){
+
+    @Override
+    public int execute () {
         resolveParameters();
         int turtleIndex = getOnlyParameter();
         myModel.getTurtle().setActiveTurtles(turtleIndex);
         return turtleIndex;
     }
-    
-    
 
 }

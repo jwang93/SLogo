@@ -2,7 +2,9 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.*;
+import commands.ICommand;
+import commands.SetPalette;
+
 
 public class SetPaletteInitializer extends AbstractInitializer {
 
@@ -13,7 +15,7 @@ public class SetPaletteInitializer extends AbstractInitializer {
 
     @Override
     protected ICommand instantiate (List<ICommand> parameters) {
-        return new SetPalette(parameters , getModel());
+        return new SetPalette(parameters, getModel());
     }
 
 }

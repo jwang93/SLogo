@@ -25,6 +25,7 @@ public interface IModel {
      * @param fileToSave file to save to
      */
     public ITurtle getTurtle ();
+
     public void saveFunctionsAndVariables (File fileToSave);
 
     /**
@@ -42,7 +43,7 @@ public interface IModel {
     public DataSource getDataSource ();
 
     public void addBackgroundImage (Image image);
-    
+
     public void addTurtleImage (Image image);
 
     public void switchToWorkspace (int workspaceNumber);

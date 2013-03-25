@@ -17,7 +17,7 @@ public class Towards extends AbstractDoubleParameterTurtleCommand {
     public int execute () {
         resolveParameters();
         ITurtle turtle = getTurtle();
-        return (int) turtle.towards(new Location(getFirstParameter(), getSecondParameter()));
+        return turtle.towards(new Location(getFirstParameter(), getSecondParameter()));
     }
 
     @Override

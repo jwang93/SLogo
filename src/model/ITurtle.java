@@ -1,8 +1,6 @@
 package model;
 
-import java.util.Iterator;
 import util.Location;
-import util.Paintable;
 
 
 public interface ITurtle {
@@ -106,37 +104,37 @@ public interface ITurtle {
     public abstract int getHeading ();
 
     public abstract int getX ();
-    
+
     public abstract int getY ();
-    
+
     public abstract int setBackgroundColor (int colorIndex);
-    
+
     public abstract int setBackgroundImage (int imageIndex);
-    
+
     public abstract int setPenColor (int colorIndex);
-    
+
     public abstract int setPenSize (int pixels);
-    
+
     public abstract int setShape (int shapeIndex);
-    
+
     public abstract int setPalette (int colorIndex, int red, int green, int blue);
-    
+
     public abstract int getPenColor ();
-    
+
     public abstract int stamp ();
-    
+
     public abstract int clearStamps ();
-    
+
     public abstract int getShapeIndex ();
-    
+
     public abstract int getTurtleID ();
-    
-    public abstract int setActiveTurtles (int... turtleIds);
-    
+
+    public abstract int setActiveTurtles (int ... turtleIds);
+
     public abstract int setAllTurtlesActive ();
-    
+
     public abstract int makeEvenTurtlesActive ();
-    
+
     public abstract int makeOddTurtlesActive ();
-    
+
 }

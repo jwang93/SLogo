@@ -2,10 +2,12 @@ package commands;
 
 import java.util.List;
 
+
 /**
  * Yea this is getting ridiculous. This is more evidence that i need to refactor.
+ * 
  * @author Will Nance
- *
+ * 
  */
 public abstract class AbstractFourParameterCommand extends CommandList {
     private static final int FIRST_PARAMETER_INDEX = 0;
@@ -28,9 +30,7 @@ public abstract class AbstractFourParameterCommand extends CommandList {
         setThirdParameter();
         setFourthParameter();
     }
-    
-    
-    
+
     private void setThirdParameter () {
         myThirdParameter = getCommands().get(THIRD_PARAMETER_INDEX).execute();
     }
@@ -38,19 +38,21 @@ public abstract class AbstractFourParameterCommand extends CommandList {
     private void setFirstParameter () {
         myFirstParameter = getCommands().get(FIRST_PARAMETER_INDEX).execute();
     }
+
     private void setSecondParameter () {
         mySecondParameter = getCommands().get(SECOND_PARAMETER_INDEX).execute();
     }
+
     private void setFourthParameter () {
         myFourthParameter = getCommands().get(FOURTH_PARAMETER_INDEX).execute();
-    }    
+    }
 
     protected int getFirstParameter () {
         return myFirstParameter;
     }
 
     protected int getSecondParameter () {
-        return mySecondParameter ;
+        return mySecondParameter;
     }
 
     protected int getThirdParameter () {

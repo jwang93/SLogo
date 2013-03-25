@@ -2,8 +2,8 @@ package factory;
 
 import java.util.List;
 import model.Model;
-import commands.ICommand;
 import commands.Equal;
+import commands.ICommand;
 
 
 public class EqualInitializer extends AbstractInitializer {
