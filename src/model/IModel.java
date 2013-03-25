@@ -24,6 +24,7 @@ public interface IModel {
      * 
      * @param fileToSave file to save to
      */
+    public ITurtle getTurtle ();
     public void saveFunctionsAndVariables (File fileToSave);
 
     /**

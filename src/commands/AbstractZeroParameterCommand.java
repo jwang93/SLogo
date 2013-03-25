@@ -11,7 +11,7 @@ import java.util.List;
  * 
  */
 public abstract class AbstractZeroParameterCommand extends CommandList implements ICommand {
-    private static final int NUM_ARGS = 0;
+    public static final int NUM_ARGS = 0;
 
     public AbstractZeroParameterCommand () {
         super();

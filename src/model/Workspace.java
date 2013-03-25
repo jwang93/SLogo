@@ -295,7 +295,7 @@ public class Workspace implements DataSource, ITurtle {
     }
 
     @Override
-    public int setActiveTurtles (int[] turtleIds) {
+    public int setActiveTurtles (int ... turtleIds) {
         myActiveTurtles = new ArrayList<Turtle>();
         for(int id : turtleIds){
             if(myTurtles.containsKey(id)){
