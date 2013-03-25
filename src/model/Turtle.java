@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,7 @@ import util.Vector;
  */
 public class Turtle extends Sprite implements Paintable {
 
-    private static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif");
+    public static final Pixmap DEFAULT_IMAGE = new Pixmap("turtle.gif");
     private static final Dimension DEFAULT_DIMENSION = new Dimension(30, 30);
     private static final double PRECISION_LEVEL = 0.0000001;
 
@@ -48,9 +49,21 @@ public class Turtle extends Sprite implements Paintable {
         myCenterYValue = (int) myCanvasBounds.getHeight() / 2;
         myPaintableObjects.add(this);
         myPaintableObjects.add(myLine);
-        activateTurtleHighlighter();
+        deactivateTurtleHighlighter();
     }
 
+    /**
+     * Uses default values for constructor, except for canvasBounds and image.
+     * 
+     * @param canvasBounds bounds to use.
+     * @param image to use
+     */
+    public Turtle (Dimension canvasBounds, Pixmap image) {
+        this(image,
+             new Location(canvasBounds.getWidth() / 2, canvasBounds.getHeight() / 2),
+             DEFAULT_DIMENSION, canvasBounds);
+    }
+    
     /**
      * Uses default values for constructor, except for canvasBounds.
      * 
@@ -397,21 +410,28 @@ public class Turtle extends Sprite implements Paintable {
     
     /**
      * make this turtle active
-     * @return 1 
+
      */
     
-    public int activateTurtleHighlighter(){
+    public void activateTurtleHighlighter(){
     	myPaintableObjects.add(myTurtleHighlighter);
-    	return 1;
     }
     /**
      * make this turtle inactive
-     * @return 0
+
      */
     
-    public int deactivateTurtleHighlighter(){
+    public void deactivateTurtleHighlighter(){
     	myPaintableObjects.remove(myTurtleHighlighter);
-    	return 0;
+    }
+    
+    public void toggleTurtleHighlighter () {
+        if(myPaintableObjects.contains(myTurtleHighlighter)){
+            deactivateTurtleHighlighter();
+        } else {
+            activateTurtleHighlighter();
+        }
+        
     }
 
     private Location convertFromViewCoordinates (Location location) {
@@ -434,6 +454,11 @@ public class Turtle extends Sprite implements Paintable {
      */
     public Location getTurtlePosition () {
         return convertFromViewCoordinates(getLocation());
+    }
+
+    public void setPenColor (Color color) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

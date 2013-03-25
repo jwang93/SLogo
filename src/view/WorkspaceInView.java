@@ -74,6 +74,7 @@ public class WorkspaceInView extends JComponent {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 				+ language);
 		myCanvas = new Canvas(canvasBounds);
+		myModel.switchToWorkspace(id);
 		myDataSource = myModel.getDataSource();
 
 		initialize();
@@ -133,8 +134,6 @@ public class WorkspaceInView extends JComponent {
 
 		JPanel turtleInfoPanel = new JPanel();
 		turtleInfoPanel.setLayout(new BorderLayout());
-
-		turtleInfoPanel.add(makeBackgroundColorPanel(), BorderLayout.NORTH);
 
 		JPanel canvasPanel = new JPanel();
 		canvasPanel.add(myCanvas);
@@ -268,11 +267,9 @@ public class WorkspaceInView extends JComponent {
 					String fileName = FILE_CHOOSER.getSelectedFile().getName();
 					Image myImage = new ImageIcon(getClass().getResource(
 							RESOURCE_LOCATION + fileName)).getImage();
-					myBackgroundImage = myImage;
-
-					// TODO, not sure what to call for now
+					myModel.addBackgroundImage(myImage);
 				}
-				update(); // deal with turtle disappearance after action
+				updateAndSuppressOutput(); // deal with turtle disappearance after action
 			}
 
 		});
@@ -287,55 +284,13 @@ public class WorkspaceInView extends JComponent {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Todo: waiting for a way to communicate with turtles belong to
-				// this workspace
-
-				update(); // deal with turtle disappearance after action
+			        myDataSource.toggleHighlighter();
+				updateAndSuppressOutput(); // deal with turtle disappearance after action
 
 			}
 
 		});
 		return myToggleHighlightButton;
-	}
-
-	/**
-	 * make a panel contains series of JRadioButtons based on the color
-	 * collection map for selecting canvas background color
-	 * 
-	 */
-	public JPanel makeBackgroundColorPanel() {
-		JPanel area = new JPanel();
-		area.add(new JLabel(myResources.getString("background_color")));
-		ButtonGroup group = new ButtonGroup();
-		Iterator<Entry<String, Color>> it = myColorCollection.entrySet()
-				.iterator();
-		JRadioButton defaultButton = makeColorButton(DEFAULT_COLOR,
-				myResources.getString("white"));
-		group.add(defaultButton);
-		area.add(defaultButton);
-		defaultButton.setSelected(true);
-		while (it.hasNext()) {
-			Entry<String, Color> next = it.next();
-			JRadioButton button = makeColorButton(next.getValue(),
-					next.getKey());
-			group.add(button);
-			area.add(button);
-		}
-		return area;
-
-	}
-
-	public JRadioButton makeColorButton(final Color color, String colorName) {
-		JRadioButton button = new JRadioButton(myResources.getString(colorName));
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				myCanvas.setBackgroundColor(color);
-				update();
-
-			}
-		});
-		return button;
 	}
 
 	public void showMessage(String message) {

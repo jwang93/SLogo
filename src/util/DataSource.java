@@ -58,4 +58,6 @@ public interface DataSource {
     public Map<String, Integer> getUserVariables ();
     
     public Map<String, String> getUserFunctions ();
+    
+    public void toggleHighlighter ();
 }

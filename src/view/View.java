@@ -212,6 +212,7 @@ public class View extends JFrame {
             public void stateChanged (ChangeEvent e) {
                 System.out.println("Tab=" + myTabbedPane.getSelectedIndex());
                 getCurrentWorkspace().update();
+                
             }
         });
     }
