@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import model.ITurtle;
 import model.Model;
 
 
@@ -9,7 +10,6 @@ public class SetPenColor extends AbstractSingleParameterCommand implements IComm
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private Model myModel;
     public static final int NUM_ARGS = 1;
 
@@ -21,8 +21,8 @@ public class SetPenColor extends AbstractSingleParameterCommand implements IComm
     @Override
     public int execute () {
         resolveParameters();
-        // TODO how to do this???
-        return getOnlyParameter();
+        ITurtle turtle = myModel.getTurtle();
+        return turtle.setPenColor(getOnlyParameter());
     }
 
     @Override

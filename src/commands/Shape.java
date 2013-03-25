@@ -8,7 +8,6 @@ public class Shape extends AbstractZeroParameterTurtleCommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
 
     public Shape (ITurtle turtle) {
         super(turtle);
@@ -16,7 +15,7 @@ public class Shape extends AbstractZeroParameterTurtleCommand {
 
     @Override
     public int execute () {
-        // TODO waiting for IModel implementation
-        return 0;
+        ITurtle turtle = getTurtle();
+        return turtle.getShapeIndex();
     }
 }

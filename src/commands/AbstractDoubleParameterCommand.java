@@ -16,7 +16,6 @@ public abstract class AbstractDoubleParameterCommand extends CommandList impleme
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private static final int FIRST_PARAMETER_INDEX = 0;
     private static final int SECOND_PARAMETER_INDEX = 1;
     public static final int NUM_ARGS = 2;

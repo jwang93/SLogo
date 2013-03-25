@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import model.ITurtle;
 import model.Model;
 
 
@@ -9,7 +10,6 @@ public class SetBackground extends AbstractSingleParameterCommand implements ICo
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     public static final int NUM_ARGS = 1;
     private Model myModel;
 
@@ -21,8 +21,8 @@ public class SetBackground extends AbstractSingleParameterCommand implements ICo
     @Override
     public int execute () {
         resolveParameters();
-        // TODO how to do this???
-        return getOnlyParameter();
+        ITurtle turtle = myModel.getTurtle();
+        return turtle.setBackgroundColor(getOnlyParameter());
     }
 
     @Override
