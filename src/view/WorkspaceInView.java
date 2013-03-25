@@ -74,6 +74,7 @@ public class WorkspaceInView extends JComponent {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 				+ language);
 		myCanvas = new Canvas(canvasBounds);
+		myModel.switchToWorkspace(id);
 		myDataSource = myModel.getDataSource();
 
 		initialize();
