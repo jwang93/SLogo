@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.DataSource;
@@ -335,7 +336,11 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int getTurtleID () {
-        // TODO Auto-generated method stub
+        for (Entry<Integer, Turtle> entry : myTurtles.entrySet()) {
+            if (getLastActiveTurtle().equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
         return 0;
     }
 

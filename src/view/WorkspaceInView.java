@@ -74,7 +74,7 @@ public class WorkspaceInView extends JComponent {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 				+ language);
 		myCanvas = new Canvas(canvasBounds);
-		myModel.switchToWorkspace(id);
+		myModel.switchToWorkspace(myID);
 		myDataSource = myModel.getDataSource();
 
 		initialize();
@@ -360,5 +360,9 @@ public class WorkspaceInView extends JComponent {
 	    updateHeadingLabel(myDataSource.getTurtleHeading());
             updatePositionLabel(myDataSource.getTurtlePosition());
 	}
+
+    public int getID () {
+        return myID;
+    }
 
 }
