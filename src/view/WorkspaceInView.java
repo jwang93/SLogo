@@ -45,6 +45,7 @@ public class WorkspaceInView extends JComponent {
     private static final JFileChooser FILE_CHOOSER = new JFileChooser(System
             .getProperties().getProperty(USER_DIR));
     private static final String RESOURCE_LOCATION = "/images/";
+    private static final Color DEFAULT_COLOR = Color.white;
 
     private JTextField myCommandLineTextField;
     private JTextArea myUserVariables;
@@ -62,6 +63,7 @@ public class WorkspaceInView extends JComponent {
     private IModel myModel;
     private Canvas myCanvas;
     private DataSource myDataSource;
+    private Map<String, Color> myColorCollection;
 
     public WorkspaceInView (IModel model, Dimension canvasBounds,
                             String language, int id) {
@@ -82,6 +84,7 @@ public class WorkspaceInView extends JComponent {
      */
     private void initializeGuiComponents() {
         setLayout(new BorderLayout());
+        loadColorCollection();
         this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
         this.add(makeCommandHistory(), BorderLayout.WEST);
         this.add(makeUserDefinedFuncAndVarDisplay(), BorderLayout.EAST);
@@ -89,11 +92,23 @@ public class WorkspaceInView extends JComponent {
         setVisible(true);
         myCanvas.update();
     }
+    
     /**
+     * loads a set of color collection into the color selection panel for bakcground color
+     */
+	private void loadColorCollection() {
+		myColorCollection = new HashMap<String, Color>();
+		myColorCollection.put("grey", Color.LIGHT_GRAY);
+		myColorCollection.put("yellow", Color.yellow);
+		myColorCollection.put("green", Color.green);
+		myColorCollection.put("cyan", Color.CYAN);
+
+	}
+	
+	/**
      * make the text area showing commands history and make the clear history button
      * @return
      */
-
     private JComponent makeCommandHistory () {
         JPanel commandHistoryPanel = new JPanel();
         commandHistoryPanel.setLayout(new BorderLayout());
@@ -140,6 +155,7 @@ public class WorkspaceInView extends JComponent {
         state.add(makeToggleHighlight());
         state.add(makeToggleGridButton());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
+        turtleInfoPanel.add(makeBackgroundColorPanel(),BorderLayout.NORTH);
 
         return turtleInfoPanel;
 
@@ -217,6 +233,34 @@ public class WorkspaceInView extends JComponent {
         return panel;
 
     }
+    
+	/**
+	 * make a panel contains series of JRadioButtons based on the color
+	 * collection map for selecting canvas background color
+	 * 
+	 */
+	public JPanel makeBackgroundColorPanel() {
+		JPanel area = new JPanel();
+		area.add(new JLabel(myResources.getString("background_color")));
+		ButtonGroup group = new ButtonGroup();
+		Iterator<Entry<String, Color>> it = myColorCollection.entrySet()
+				.iterator();
+		JRadioButton defaultButton = makeColorButton(DEFAULT_COLOR,
+				myResources.getString("white"));
+		group.add(defaultButton);
+		area.add(defaultButton);
+		defaultButton.setSelected(true);
+		while (it.hasNext()) {
+			Entry<String, Color> next = it.next();
+			JRadioButton button = makeColorButton(next.getValue(),
+					next.getKey());
+			group.add(button);
+			area.add(button);
+		}
+		return area;
+
+	}
+
 
     /**
      * Makes the button that clears the command history.
