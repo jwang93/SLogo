@@ -47,14 +47,16 @@ code was also taken from the Canvas class and is contained in both the View and 
 
 ##### Any known bugs, crashes, or problems with the project's functionality
    Bugs:
-     - set background image cause null-pointer exception for some files but not others
-     - 
+     * set background image cause null-pointer exception for some files but not others
+     * 
    Not implemented functionality:
-     - allow user to set image for turtle **we imagine it will be very similar to set background image
-     - pen can choose to make dashed lines ** not hard but we chose to work more on refactoring with our time
-     - let user acess a html page for help
-     - undo/do actions
-     - show variables/functions defined by users **GUI has windows for them but isn't functional yet
+     * allow user to set image for turtle; we imagine it will be very similar to set background image
+	 * background images and colors are still problematic as not all commands are working correctly - we implemented it purely view side and there is a mostly complete
+	 model side implementation that is not connected.
+     * pen cannot choose to make dashed lines; not hard but we chose to work more on refactoring with our time
+     * let user acess a html page for help
+     * undo/do actions
+     * show variables/functions defined by users ** GUI has windows for them but isn't functional yet
     
 
 ##### Any extra features included in the project
@@ -63,4 +65,5 @@ code was also taken from the Canvas class and is contained in both the View and 
 
 ##### Your impressions of the assignment to help improve it in the future
 
-We felt that this project was both challenging and rewarding. From the Model side, we wish that maybe one day could have been devoted to interpreter design. Our TA helped us a bit with planning out how to design the Parser, but for the most part, we struggled heavily with that in the beginning.
+We felt that this project was both challenging and rewarding. From the Command side, we wish that maybe one day could have been devoted to interpreter design. Our TA helped us a bit with planning out how to design the Parser, but for the most part, we struggled heavily with that in the beginning.
+We also felt like there was a large mismatch between the amount of work each team had to do during each part of the project - the command side had vastly more work during part 2 and the model side had much more during part 3.
