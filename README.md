@@ -3,14 +3,14 @@
 ##### Names of all people who worked on the project
 CS 308 - Team 7 SLogo 
 
-**Team:**Zhen Gou, Will Nance, Jay Wang, David Winegar
-**UTA:** Brandon Millman
+**Team:**Zhen Gou, Will Nance, Jay Wang, David Winegar  
+**UTA:** Brandon Millman  
 
 ##### Date you started, date you finished, and an estimate of the number of hours worked on the project
 
-**Started:** Feb 23, 2013
-**Finished:** Mar 25, 2013
-**Hours worked:** ~100 hours
+**Started:** Feb 23, 2013  
+**Finished:** Mar 25, 2013  
+**Hours worked:** ~100 hours  
 
 ##### For team projects, the link to your project repository
 
