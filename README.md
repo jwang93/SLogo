@@ -9,7 +9,11 @@ Mentor: Brandon Millman
 
 ##### date you started, date you finished, and an estimate of the number of hours worked on the project
 
-Started Feb 23, 2013, finished ??, Hours worked: ??
+Started: Feb 23, 2013
+
+Finished: Mar 25, 2013
+
+Hours worked: ~100 hours
 
 ##### for team projects, the link to your project repository
 
@@ -18,7 +22,8 @@ https://github.com/jwang93/SLogo
 ##### for team projects, each person's role in developing the project
 
 Zhen Gou and David Winegar: View, Model, and Util - the parts that deal with the state of the model and the view
-Jay Wang and Will Nance: Factory and Command - the parts that deal with the parser and instantiating that
+
+Jay Wang and Will Nance: Factory and Commands - the parts that deal with the parser and instantiating that
 
 ##### any books, papers, online, or human resources that you used in developing the project
 
@@ -30,7 +35,7 @@ Files were taken from the previous Springies project, including much of the Util
 code was also taken from the Canvas class and is contained in both the View and the current Canvas class.
 
 ##### any data or resource files required by the project (including format of non-standard files)
-requires a .properties file with the proper language for View to function correctly, also requires a picture to represent the turtle.
+The project requires a .properties file with the proper language for View to function correctly. It also requires a picture to represent the turtle. It also requires an Initializers.properties file, which the Parser uses to grab the appropriate Initializer. 
 
 ##### any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs)
 
