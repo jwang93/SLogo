@@ -481,9 +481,11 @@ public class Turtle extends Sprite implements Paintable {
     /**
      * Sets pen size to current size
      * @param size
+     * @return 
      */
-    protected void setPenSize (int size) {
+    protected int setPenSize (int size) {
         myLine.setPenSize(size);
+        return size;
 
     }
 

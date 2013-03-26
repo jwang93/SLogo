@@ -22,7 +22,7 @@ import util.Paintable;
 public class Canvas extends JComponent {
     // default serialization ID
     private static final long serialVersionUID = 1L;
-    private int DEFAULT_GRID_FREQUENCY = 10;
+    private static final int DEFAULT_GRID_FREQUENCY = 10;
     private static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
 
     private Iterator<Paintable> myPaintableIterator;

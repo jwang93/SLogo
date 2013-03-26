@@ -15,41 +15,67 @@ import util.Location;
 import util.Pixmap;
 
 
+/**
+ * This is a workspace. It represents all the data of all the turtles to the view through the
+ * DataSource interface and all the Turtle actions to the Commands through the ITurtle interface.
+ * 
+ * @author David Winegar
+ * 
+ */
 public class Workspace implements DataSource, ITurtle {
 
     private Scope myScope;
     private MethodScope myMethods;
 
-    Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
-    List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
-    Dimension myCanvasBounds;
-    int myReturnValue;
-    int myBackgroundImageIndex = 0;
-    int myTurtleImageIndex = 0;
-    int myPenColorIndex = 0;
-    int myBackgroundColorIndex = 0;
-    WorkspaceContainer myContainer;
+    private Map<Integer, Turtle> myTurtles = new HashMap<Integer, Turtle>();
+    private List<Turtle> myActiveTurtles = new ArrayList<Turtle>();
+    private Dimension myCanvasBounds;
+    private int myReturnValue;
+    private int myBackgroundImageIndex = 0;
+    private int myTurtleImageIndex = 0;
+    private int myPenColorIndex = 0;
+    private int myBackgroundColorIndex = 0;
+    private WorkspaceContainer myContainer;
 
+    /**
+     * Creates the workspace and adds the scopes and adds the first turtle at ID 0.
+     * 
+     * @param canvasBounds bounds of canvas
+     * @param container workspaceContainer used for global lists of things like images
+     */
     public Workspace (Dimension canvasBounds, WorkspaceContainer container) {
         myScope = new Scope();
         myMethods = new MethodScope();
         myContainer = container;
-
-        Turtle firstTurtle =
-                new Turtle(canvasBounds, myContainer.getTurtleImage(myTurtleImageIndex));
-        myTurtles.put(0, firstTurtle);
-        myActiveTurtles.add(firstTurtle);
         myCanvasBounds = canvasBounds;
+
+        setActiveTurtles(0);
+
     }
 
+    /**
+     * returns the variable scope
+     * 
+     * @return variable scope
+     */
     public Scope getScope () {
         return myScope;
     }
 
+    /**
+     * returns the method scope
+     * 
+     * @return method scope
+     */
     public MethodScope getMethodScope () {
         return myMethods;
     }
 
+    /**
+     * Sets the return value for DataSource
+     * 
+     * @param returnValue of command
+     */
     public void setReturnValue (int returnValue) {
         myReturnValue = returnValue;
     }
@@ -66,7 +92,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Image getBackgroundImage () {
-         return myContainer.getBackgroundImage(myBackgroundImageIndex);
+        return myContainer.getBackgroundImage(myBackgroundImageIndex);
     }
 
     @Override
@@ -89,7 +115,8 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Map<String, String> getUserFunctions () {
-        // todo: it will return a map representing with function name as keys and string representing the function as value
+        // todo: it will return a map representing with function name as keys and string
+        // representing the function as value
         return null;
     }
 
@@ -268,8 +295,11 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int setPenSize (int pixels) {
-        // TODO Auto-generated method stub
-        return 0;
+        int i = 0;
+        for (Turtle turtle : getActiveTurtles()) {
+            i = turtle.setPenSize(pixels);
+        }
+        return i;
     }
 
     @Override
@@ -348,10 +378,18 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int makeEvenTurtlesActive () {
-        return evenOddHelper(0);
+        return evenOddHelper(false);
     }
 
-    private int evenOddHelper (int oddOrEven) {
+    /**
+     * Private helper method that takes a boolean and sets turtles as active according to whether
+     * that boolean is true or not.
+     */
+    private int evenOddHelper (boolean isOdd) {
+        int oddOrEven = 0;
+        if (isOdd) {
+            oddOrEven = 1;
+        }
         myActiveTurtles = new ArrayList<Turtle>();
         int lastId = 0;
         for (int id : myTurtles.keySet()) {
@@ -368,7 +406,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int makeOddTurtlesActive () {
-        return evenOddHelper(1);
+        return evenOddHelper(true);
     }
 
     private Turtle getLastActiveTurtle () {
