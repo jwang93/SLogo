@@ -204,7 +204,14 @@ public abstract class AbstractInitializer {
         }
         return false;
     }
-
+    /**
+     * This is the final command to be called during build. This method collects all of the
+     * parameters for the command's constructor and instantiates the command and 
+     * returns it.
+     * @param parameters the commands that were parsed that will be parameters for 
+     *the command
+     * @return the command
+     */
     protected abstract ICommand instantiate (List<ICommand> parameters);
 
     protected void setNumArgs (int numArgs) {
