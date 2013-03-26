@@ -1,5 +1,8 @@
 package model;
 
+import commands.ICommand;
+import exceptions.FormattingException;
+import factory.Parser;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -13,9 +16,6 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import model.scope.MethodScope;
 import model.scope.Scope;
-import commands.ICommand;
-import exceptions.FormattingException;
-import factory.Parser;
 
 
 /**
@@ -34,11 +34,11 @@ public class Model implements IModel {
      */
     public static final int ERROR_RETURN_VALUE = -1;
     private FileWriter myFileWriter;
-    private File sessionFile;
+    private File mySessionFile;
     private Parser myParser;
     private WorkspaceContainer myWorkspaces;
-    private FileChannel sourceChannel;
-    private FileChannel targetChannel;
+    private FileChannel mySourceChannel;
+    private FileChannel myTargetChannel;
 
     /**
      * Instantiates parser, scope, and turtle and passes the canvasBounds.
@@ -47,17 +47,18 @@ public class Model implements IModel {
      */
     public Model (Dimension canvasBounds) {
 
-        myWorkspaces = new WorkspaceContainer(canvasBounds, this);
+        myWorkspaces = new WorkspaceContainer(canvasBounds);
         // do this second
         myParser = new Parser(this);
-        sourceChannel = null;
-        targetChannel = null;
-        sessionFile = new File("src/files/session.txt");
+        mySourceChannel = null;
+        myTargetChannel = null;
+        mySessionFile = new File("src/files/session.txt");
         try {
-            myFileWriter = new FileWriter(sessionFile);
+            myFileWriter = new FileWriter(mySessionFile);
         }
         catch (IOException e) {
-            e.printStackTrace();
+            // should not happen
+            myWorkspaces.getCurrentWorkspace().setReturnValue(ERROR_RETURN_VALUE);
         }
     }
 
@@ -73,12 +74,17 @@ public class Model implements IModel {
     /**
      * returns the current scope
      * 
-     * @return myScope
+     * @return scope of current workspace
      */
     public Scope getScope () {
         return myWorkspaces.getCurrentWorkspace().getScope();
     }
 
+    /**
+     * returns the current methodscope
+     * 
+     * @return methodScipe of current workspace
+     */
     public MethodScope getMethodScope () {
         return myWorkspaces.getCurrentWorkspace().getMethodScope();
     }
@@ -90,17 +96,20 @@ public class Model implements IModel {
      * recursively executes down the tree in
      * a way that resembles a post-order traversal, although you'd never
      * guess that by looking at the code.
+     * 
+     * @param command String of command
      */
     @Override
     public void executeCommand (String command) {
 
         ICommand executable;
-        int returnValue = ERROR_RETURN_VALUE;
+        int returnValue = 0;
         try {
             executable = myParser.parse(command);
             returnValue = executable.execute();
         }
         catch (FormattingException e) {
+            returnValue = ERROR_RETURN_VALUE;
         }
         finally {
             myWorkspaces.getCurrentWorkspace().setReturnValue(returnValue);
@@ -116,9 +125,9 @@ public class Model implements IModel {
 
         File fileToSave = new File(file.getAbsolutePath());
         try {
-            sourceChannel = new FileInputStream(sessionFile).getChannel();
-            targetChannel = new FileOutputStream(fileToSave).getChannel();
-            targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+            mySourceChannel = new FileInputStream(mySessionFile).getChannel();
+            myTargetChannel = new FileOutputStream(fileToSave).getChannel();
+            myTargetChannel.transferFrom(mySourceChannel, 0, mySourceChannel.size());
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -128,11 +137,11 @@ public class Model implements IModel {
         }
         finally {
             try {
-                if (sourceChannel != null) {
-                    sourceChannel.close();
+                if (mySourceChannel != null) {
+                    mySourceChannel.close();
                 }
-                if (targetChannel != null) {
-                    targetChannel.close();
+                if (myTargetChannel != null) {
+                    myTargetChannel.close();
                 }
             }
             catch (IOException e) {
@@ -169,10 +178,20 @@ public class Model implements IModel {
 
     }
 
+    /**
+     * Filewriter for the session, used in some parts of the commands
+     * 
+     * @return FileWriter for session file
+     */
     public FileWriter getFileWriter () {
         return myFileWriter;
     }
 
+    /**
+     * Sets Filewriter for the session, used in some parts of the commands
+     * 
+     * @param fileWriter new filewriter
+     */
     public void setFileWriter (FileWriter fileWriter) {
         myFileWriter = fileWriter;
     }

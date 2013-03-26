@@ -5,16 +5,13 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import model.scope.MethodScope;
 import model.scope.Scope;
 import util.Location;
-import util.Paintable;
 import util.Pixmap;
 
 
