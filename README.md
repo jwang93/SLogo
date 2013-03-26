@@ -1,8 +1,8 @@
 # SLogo
 
 ##### Names of all people who worked on the project
-CS 308 - Team 7 SLogo 
 
+**CS 308 - Team 7 SLogo**   
 **Team:** Zhen Gou, Will Nance, Jay Wang, David Winegar  
 **UTA:** Brandon Millman  
 
@@ -18,9 +18,10 @@ CS 308 - Team 7 SLogo
 
 ##### For team projects, each person's role in developing the project
 
-Zhen Gou and David Winegar: View, Model, and Util - the parts that deal with the state of the model and the view
+**Zhen Gou** and **David Winegar**: View, Model, and Util
+	We worked mostly on the parts that deal with the state of the model and the view.
 
-Jay Wang and Will Nance: Factory and Commands
+**Jay Wang** and **Will Nance**: Factory and Commands  
 	Early on, the majority of our time was spent on figuring out how we were going to handle process commands. Ultimately, we built out a framework using the Parser, an Initializer (AbstractInitializer + Specific_Initializer), and a Command.
 
 ##### Any books, papers, online, or human resources that you used in developing the project
@@ -40,9 +41,10 @@ code was also taken from the Canvas class and is contained in both the View and 
 * Requires a picture to represent the turtle
 
 ##### Any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs)
+* When using Save/Load FunctionsAndVariables, please save your file in the src/file directory. It is the same directory that has the session.txt file. 
 
 ##### Any known bugs, crashes, or problems with the project's functionality
-     turtle wrap around screen feature still buggy
+
 
 ##### Any extra features included in the project
 
