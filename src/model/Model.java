@@ -59,7 +59,6 @@ public class Model implements IModel {
         catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -67,7 +66,6 @@ public class Model implements IModel {
      * 
      * @return turtle to return
      */
-    @Override
     public ITurtle getTurtle () {
         return myWorkspaces.getCurrentWorkspace();
     }

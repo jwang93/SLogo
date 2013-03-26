@@ -2,6 +2,7 @@ package commands;
 
 import model.IModel;
 import model.ITurtle;
+import model.Model;
 
 
 public class Stamp extends AbstractZeroParameterCommand implements ICommand {
@@ -9,9 +10,9 @@ public class Stamp extends AbstractZeroParameterCommand implements ICommand {
     /**
      * 
      */
-    private IModel myModel;
+    private Model myModel;
 
-    public Stamp (IModel model) {
+    public Stamp (Model model) {
         super();
         myModel = model;
 

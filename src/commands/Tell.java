@@ -3,6 +3,7 @@ package commands;
 
 import java.util.List;
 import model.IModel;
+import model.Model;
 
 /*Kinda funky and tricky to understand. The single parameter is actually a list of all of the 
  * turtle indices (or other commands), but youre not really sure how many you get.*/
@@ -11,9 +12,9 @@ public class Tell extends AbstractSingleParameterCommand implements ICommand {
     /**
      * 
      */
-    private IModel myModel;
+    private Model myModel;
 
-    public Tell ( List<ICommand> parameters, IModel model) {
+    public Tell ( List<ICommand> parameters, Model model) {
         super(parameters);
         myModel = model;
     }

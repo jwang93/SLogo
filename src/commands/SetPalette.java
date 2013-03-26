@@ -3,6 +3,7 @@ package commands;
 import java.util.List;
 import model.IModel;
 import model.ITurtle;
+import model.Model;
 
 
 public class SetPalette extends AbstractFourParameterCommand {
@@ -10,9 +11,9 @@ public class SetPalette extends AbstractFourParameterCommand {
     /**
      * 
      */
-    private IModel myModel;
+    private Model myModel;
 
-    public SetPalette (List<ICommand> parameters, IModel model) {
+    public SetPalette (List<ICommand> parameters, Model model) {
         super(parameters);
         myModel = model;
     }

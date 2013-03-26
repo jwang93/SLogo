@@ -19,11 +19,6 @@ public interface IModel {
     public void executeCommand (String command);
 
     /**
-     * returns the current turtle interface given.
-     */
-    public ITurtle getTurtle ();
-
-    /**
      * Saves all current functions and variables to file.
      * 
      * @param fileToSave file to save to

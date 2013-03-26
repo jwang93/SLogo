@@ -2,6 +2,7 @@ package commands;
 
 import model.IModel;
 import model.ITurtle;
+import model.Model;
 
 
 public class ClearStamps extends AbstractZeroParameterCommand {
@@ -9,9 +10,9 @@ public class ClearStamps extends AbstractZeroParameterCommand {
     /**
      * 
      */
-    private IModel myModel;
+    private Model myModel;
 
-    public ClearStamps (IModel model) {
+    public ClearStamps (Model model) {
         myModel = model;
     }
 
