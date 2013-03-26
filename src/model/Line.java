@@ -15,22 +15,8 @@ import util.Paintable;
  */
 
 public class Line implements Paintable {
-	private static final Color DEFAULT_COLOR=Color.black;
-    private static final int DEFAULT_PEN_SIZE=2;
-	
-    private ArrayList<LineSegment> myLineSegmentList;
-    private Color myColor=Color.red;
-    
-    private int mySize;
 
-    /**
-     * Creates a list of line segments that form a single line.
-     */
-    public Line () {
-        myLineSegmentList = new ArrayList<LineSegment>();
-        mySize=DEFAULT_PEN_SIZE;
-        myColor=DEFAULT_COLOR;
-    }
+    private ArrayList<LineSegment> myLineSegmentList = new ArrayList<LineSegment>();;
 
     /**
      * Adds a line segment to the line.
@@ -56,27 +42,30 @@ public class Line implements Paintable {
      */
     @Override
     public void paint (Graphics2D pen) {
-    	pen.setColor(myColor);
-	
         for (LineSegment ls : myLineSegmentList) {
-        	ls.setPenSize(mySize);
             ls.paint(pen);
         }
     }
-    
+
     /**
      * set pen color
      * 
+     * @param color color of pen
      */
-    public void setPenColor(Color color){
-    	myColor=color;
+    public void setPenColor (Color color) {
+        for (LineSegment segment : myLineSegmentList) {
+            segment.setPenColor(color);
+        }
     }
-    
+
     /**
      * set pen size
      * 
+     * @param size pixels of width of pen
      */
-    public void setPenSize(int size){
-    	mySize=size;
+    public void setPenSize (int size) {
+        for (LineSegment segment : myLineSegmentList) {
+            segment.setPenSize(size);
+        }
     }
 }
