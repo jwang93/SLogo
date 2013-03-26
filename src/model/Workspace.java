@@ -86,13 +86,13 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Map<String, Integer> getUserVariables () {
-        // TODO Auto-generated method stub
+        // todo: it will return a map representing with variable name as keys and value as value
         return null;
     }
 
     @Override
     public Map<String, String> getUserFunctions () {
-        // TODO Auto-generated method stub
+        // todo: it will return a map representing with function name as keys and string representing the function as value
         return null;
     }
 

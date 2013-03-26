@@ -63,8 +63,8 @@ public class TurtleTest extends TestCase {
     @Test
     public void testTowards () {
         myTurtle = new Turtle(DEFAULT_DIMENSION);
-        myTurtle.towards(new Location(310, 190));
-        assertEquals(myTurtle.getHeading(), 315.0);
+        myTurtle.towards(new Location(10, -10));
+        assertEquals(myTurtle.getHeading(), 45.0);
     }
 
     public double locationDiffSquare (Location one, Location two) {

@@ -43,8 +43,6 @@ public class Canvas extends JComponent {
         setSize(size);
         setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
         myWorkspace = workspace;
-        // prepare to receive input
-        List<Paintable> emptyList = new ArrayList<Paintable>();
         myGrid =
                 new Grid(new Dimension(getWidth(), getHeight()),
                          DEFAULT_GRID_FREQUENCY);

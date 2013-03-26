@@ -42,6 +42,7 @@ import util.Location;
  * 
  */
 
+
 public class WorkspaceInView extends JComponent {
     /**
 	 * 
@@ -323,6 +324,7 @@ public class WorkspaceInView extends JComponent {
                                                                  RESOURCE_LOCATION + fileName))
                                     .getImage();
                     myModel.addBackgroundImage(myImage);
+                    myCanvas.setBackgroundImage(myImage);
                 }
                 updateAndSuppressOutput(); // deal with turtle disappearance after action
             }
