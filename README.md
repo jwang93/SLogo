@@ -46,9 +46,20 @@ code was also taken from the Canvas class and is contained in both the View and 
 * When using Save/Load FunctionsAndVariables, please save your file in the src/file directory. It is the same directory that has the session.txt file. 
 
 ##### Any known bugs, crashes, or problems with the project's functionality
-
+   Bugs:
+     - set background image cause null-pointer exception for some files but not others
+     - 
+   Not implemented functionality:
+     - allow user to set image for turtle **we imagine it will be very similar to set background image
+     - pen can choose to make dashed lines ** not hard but we chose to work more on refactoring with our time
+     - let user acess a html page for help
+     - undo/do actions
+     - show variables/functions defined by users **GUI has windows for them but isn't functional yet
+    
 
 ##### Any extra features included in the project
+   Enhanced GUI, lets the user choose background color/toggle highlight for turtle/set background image/ toggle reference grid by clicking buttons in GUI without need
+   to type commands
 
 ##### Your impressions of the assignment to help improve it in the future
 
