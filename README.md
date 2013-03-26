@@ -28,7 +28,7 @@
 
 * Javadoc
 * CS website resources
-* http://www.kodejava.org/examples/591.html (for writing/loading to .txt file) 
+* [For writing/loading to a text file](http://www.kodejava.org/examples/591.html)
 
 ##### Files used to start the project (i.e., the class containing main) and test the project (the class containing TestSuite)
 
