@@ -6,13 +6,23 @@ import util.Location;
 import util.Paintable;
 import util.Pixmap;
 
-
+/**
+ * Represents a simple immutable paintable image in the model.
+ * @author David Winegar
+ *
+ */
 public class Stamp implements Paintable {
 
-    Pixmap myImage;
-    Location myLocation;
-    Dimension mySize;
+    private Pixmap myImage;
+    private Location myLocation;
+    private Dimension mySize;
 
+    /**
+     * sets the image, location, and size (cannot be changed)
+     * @param image image to use
+     * @param location location of image
+     * @param size size of image
+     */
     public Stamp (Pixmap image, Location location, Dimension size) {
         myImage = image;
         myLocation = location;

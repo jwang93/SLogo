@@ -6,24 +6,38 @@ import util.Location;
 import util.Paintable;
 
 
+/**
+ * Creates a box around the current turtle (highlighter)
+ * 
+ * @author Zhen Gou
+ * 
+ */
 public class TurtleHighlighter implements Paintable {
-    private Location topLeft;
-    private Location topRight;
-    private Location botLeft;
-    private Location botRight;
+    private Location myTopLeft;
+    private Location myTopRight;
+    private Location myBottomLeft;
+    private Location myBottomRight;
     private Turtle myTurtle;
 
+    /**
+     * Makes a highlighter of the current turtle
+     * 
+     * @param turtle to highlight
+     */
     public TurtleHighlighter (Turtle turtle) {
         myTurtle = turtle;
         updatePosition();
 
     }
 
+    /**
+     * Updates all location variables.
+     */
     private void updatePosition () {
-        topLeft = new Location(myTurtle.getLeft(), myTurtle.getTop());
-        topRight = new Location(myTurtle.getRight(), myTurtle.getTop());
-        botLeft = new Location(myTurtle.getLeft(), myTurtle.getBottom());
-        botRight = new Location(myTurtle.getRight(), myTurtle.getBottom());
+        myTopLeft = new Location(myTurtle.getLeft(), myTurtle.getTop());
+        myTopRight = new Location(myTurtle.getRight(), myTurtle.getTop());
+        myBottomLeft = new Location(myTurtle.getLeft(), myTurtle.getBottom());
+        myBottomRight = new Location(myTurtle.getRight(), myTurtle.getBottom());
     }
 
     @Override
@@ -32,17 +46,18 @@ public class TurtleHighlighter implements Paintable {
         pen.setColor(Color.RED);
 
         // draw top
-        pen.drawLine((int) topLeft.getX(), (int) topLeft.getY(), (int) topRight.getX(),
-                     (int) topRight.getY());
+        pen.drawLine((int) myTopLeft.getX(), (int) myTopLeft.getY(), (int) myTopRight.getX(),
+                     (int) myTopRight.getY());
         // draw right
-        pen.drawLine((int) topRight.getX(), (int) topRight.getY(), (int) botRight.getX(),
-                     (int) botRight.getY());
+        pen.drawLine((int) myTopRight.getX(), (int) myTopRight.getY(), (int) myBottomRight.getX(),
+                     (int) myBottomRight.getY());
         // draw bot
-        pen.drawLine((int) botLeft.getX(), (int) botLeft.getY(), (int) botRight.getX(),
-                     (int) botRight.getY());
+        pen.drawLine((int) myBottomLeft.getX(), (int) myBottomLeft.getY(),
+                     (int) myBottomRight.getX(),
+                     (int) myBottomRight.getY());
         // draw left
-        pen.drawLine((int) topLeft.getX(), (int) topLeft.getY(), (int) botLeft.getX(),
-                     (int) botLeft.getY());
+        pen.drawLine((int) myTopLeft.getX(), (int) myTopLeft.getY(), (int) myBottomLeft.getX(),
+                     (int) myBottomLeft.getY());
 
         // the following is for drawing circle highlighter
         // pen.drawOval((int)topLeft.getX() ,(int) topLeft.getY(), (int)myTurtle.getWidth(),
