@@ -1,10 +1,12 @@
-package util;
+package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.Map;
+import util.Location;
+import util.Paintable;
 
 
 /**
@@ -15,12 +17,6 @@ import java.util.Map;
  * 
  */
 public interface DataSource {
-    /**
-     * Gets the paintable objects in the Model.
-     * 
-     * @return iterator of objects in the Model
-     */
-    public Iterator<Paintable> getPaintableIterator ();
 
     /**
      * Gets the value that the View is supposed to return.

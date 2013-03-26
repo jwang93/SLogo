@@ -14,7 +14,6 @@ public class TellEven extends AbstractZeroParameterCommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
 
     @Override
     public int execute () {

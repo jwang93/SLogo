@@ -30,24 +30,24 @@ public class Canvas extends JComponent {
     private Color myBackgroundColor;
     private boolean gridShowing = true;
     private Grid myGrid;
+    private WorkspaceInView myWorkspace;
 
     /**
      * Create a panel so that it knows its size.
      * 
      * @param size size of the viewable area
      */
-    public Canvas (Dimension size) {
+    public Canvas (Dimension size, WorkspaceInView workspace) {
         // set size (a bit of a pain)
         setPreferredSize(size);
         setSize(size);
         setBackgroundColor(DEFAULT_BACKGROUND_COLOR);
+        myWorkspace = workspace;
         // prepare to receive input
         List<Paintable> emptyList = new ArrayList<Paintable>();
-        myPaintableIterator = emptyList.iterator();
         myGrid =
                 new Grid(new Dimension(getWidth(), getHeight()),
                          DEFAULT_GRID_FREQUENCY);
-
     }
 
     /**
@@ -68,11 +68,7 @@ public class Canvas extends JComponent {
         if (gridShowing) {
             myGrid.paint((Graphics2D) pen);
         }
-        while (myPaintableIterator.hasNext()) {
-            pen.setColor(Color.BLACK);
-            Paintable paintable = myPaintableIterator.next();
-            paintable.paint((Graphics2D) pen);
-        }
+        myWorkspace.paintModel((Graphics2D) pen);
     }
 
     /**
@@ -80,9 +76,7 @@ public class Canvas extends JComponent {
      * 
      * @param iterator iterator to update
      */
-    public void update (Iterator<Paintable> iterator, Image backgroundImage) {
-        myPaintableIterator = iterator;
-        myBackground = backgroundImage;
+    public void update () {
         repaint();
     }
 
@@ -97,7 +91,13 @@ public class Canvas extends JComponent {
     }
 
     public void setBackgroundColor (Color color) {
-        myBackgroundColor = color;
+        if(color != null) {
+            myBackgroundColor = color;
+        }
+    }
+    
+    public void setBackgroundImage (Image image) {
+        myBackground = image;
     }
 
 }

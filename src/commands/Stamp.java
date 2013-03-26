@@ -1,6 +1,7 @@
 package commands;
 
 import model.IModel;
+import model.ITurtle;
 
 
 public class Stamp extends AbstractZeroParameterCommand implements ICommand {
@@ -8,7 +9,6 @@ public class Stamp extends AbstractZeroParameterCommand implements ICommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private IModel myModel;
 
     public Stamp (IModel model) {
@@ -19,8 +19,8 @@ public class Stamp extends AbstractZeroParameterCommand implements ICommand {
 
     @Override
     public int execute () {
-        // TODO waiting on model implementation
-        // What do I return? How about the number of stamps on the board?
+        ITurtle turtle = myModel.getTurtle();
+        turtle.stamp();
         return 0;
     }
 }

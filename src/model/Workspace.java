@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import model.scope.MethodScope;
 import model.scope.Scope;
-import util.DataSource;
 import util.Location;
 import util.Paintable;
 import util.Pixmap;
@@ -70,8 +69,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public Image getBackgroundImage () {
-        // return myContainer.getBackgroundImage(myBackgroundImageIndex);
-        return null;
+         return myContainer.getBackgroundImage(myBackgroundImageIndex);
     }
 
     @Override
@@ -103,15 +101,6 @@ public class Workspace implements DataSource, ITurtle {
         for (Turtle turtle : getActiveTurtles()) {
             turtle.toggleTurtleHighlighter();
         }
-    }
-
-    @Override
-    public Iterator<Paintable> getPaintableIterator () {
-        Collection<Paintable> collection = new ArrayList<Paintable>();
-        for (Turtle turtle : myTurtles.values()) {
-            collection.addAll(turtle.getPaintables());
-        }
-        return collection.iterator();
     }
 
     @Override

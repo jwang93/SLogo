@@ -9,6 +9,13 @@ import java.awt.Stroke;
 import java.awt.font.TextLayout;
 import util.Paintable;
 
+/**
+ * paints a reference grid for the area the given graphics2D pen is responsible for
+ * 
+ * @author Zhen Gou
+ * @author David Winegar
+ * 
+ */
 
 public class Grid implements Paintable {
     private int canvasHeight;
@@ -60,7 +67,7 @@ public class Grid implements Paintable {
         for (int i = 0; i < myFrequency + 1; ++i) {
             int myY = 0 + i * segmentSize;
             pen.drawLine(0, myY, canvasWidth, myY);
-            TextLayout text = new TextLayout("" + (myY - canvasHeight / 2),
+            TextLayout text = new TextLayout("" + (canvasHeight / 2 - myY),
                                              myFont, pen.getFontRenderContext());
             text.draw(pen, 0 + xOffset, myY + yOffset * 2);
 

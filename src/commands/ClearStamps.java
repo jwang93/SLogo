@@ -1,6 +1,7 @@
 package commands;
 
 import model.IModel;
+import model.ITurtle;
 
 
 public class ClearStamps extends AbstractZeroParameterCommand {
@@ -8,7 +9,6 @@ public class ClearStamps extends AbstractZeroParameterCommand {
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
     private IModel myModel;
 
     public ClearStamps (IModel model) {
@@ -17,7 +17,8 @@ public class ClearStamps extends AbstractZeroParameterCommand {
 
     @Override
     public int execute () {
-        // TODO waiting on View Implementation
-        return 0;
+        ITurtle turtle = myModel.getTurtle();
+        turtle.clearStamps();
+        return 0; 
     }
 }

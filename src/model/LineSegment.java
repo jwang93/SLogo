@@ -18,6 +18,7 @@ public class LineSegment implements Paintable {
 
     private Location myStartLocation;
     private Location myEndLocation;
+    private int mySize;
 
     /**
      * Creates line segment from one location to the other.
@@ -37,9 +38,13 @@ public class LineSegment implements Paintable {
      */
     @Override
     public void paint (Graphics2D pen) {
-        pen.setStroke(new BasicStroke(2));
+        pen.setStroke(new BasicStroke(mySize));
         pen.drawLine((int) myStartLocation.getX(), (int) myStartLocation.getY(),
                      (int) myEndLocation.getX(), (int) myEndLocation.getY());
+    }
+    
+    public void setPenSize(int size){
+    	mySize=size;
     }
 
 }

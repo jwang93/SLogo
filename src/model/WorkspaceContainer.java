@@ -25,7 +25,9 @@ public class WorkspaceContainer {
     List<Color> myColors = new ArrayList<Color>();
 
     public WorkspaceContainer (Dimension canvasBounds, Model model) {
-        myTurtleImages.add(Turtle.DEFAULT_IMAGE);
+        myTurtleImages.add(Turtle.DEFAULT_IMAGE); // first image is default turtle image
+        myBackgroundImages.add(null); // first image is no image (just colored background)
+        myColors.add(Color.BLACK); // first color is black
         myModel = model;
         myDefaultCanvasBounds = canvasBounds;
         switchToWorkspace(0);

@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.List;
+import model.ITurtle;
 import model.Model;
 
 
@@ -17,8 +18,8 @@ public class SetShape extends AbstractSingleParameterCommand {
     @Override
     public int execute () {
         resolveParameters();
-        // TODO how to do this???
-        return getOnlyParameter();
+        ITurtle turtle = myModel.getTurtle();
+        return turtle.setShape(getOnlyParameter());
     }
 
     @Override

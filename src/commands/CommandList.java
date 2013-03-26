@@ -1,6 +1,5 @@
 package commands;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +17,11 @@ import java.util.List;
  * commands that the user enters. In addition this functions as a root or main command
  * from which a program is executed. This returns 0 if there are no commands to execute
  */
-public class CommandList implements ICommand, Serializable {
+public class CommandList implements ICommand {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
 
     private static final int DEFAULT_RETURN = 0;
 
