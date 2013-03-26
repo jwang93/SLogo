@@ -62,7 +62,7 @@ public class Canvas extends JComponent {
         if (myGridShowing) {
             myGrid.paint((Graphics2D) pen);
         }
-        myWorkspace.paintModel((Graphics2D) pen);
+        myWorkspace.paintDataSource((Graphics2D) pen);
     }
 
     /**

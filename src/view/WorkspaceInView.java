@@ -31,10 +31,13 @@ import javax.swing.border.EtchedBorder;
 import model.IModel;
 import model.workspaces.DataSource;
 import util.Location;
+
+
 /**
  * The View for one workspace. Contains a Canvas to draw sprites on,
  * information about positions and heading of the turtle, a command window with
- * history, a command line to type in commands, radio button panel to select background color, a window to 
+ * history, a command line to type in commands, radio button panel to select background color, a
+ * window to
  * show user defined vars and funcs.
  * 
  * @author Zhen Gou
@@ -42,13 +45,9 @@ import util.Location;
  * 
  */
 
-
 public class WorkspaceInView extends JComponent {
-    /**
-	 * 
-	 */
+
     private static final long serialVersionUID = 1L;
-    private int myID;
     private static final int FIELD_SIZE = 20;
     private static final String DEFAULT_RESOURCE_PACKAGE = "view.resources.";
     private static final String USER_DIR = "user.dir";
@@ -57,24 +56,34 @@ public class WorkspaceInView extends JComponent {
     private static final String RESOURCE_LOCATION = "/images/";
     private static final Color DEFAULT_COLOR = Color.white;
 
+    private int myID;
+
     private JTextField myCommandLineTextField;
     private JTextArea myUserVariables;
     private JTextArea myUserFuncs;
     private JTextArea myCommandHistoryTextArea;
     private JLabel myTurtlePositionLabel;
     private JLabel myTurtleHeadingLabel;
-   
+
     private JButton myClearButton;
     private JButton myToggleGridButton;
     private JButton myChangeBackgroundButton;
     private JButton myToggleHighlightButton;
-   
+
     private ResourceBundle myResources;
     private IModel myModel;
     private Canvas myCanvas;
     private DataSource myDataSource;
     private Map<String, Color> myColorCollection;
 
+    /**
+     * Sets all references and initializes the GUI.
+     * 
+     * @param model model to use
+     * @param canvasBounds bounds of canvas
+     * @param language language for properties file
+     * @param id workspace ID
+     */
     public WorkspaceInView (IModel model, Dimension canvasBounds,
                             String language, int id) {
 
@@ -85,14 +94,14 @@ public class WorkspaceInView extends JComponent {
         myCanvas = new Canvas(canvasBounds, this);
         myModel.switchToWorkspace(myID);
         myDataSource = myModel.getDataSource();
-        
+
         initializeGuiComponents();
     }
 
     /**
      * adds components to GUI
      */
-    private void initializeGuiComponents() {
+    private void initializeGuiComponents () {
         setLayout(new BorderLayout());
         loadColorCollection();
         this.add(makeCommandLinePanel(), BorderLayout.SOUTH);
@@ -102,21 +111,22 @@ public class WorkspaceInView extends JComponent {
         setVisible(true);
         myCanvas.update();
     }
-    
+
     /**
      * loads a set of color collection into the color selection panel for bakcground color
      */
-	private void loadColorCollection() {
-		myColorCollection = new HashMap<String, Color>();
-		myColorCollection.put("grey", Color.LIGHT_GRAY);
-		myColorCollection.put("yellow", Color.yellow);
-		myColorCollection.put("green", Color.green);
-		myColorCollection.put("cyan", Color.CYAN);
+    private void loadColorCollection () {
+        myColorCollection = new HashMap<String, Color>();
+        myColorCollection.put("grey", Color.LIGHT_GRAY);
+        myColorCollection.put("yellow", Color.yellow);
+        myColorCollection.put("green", Color.green);
+        myColorCollection.put("cyan", Color.CYAN);
 
-	}
-	
-	/**
+    }
+
+    /**
      * make the text area showing commands history and make the clear history button
+     * 
      * @return
      */
     private JComponent makeCommandHistory () {
@@ -165,7 +175,7 @@ public class WorkspaceInView extends JComponent {
         state.add(makeToggleHighlight());
         state.add(makeToggleGridButton());
         turtleInfoPanel.add(state, BorderLayout.SOUTH);
-        turtleInfoPanel.add(makeBackgroundColorPanel(),BorderLayout.NORTH);
+        turtleInfoPanel.add(makeBackgroundColorPanel(), BorderLayout.NORTH);
 
         return turtleInfoPanel;
 
@@ -208,9 +218,10 @@ public class WorkspaceInView extends JComponent {
         });
         return myCommandLineTextField;
     }
-    
+
     /**
      * make text areas displaying user defined functions and variables
+     * 
      * @return
      */
     private JComponent makeUserDefinedFuncAndVarDisplay () {
@@ -243,34 +254,33 @@ public class WorkspaceInView extends JComponent {
         return panel;
 
     }
-    
-	/**
-	 * make a panel contains series of JRadioButtons based on the color
-	 * collection map for selecting canvas background color
-	 * 
-	 */
-	public JPanel makeBackgroundColorPanel() {
-		JPanel area = new JPanel();
-		area.add(new JLabel(myResources.getString("background_color")));
-		ButtonGroup group = new ButtonGroup();
-		Iterator<Entry<String, Color>> it = myColorCollection.entrySet()
-				.iterator();
-		JRadioButton defaultButton = makeColorButton(DEFAULT_COLOR,
-				myResources.getString("white"));
-		group.add(defaultButton);
-		area.add(defaultButton);
-		defaultButton.setSelected(true);
-		while (it.hasNext()) {
-			Entry<String, Color> next = it.next();
-			JRadioButton button = makeColorButton(next.getValue(),
-					next.getKey());
-			group.add(button);
-			area.add(button);
-		}
-		return area;
 
-	}
+    /**
+     * make a panel contains series of JRadioButtons based on the color
+     * collection map for selecting canvas background color
+     * 
+     */
+    public JPanel makeBackgroundColorPanel () {
+        JPanel area = new JPanel();
+        area.add(new JLabel(myResources.getString("background_color")));
+        ButtonGroup group = new ButtonGroup();
+        Iterator<Entry<String, Color>> it = myColorCollection.entrySet()
+                .iterator();
+        JRadioButton defaultButton = makeColorButton(DEFAULT_COLOR,
+                                                     myResources.getString("white"));
+        group.add(defaultButton);
+        area.add(defaultButton);
+        defaultButton.setSelected(true);
+        while (it.hasNext()) {
+            Entry<String, Color> next = it.next();
+            JRadioButton button = makeColorButton(next.getValue(),
+                                                  next.getKey());
+            group.add(button);
+            area.add(button);
+        }
+        return area;
 
+    }
 
     /**
      * Makes the button that clears the command history.
@@ -287,9 +297,10 @@ public class WorkspaceInView extends JComponent {
         });
         return myClearButton;
     }
-    
+
     /**
      * makes the button that toggles the reference grid
+     * 
      * @return
      */
     private JButton makeToggleGridButton () {
@@ -303,9 +314,10 @@ public class WorkspaceInView extends JComponent {
         });
         return myToggleGridButton;
     }
-    
+
     /**
      * makes the button that when clicked lets user to select an image for background
+     * 
      * @return
      */
     private JButton makeChangeBackgroundButton () {
@@ -323,19 +335,22 @@ public class WorkspaceInView extends JComponent {
                             new ImageIcon(getClass().getResource(
                                                                  RESOURCE_LOCATION + fileName))
                                     .getImage();
+                    // not implemented in commands :( but implemented in model
                     myModel.addBackgroundImage(myImage);
                     myCanvas.setBackgroundImage(myImage);
                 }
-                updateAndSuppressOutput(); // deal with turtle disappearance after action
+                // deal with turtle disappearance after action
+                updateAndSuppressOutput();
             }
 
         });
         return myChangeBackgroundButton;
 
     }
-    
+
     /**
      * makes the button that allow user to toggle whether to highlight active turtles
+     * 
      * @return
      */
 
@@ -347,37 +362,41 @@ public class WorkspaceInView extends JComponent {
             @Override
             public void actionPerformed (ActionEvent e) {
                 myDataSource.toggleHighlighter();
-                updateAndSuppressOutput(); // deal with turtle disappearance after action
+                // deal with turtle disappearance after action
+                updateAndSuppressOutput();
 
             }
 
         });
         return myToggleHighlightButton;
     }
-    
+
     /**
-     * make a radio button for color selection
-     * @param color
-     * @param colorName
+     * make a radio button for color selection.
+     * Here in the absence of colors working completely correctly in the commands.
+     * 
+     * @param color color
+     * @param colorName name of color
      * @return
      */
-	public JRadioButton makeColorButton(final Color color, String colorName) {
-		JRadioButton button = new JRadioButton(myResources.getString(colorName));
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				myCanvas.setBackgroundColor(color);
-				updateAndSuppressOutput();
+    public JRadioButton makeColorButton (final Color color, String colorName) {
+        JRadioButton button = new JRadioButton(myResources.getString(colorName));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                myCanvas.setBackgroundColor(color);
+                updateAndSuppressOutput();
 
-			}
-		});
-		return button;
-	}
-	
-	/**
-	 * show a message in command history
-	 * @param message
-	 */
+            }
+        });
+        return button;
+    }
+
+    /**
+     * show a message in command history
+     * 
+     * @param message to show
+     */
 
     public void showMessage (String message) {
         myCommandHistoryTextArea.append(message + "\n");
@@ -392,6 +411,7 @@ public class WorkspaceInView extends JComponent {
 
     /**
      * show user-defined variables on relevant panel
+     * Not implemented :(
      * 
      * @param var
      */
@@ -402,6 +422,7 @@ public class WorkspaceInView extends JComponent {
 
     /**
      * show user-defined functions on relevant panel
+     * Not implemented :(
      * 
      * @param func
      */
@@ -413,7 +434,7 @@ public class WorkspaceInView extends JComponent {
     /**
      * Updates the position label with the new location.
      * 
-     * @param location
+     * @param location to update
      */
     public void updatePositionLabel (Location location) {
         myTurtlePositionLabel.setText(myResources.getString("Position") + " "
@@ -423,7 +444,7 @@ public class WorkspaceInView extends JComponent {
     /**
      * updates the heading label with the new heading.
      * 
-     * @param heading
+     * @param heading to show
      */
     public void updateHeadingLabel (int heading) {
         myTurtleHeadingLabel.setText(myResources.getString("Heading") + " "
@@ -431,6 +452,9 @@ public class WorkspaceInView extends JComponent {
 
     }
 
+    /**
+     * Updates all view components
+     */
     public void update () {
         myCanvas.update();
         updateHeadingLabel(myDataSource.getTurtleHeading());
@@ -439,16 +463,29 @@ public class WorkspaceInView extends JComponent {
 
     }
 
+    /**
+     * Updates view components and suppresses a return value
+     */
     public void updateAndSuppressOutput () {
         myCanvas.update();
         updateHeadingLabel(myDataSource.getTurtleHeading());
         updatePositionLabel(myDataSource.getTurtlePosition());
     }
-    
-    public void paintModel (Graphics2D pen) {
+
+    /**
+     * paints the dataSource
+     * 
+     * @param pen to paint with
+     */
+    public void paintDataSource (Graphics2D pen) {
         myDataSource.paint(pen);
     }
 
+    /**
+     * Returns the workspaceID.
+     * 
+     * @return
+     */
     public int getID () {
         return myID;
     }
