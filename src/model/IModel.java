@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Image;
 import java.io.File;
+import model.workspaces.DataSource;
 
 
 /**

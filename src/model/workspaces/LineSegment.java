@@ -1,4 +1,4 @@
-package model;
+package model.workspaces;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -10,6 +10,8 @@ import util.Paintable;
 /**
  * Represents a line segment on a canvas. Can be painted.
  * 
+ * all methods and constructors are protected except for paint(Graphics2D pen) because this is a
+ * low-level class that is accessed through the ITurtle interface implemented in Workspace.
  * @author David Winegar
  * @author Zhen Gou
  * 
@@ -30,7 +32,7 @@ public class LineSegment implements Paintable {
      * @param start start of line.
      * @param end end of line.
      */
-    public LineSegment (Location start, Location end) {
+    protected LineSegment (Location start, Location end) {
         myStartLocation = start;
         myEndLocation = end;
     }
@@ -52,7 +54,7 @@ public class LineSegment implements Paintable {
      * Sets the pen size to the size given
      * @param size of stroke in pixels
      */
-    public void setPenSize (int size) {
+    protected void setPenSize (int size) {
         mySize = size;
     }
 
@@ -60,7 +62,7 @@ public class LineSegment implements Paintable {
      * Sets pen color
      * @param color of lines
      */
-    public void setPenColor (Color color) {
+    protected void setPenColor (Color color) {
         myColor = color;
     }
 

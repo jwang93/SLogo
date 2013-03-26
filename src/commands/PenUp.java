@@ -1,6 +1,6 @@
 package commands;
 
-import model.ITurtle;
+import model.workspaces.ITurtle;
 
 
 public class PenUp extends AbstractZeroParameterTurtleCommand implements ICommand {

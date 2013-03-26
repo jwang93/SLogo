@@ -2,7 +2,7 @@ package testsuite;
 
 import java.awt.Dimension;
 import junit.framework.TestCase;
-import model.Turtle;
+import model.workspaces.Turtle;
 import org.junit.Test;
 import util.Location;
 

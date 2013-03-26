@@ -1,8 +1,8 @@
 package commands;
 
 import model.IModel;
-import model.ITurtle;
 import model.Model;
+import model.workspaces.ITurtle;
 
 
 public class ClearStamps extends AbstractZeroParameterCommand {

@@ -1,7 +1,7 @@
 package commands;
 
 import java.util.List;
-import model.ITurtle;
+import model.workspaces.ITurtle;
 
 
 public abstract class AbstractSingleParameterTurtleCommand extends AbstractSingleParameterCommand

@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import model.scope.MethodScope;
 import model.scope.Scope;
+import model.workspaces.DataSource;
+import model.workspaces.ITurtle;
+import model.workspaces.WorkspaceContainer;
 
 
 /**

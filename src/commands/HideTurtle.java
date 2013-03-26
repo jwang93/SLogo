@@ -1,6 +1,6 @@
 package commands;
 
-import model.ITurtle;
+import model.workspaces.ITurtle;
 
 
 public class HideTurtle extends AbstractZeroParameterTurtleCommand implements ICommand {

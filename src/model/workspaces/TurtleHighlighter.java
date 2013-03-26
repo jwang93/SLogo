@@ -1,4 +1,4 @@
-package model;
+package model.workspaces;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -9,6 +9,8 @@ import util.Paintable;
 /**
  * Creates a box around the current turtle (highlighter)
  * 
+ * all methods and constructors are protected except for paint(Graphics2D pen) because this is a
+ * low-level class that is accessed through the ITurtle interface implemented in Workspace.
  * @author Zhen Gou
  * 
  */
@@ -24,7 +26,7 @@ public class TurtleHighlighter implements Paintable {
      * 
      * @param turtle to highlight
      */
-    public TurtleHighlighter (Turtle turtle) {
+    protected TurtleHighlighter (Turtle turtle) {
         myTurtle = turtle;
         updatePosition();
 

@@ -1,6 +1,6 @@
 package commands;
 
-import model.ITurtle;
+import model.workspaces.ITurtle;
 
 
 public class ClearScreen extends AbstractZeroParameterTurtleCommand implements ICommand {

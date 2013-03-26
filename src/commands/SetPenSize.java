@@ -1,8 +1,8 @@
 package commands;
 
 import java.util.List;
-import model.ITurtle;
 import model.Model;
+import model.workspaces.ITurtle;
 
 
 public class SetPenSize extends AbstractSingleParameterCommand implements ICommand {

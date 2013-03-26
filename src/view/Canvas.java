@@ -5,11 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import javax.swing.JComponent;
-import util.Paintable;
 
 
 /**
@@ -25,10 +21,9 @@ public class Canvas extends JComponent {
     private static final int DEFAULT_GRID_FREQUENCY = 10;
     private static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
 
-    private Iterator<Paintable> myPaintableIterator;
     private Image myBackground;
     private Color myBackgroundColor;
-    private boolean gridShowing = true;
+    private boolean myGridShowing = true;
     private Grid myGrid;
     private WorkspaceInView myWorkspace;
 
@@ -36,6 +31,7 @@ public class Canvas extends JComponent {
      * Create a panel so that it knows its size.
      * 
      * @param size size of the viewable area
+     * @param workspace used to paint
      */
     public Canvas (Dimension size, WorkspaceInView workspace) {
         // set size (a bit of a pain)
@@ -63,7 +59,7 @@ public class Canvas extends JComponent {
         pen.fillRect(0, 0, getSize().width, getSize().height);
         pen.drawImage(myBackground, 0, 0, getSize().width, getSize().height, null);
 
-        if (gridShowing) {
+        if (myGridShowing) {
             myGrid.paint((Graphics2D) pen);
         }
         myWorkspace.paintModel((Graphics2D) pen);
@@ -72,28 +68,45 @@ public class Canvas extends JComponent {
     /**
      * Updates the iterator and repaints.
      * 
-     * @param iterator iterator to update
      */
     public void update () {
         repaint();
     }
 
+    /**
+     * Used to change size of canvas.
+     * 
+     * @param size new size of canvas
+     */
     public void changeSize (Dimension size) {
         setPreferredSize(size);
         setSize(size);
         repaint();
     }
 
+    /**
+     * toggles the grid showing.
+     */
     public void toggleGrid () {
-        gridShowing = !gridShowing;
+        myGridShowing = !myGridShowing;
     }
 
+    /**
+     * Sets the background color.
+     * 
+     * @param color to set
+     */
     public void setBackgroundColor (Color color) {
-        if(color != null) {
+        if (color != null) {
             myBackgroundColor = color;
         }
     }
-    
+
+    /**
+     * Sets the background image.
+     * 
+     * @param image to set
+     */
     public void setBackgroundImage (Image image) {
         myBackground = image;
     }

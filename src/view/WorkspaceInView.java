@@ -28,8 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-import model.DataSource;
 import model.IModel;
+import model.workspaces.DataSource;
 import util.Location;
 /**
  * The View for one workspace. Contains a Canvas to draw sprites on,

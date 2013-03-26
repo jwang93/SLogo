@@ -1,4 +1,4 @@
-package model;
+package model.workspaces;
 
 import util.Location;
 
