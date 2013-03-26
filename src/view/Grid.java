@@ -9,6 +9,7 @@ import java.awt.Stroke;
 import java.awt.font.TextLayout;
 import util.Paintable;
 
+
 /**
  * paints a reference grid for the area the given graphics2D pen is responsible for
  * 
@@ -18,16 +19,23 @@ import util.Paintable;
  */
 
 public class Grid implements Paintable {
-    private int canvasHeight;
-    private int canvasWidth;
+    private static final int DASH_VALUE = 8;
+    private int myCanvasHeight;
+    private int myCanvasWidth;
     private int myFrequency;
     private final Font myFont = new Font("Default", Font.PLAIN, 12);
-    private final int yOffset = 8;
-    private final int xOffset = 3;
+    private final int myYoffset = 8;
+    private final int myXoffset = 3;
 
+    /**
+     * instantiates the grid with bounds and frequency of lines.
+     * 
+     * @param bounds of grid
+     * @param frequency of lines in pixels
+     */
     public Grid (Dimension bounds, int frequency) {
-        canvasHeight = (int) bounds.getHeight();
-        canvasWidth = (int) bounds.getWidth();
+        myCanvasHeight = (int) bounds.getHeight();
+        myCanvasWidth = (int) bounds.getWidth();
         myFrequency = frequency;
 
     }
@@ -41,35 +49,44 @@ public class Grid implements Paintable {
 
     }
 
-    public void paintVerticalLines (Graphics2D pen) {
-        int segmentSize = canvasWidth / myFrequency;
-        Stroke drawingStroke = new BasicStroke(1, BasicStroke.CAP_BUTT,
-                                               BasicStroke.JOIN_BEVEL, 0, new float[] { 8 }, 0);
+    /**
+     * paints all vertical lines
+     */
+    private void paintVerticalLines (Graphics2D pen) {
+        int segmentSize = myCanvasWidth / myFrequency;
+        Stroke drawingStroke =
+                new BasicStroke(1, BasicStroke.CAP_BUTT,
+                                BasicStroke.JOIN_BEVEL, 0, new float[] {DASH_VALUE}, 0);
+        new BasicStroke();
         pen.setStroke(drawingStroke);
         pen.setColor(Color.black);
         for (int i = 1; i < myFrequency + 1; ++i) {
             int myX = 0 + i * segmentSize;
-            pen.drawLine(myX, 0, myX, canvasHeight);
-            TextLayout text = new TextLayout("" + (myX - canvasWidth / 2),
+            pen.drawLine(myX, 0, myX, myCanvasHeight);
+            TextLayout text = new TextLayout("" + (myX - myCanvasWidth / 2),
                                              myFont, pen.getFontRenderContext());
-            text.draw(pen, myX + xOffset, canvasHeight - yOffset);
+            text.draw(pen, myX + myXoffset, myCanvasHeight - myYoffset);
 
         }
 
     }
 
-    public void paintHorizontalLines (Graphics2D pen) {
-        int segmentSize = canvasHeight / myFrequency;
-        Stroke drawingStroke = new BasicStroke(1, BasicStroke.CAP_BUTT,
-                                               BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0);
+    /**
+     * paints all horizontal lines
+     */
+    private void paintHorizontalLines (Graphics2D pen) {
+        int segmentSize = myCanvasHeight / myFrequency;
+        Stroke drawingStroke =
+                new BasicStroke(1, BasicStroke.CAP_BUTT,
+                                BasicStroke.JOIN_BEVEL, 0, new float[] {DASH_VALUE}, 0);
         pen.setStroke(drawingStroke);
         pen.setColor(Color.black);
         for (int i = 0; i < myFrequency + 1; ++i) {
             int myY = 0 + i * segmentSize;
-            pen.drawLine(0, myY, canvasWidth, myY);
-            TextLayout text = new TextLayout("" + (canvasHeight / 2 - myY),
+            pen.drawLine(0, myY, myCanvasWidth, myY);
+            TextLayout text = new TextLayout("" + (myCanvasHeight / 2 - myY),
                                              myFont, pen.getFontRenderContext());
-            text.draw(pen, 0 + xOffset, myY + yOffset * 2);
+            text.draw(pen, 0 + myXoffset, myY + myYoffset * 2);
 
         }
 
