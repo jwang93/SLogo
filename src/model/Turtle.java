@@ -36,6 +36,7 @@ public class Turtle extends Sprite implements Paintable {
     private Dimension myCanvasBounds;
     private int myCenterXValue;
     private int myCenterYValue;
+    // Contains all paintables other than this turtle
     private List<Paintable> myPaintableObjects = new ArrayList<Paintable>();
 
     /**
@@ -107,13 +108,15 @@ public class Turtle extends Sprite implements Paintable {
      *        possible rounding errors with trig functions)
      */
     protected void moveRecursiveHelper (double pixels) {
+        // Checkstyle and clean-up rules conflict on brackets - this is a recurring problem 
+        // throughout our code
         if (pixels <= 0 + PRECISION_LEVEL) return;
 
         Location currentLocation = getLocation();
         Location nextLocation = getLocation();
         Location nextCenter = nextLocation;
         nextLocation.translate(new Vector(getHeading(), pixels));
-        Location[] replacements = { nextLocation, nextCenter };
+        Location[] replacements = {nextLocation, nextCenter};
 
         if (nextLocation.getY() < 0) {
             // top
@@ -157,7 +160,7 @@ public class Turtle extends Sprite implements Paintable {
         if (getHeading() == THREE_QUARTER_TURN_DEGREES) {
             nextLocation = new Location(getX(), 0);
             nextCenter = new Location(getX(), myCanvasBounds.getHeight());
-            return new Location[] { nextLocation, nextCenter };
+            return new Location[] {nextLocation, nextCenter};
         }
 
         double angle = FULL_TURN_DEGREES - getHeading();
@@ -177,7 +180,7 @@ public class Turtle extends Sprite implements Paintable {
         else if (nextLocation.getX() < 0) // left
             return overrunLeft();
 
-        return new Location[] { nextLocation, nextCenter };
+        return new Location[] {nextLocation, nextCenter};
     }
 
     /**
@@ -193,7 +196,7 @@ public class Turtle extends Sprite implements Paintable {
         if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
             nextLocation = new Location(getX(), myCanvasBounds.getHeight());
             nextCenter = new Location(getX(), 0);
-            return new Location[] { nextLocation, nextCenter };
+            return new Location[] {nextLocation, nextCenter};
         }
 
         double angle = getHeading();
@@ -214,7 +217,7 @@ public class Turtle extends Sprite implements Paintable {
             return overrunRight();
         else if (nextLocation.getX() < 0) // left
             return overrunLeft();
-        return new Location[] { nextLocation, nextCenter };
+        return new Location[] {nextLocation, nextCenter};
     }
 
     /**
@@ -229,7 +232,7 @@ public class Turtle extends Sprite implements Paintable {
         if (getHeading() == ONE_QUARTER_TURN_DEGREES) {
             nextLocation = new Location(myCanvasBounds.getWidth(), getY());
             nextCenter = new Location(0, getY());
-            return new Location[] { nextLocation, nextCenter };
+            return new Location[] {nextLocation, nextCenter};
         }
 
         double angle = ONE_QUARTER_TURN_DEGREES - getHeading();
@@ -434,11 +437,17 @@ public class Turtle extends Sprite implements Paintable {
 
     }
 
+    /**
+     * Converts a location from the current view coordinates
+     */
     private Location convertFromViewCoordinates (Location location) {
         return new Location(myCenterXValue + location.getX(), myCenterYValue - location.getY());
 
     }
 
+    /**
+     * Converts a location to the current view coordinates
+     */
     private Location convertToViewCoordinates (Location location) {
         return new Location(location.getX() - myCenterXValue, myCenterYValue - location.getY());
     }
@@ -460,20 +469,34 @@ public class Turtle extends Sprite implements Paintable {
         return convertToViewCoordinates(getLocation());
     }
 
+    /**
+     * Sets pen color to current color
+     * @param color
+     */
     protected void setPenColor (Color color) {
         myLine.setPenColor(color);
 
     }
 
+    /**
+     * Sets pen size to current size
+     * @param size
+     */
     protected void setPenSize (int size) {
         myLine.setPenSize(size);
 
     }
 
+    /**
+     * Creates a stamp of image on the current canvas
+     */
     protected void stamp () {
         myPaintableObjects.add(new Stamp(DEFAULT_IMAGE, getLocation(), DEFAULT_DIMENSION));
     }
 
+    /**
+     * Clears all the current stamps from the canvas
+     */
     protected void clearStamps () {
         for (Paintable paintable : myPaintableObjects) {
             if (paintable instanceof Stamp) {
