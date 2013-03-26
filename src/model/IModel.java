@@ -19,12 +19,15 @@ public interface IModel {
     public void executeCommand (String command);
 
     /**
+     * returns the current turtle interface given.
+     */
+    public ITurtle getTurtle ();
+
+    /**
      * Saves all current functions and variables to file.
      * 
      * @param fileToSave file to save to
      */
-    public ITurtle getTurtle ();
-
     public void saveFunctionsAndVariables (File fileToSave);
 
     /**
@@ -35,16 +38,31 @@ public interface IModel {
     public void loadFunctionsAndVariables (File fileToLoad);
 
     /**
-     * Returns the datasource.
+     * Returns the current datasource referring to the current workspace.
      * 
      * @return datasource
      */
     public DataSource getDataSource ();
 
+    /**
+     * Adds the background image to the list in model.
+     * 
+     * @param image to add
+     */
     public void addBackgroundImage (Image image);
 
+    /**
+     * Adds the turtle image to the list in model.
+     * 
+     * @param image to add
+     */
     public void addTurtleImage (Image image);
 
+    /**
+     * switches to workspace number passed in
+     * 
+     * @param workspaceNumber ID of the workspace
+     */
     public void switchToWorkspace (int workspaceNumber);
 
 }

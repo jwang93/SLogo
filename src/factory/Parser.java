@@ -28,7 +28,6 @@ public class Parser {
         // myUserFunctions = new HashMap<String, UserFunctionMetaData>();
         myModel = model;
         myResourceBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + BUNDLE_NAME);
-        myUserFunctions = model.getMethods();
     }
 
     /**
@@ -40,6 +39,7 @@ public class Parser {
      * @throws FormattingException if the parser breaks whie parsing
      */
     public ICommand parse (String command) throws FormattingException {
+        myUserFunctions = myModel.getMethodScope();
         CommandStream params = new CommandStream();
         String commandString = command.trim();
         for (String str : commandString.split(TOKEN_SEPARATOR_REGEX)) {
@@ -151,7 +151,7 @@ public class Parser {
      * @param metadata
      */
     public void add (UserFunctionMetaData metadata) {
-        myModel.getMethods().add(metadata);
+        myModel.getMethodScope().add(metadata);
     }
 
 }

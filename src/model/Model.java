@@ -199,7 +199,4 @@ public class Model implements IModel {
         myWorkspaces.switchToWorkspace(workspaceNumber);
     }
 
-    public MethodScope getMethods () {
-        return myWorkspaces.getMethods();
-    }
 }

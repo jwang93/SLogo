@@ -17,9 +17,6 @@ public class WorkspaceContainer {
     Workspace myCurrentWorkspace;
     Model myModel;
     Dimension myDefaultCanvasBounds;
-
-    private MethodScope myMethods;
-
     List<Image> myBackgroundImages = new ArrayList<Image>();
     List<Pixmap> myTurtleImages = new ArrayList<Pixmap>();
     List<Color> myColors = new ArrayList<Color>();
@@ -31,7 +28,6 @@ public class WorkspaceContainer {
         myModel = model;
         myDefaultCanvasBounds = canvasBounds;
         switchToWorkspace(0);
-        myMethods = new MethodScope();
     }
 
     public Workspace getCurrentWorkspace () {
@@ -47,10 +43,6 @@ public class WorkspaceContainer {
         else {
             myCurrentWorkspace = myWorkspaceMap.get(workspaceNumber);
         }
-    }
-
-    public MethodScope getMethods () {
-        return myMethods;
     }
 
     public void addBackgroundImage (Image image) {
