@@ -18,6 +18,8 @@
 
 ##### For team projects, each person's role in developing the project
 
+*MORE TO BE DISCUSSED IN PROJECT ANALYSIS*
+
 **Zhen Gou** and **David Winegar**: View, Model, and Util
 	We worked mostly on the parts that deal with the state of the model and the view.
 
