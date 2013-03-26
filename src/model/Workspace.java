@@ -294,8 +294,7 @@ public class Workspace implements DataSource, ITurtle {
 
     @Override
     public int getPenColor () {
-        // TODO Auto-generated method stub
-        return 0;
+        return myPenColorIndex;
     }
 
     @Override
