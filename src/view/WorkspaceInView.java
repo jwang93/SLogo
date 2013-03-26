@@ -31,7 +31,16 @@ import javax.swing.border.EtchedBorder;
 import model.DataSource;
 import model.IModel;
 import util.Location;
-
+/**
+ * The View for one workspace. Contains a Canvas to draw sprites on,
+ * information about positions and heading of the turtle, a command window with
+ * history, a command line to type in commands, radio button panel to select background color, a window to 
+ * show user defined vars and funcs.
+ * 
+ * @author Zhen Gou
+ * @author David Winegar
+ * 
+ */
 
 public class WorkspaceInView extends JComponent {
     /**

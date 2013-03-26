@@ -9,6 +9,13 @@ import java.awt.Stroke;
 import java.awt.font.TextLayout;
 import util.Paintable;
 
+/**
+ * paints a reference grid for the area the given graphics2D pen is responsible for
+ * 
+ * @author Zhen Gou
+ * @author David Winegar
+ * 
+ */
 
 public class Grid implements Paintable {
     private int canvasHeight;
